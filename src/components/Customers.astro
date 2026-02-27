@@ -1,0 +1,146 @@
+---
+const customers = [
+    {
+        src: "/images/customer/portal-berita-bilah-news.avif",
+        alt: "Portal Berita Bilah News",
+    },
+    {
+        src: "/images/customer/portal-berita-indikator-media.avif",
+        alt: "Portal Berita Indikator Media",
+    },
+    {
+        src: "/images/customer/portal-berita-kabar-siang.avif",
+        alt: "Portal Berita Kabar Siang",
+    },
+    {
+        src: "/images/customer/portal-berita-online-rasionalis.avif",
+        alt: "Portal Berita Online Rasionalis",
+    },
+    {
+        src: "/images/customer/portal-berita-swararakjatmerdeka.avif",
+        alt: "Portal Berita Swara Rakyat Merdeka",
+    },
+    {
+        src: "/images/customer/website -perusahaan-jasaku.avif",
+        alt: "Website Perusahaan Jasaku",
+    },
+];
+---
+
+<section class="customers-section">
+    <div class="container">
+        <p class="customers-label">Mereka percaya kami</p>
+    </div>
+
+    <div class="marquee-wrapper">
+        <div class="marquee-track">
+            {
+                [...customers, ...customers].map((c) => (
+                    <div class="marquee-item">
+                        <img src={c.src} alt={c.alt} loading="lazy" />
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<style is:global>
+    /* ===== CUSTOMERS MARQUEE ===== */
+    .customers-section {
+        padding: 3rem 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .customers-label {
+        text-align: center;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--color-text-subtle);
+        margin-bottom: 2rem;
+    }
+
+    /* Fade edges */
+    .marquee-wrapper {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .marquee-wrapper::before,
+    .marquee-wrapper::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 120px;
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .marquee-wrapper::before {
+        left: 0;
+        background: linear-gradient(
+            to right,
+            var(--color-bg, #080e1a),
+            transparent
+        );
+    }
+
+    .marquee-wrapper::after {
+        right: 0;
+        background: linear-gradient(
+            to left,
+            var(--color-bg, #080e1a),
+            transparent
+        );
+    }
+
+    .marquee-track {
+        display: flex;
+        gap: 3rem;
+        width: max-content;
+        animation: marquee-scroll 28s linear infinite;
+    }
+
+    .marquee-track:hover {
+        animation-play-state: paused;
+    }
+
+    @keyframes marquee-scroll {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    .marquee-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        height: 52px;
+        padding: 0 1rem;
+        filter: grayscale(1) brightness(0.7);
+        opacity: 0.6;
+        transition:
+            filter 0.3s ease,
+            opacity 0.3s ease;
+    }
+
+    .marquee-item:hover {
+        filter: grayscale(0) brightness(1);
+        opacity: 1;
+    }
+
+    .marquee-item img {
+        height: 100%;
+        width: auto;
+        max-width: 140px;
+        object-fit: contain;
+    }
+</style>

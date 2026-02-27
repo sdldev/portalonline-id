@@ -1,150 +1,575 @@
 ---
-const features = [
+const reasons = [
     {
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="M10 4v4" /><path d="M2 8h20" /><path d="M6 4v4" /></svg>`,
-        title: "CMS Canggih",
+        number: "01",
+        title: "Teknologi Terkini",
+        highlight: "Selalu Diperbarui Otomatis",
         description:
-            "Dibangun menggunakan teknologi terkini dan terupdate dengan enterprise-grade",
+            "Dibangun dengan arsitektur modern yang digunakan oleh perusahaan besar — Bun, Elysia.js, Astro, React, dan Cloudflare. Anda tidak perlu khawatir soal keusangan teknologi, semua maintenance kami tangani.",
+        stat: "Always",
+        statLabel: "Up to Date",
     },
     {
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg>`,
-        title: "SSO (Single Sign On)",
+        number: "02",
+        title: "CMS + Server Khusus",
+        highlight: "Standar Website Besar & Nasional",
         description:
-            "Sistem login terpisah dengan portal utama, sehingga lebih aman dan terpercaya.",
+            "API, Dashboard admin, dan Frontend Web berjalan secara terpisah — persis seperti yang digunakan Kompas, Detik, dan platform nasional terkemuka. Anda mendapat sistem kelas enterprise: kelola konten sendiri kapan saja, tanpa bergantung pada developer.",
+        stat: "Tier 1",
+        statLabel: "Standar Industri",
     },
     {
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>`,
-        title: "Dashboard Simple & Interaktif",
+        number: "03",
+        title: "Full Onpage SEO",
+        highlight: "Tanpa Plugin Tambahan",
         description:
-            "Dashboard simple dan interaktif dibuat berdasarkan kebutuhan dan pengalaman pengguna.",
+            "Schema markup, meta tags otomatis, sitemap dinamis, dan Core Web Vitals optimal sudah terpasang dari awal. Portal Anda dirancang dari nol untuk mendominasi halaman 1 Google.",
+        stat: "Gratis",
+        statLabel: "Full SEO Setup",
     },
     {
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>`,
-        title: "SEO Powerful",
+        number: "04",
+        title: "Performa Sempurna",
+        highlight: "Loading di Bawah 1 Detik",
         description:
-            "Optimasi mesin pencari bawaan. Meta tags otomatis, sitemap, dan schema markup untuk ranking maksimal di Google.",
+            "Skor Lighthouse 95+. Pengunjung tidak akan menunggu — mereka langsung melihat konten. Setiap milidetik loading yang terbuang adalah peluang bisnis yang hilang.",
+        stat: "95+",
+        statLabel: "Lighthouse Score",
     },
     {
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.744 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.01 17.461 2 12 2z"/></svg>`,
-        title: "Custom Theme",
+        number: "05",
+        title: "Keamanan Tingkat Tinggi",
+        highlight: "Proteksi Server & Website",
         description:
-            "Theme dapat diubah sesuai dengan kebutuhan dan keinginan pengguna",
+            "SSL, firewall, DDoS protection, dan backup otomatis sudah aktif sejak hari pertama. Data perusahaan Anda dilindungi dengan lapisan keamanan berlevel enterprise.",
+        stat: "Multi",
+        statLabel: "Layer Security",
     },
     {
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
-        title: "Responsif & Cepat",
+        number: "06",
+        title: "Dashboard Intuitif",
+        highlight: "Langsung Paham Tanpa Pelatihan",
         description:
-            "Tampilan optimal di semua perangkat. Loading super cepat dengan teknologi modern untuk pengalaman pembaca terbaik.",
+            "Kelola portal hanya dalam hitungan menit. Dashboard dibuat berdasarkan riset UX mendalam — bahkan pengguna baru pun langsung mahir tanpa perlu diajari.",
+        stat: "5 mnt",
+        statLabel: "Setup Time",
     },
     {
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
-        title: "Multi-User & Role",
+        number: "07",
+        title: "Theme Premium Eksklusif",
+        highlight: "Anti Template Pasaran",
         description:
-            "Menerapkan sistem multi-user dan role-based access control (RBAC) untuk mengelola akses pengguna ke sistem.",
+            "Setiap portal dirancang khusus sesuai brand Anda — bukan duplikasi template yang dipakai ribuan website lain. Tampilan mencerminkan identitas bisnis Anda secara profesional.",
+        stat: "100%",
+        statLabel: "Custom Design",
     },
     {
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>`,
-        title: "Keamanan Tinggi",
+        number: "08",
+        title: "Full Support",
+        highlight: "Langsung Bicara dengan Developer",
         description:
-            "SSL, backup otomatis, dan proteksi firewall. Data Anda aman dengan standar keamanan enterprise-grade.",
+            "Anda tidak sekadar menerima produk — Anda bisa meminta, berdiskusi, dan berkonsultasi langsung. Tim kami siap mendengar kebutuhan Anda dan memberikan solusi terbaik kapan saja.",
+        stat: "24/7",
+        statLabel: "Full Support",
     },
 ];
 ---
 
-<section class="section features" id="features">
+<section class="section why-choose" id="why-choose">
     <div class="container">
-        <!-- Section Header -->
-        <div class="section-header">
-            <span class="badge">Fitur Platform</span>
+        <div class="why-header">
             <h2 class="section-title">
-                Service yang Anda <span class="text-gradient">Dapatkan</span>
+                Alasan <span class="text-gradient">Cerdas</span> Memilih
+                <br />Portal Online
             </h2>
             <p class="section-subtitle">
-                Platform lengkap dengan fitur-fitur premium untuk membangun dan
-                mengelola portal online perusahaan anda secara mudah dan
-                profesional.
+                Yang pasti bukan untuk <em>kaum mendang mending</em>, <span
+                    class="text-gradient">"Ada harga ada kualitas"</span
+                >. Kami yakin perusahaan dan brand anda ingin memiliki website
+                yang profesional dan modern.
             </p>
         </div>
-
-        <!-- Features Grid -->
-        <div class="features-grid">
+        <div class="reasons-container">
             {
-                features.map((feature, index) => (
+                reasons.map((reason, index) => (
                     <div
-                        class="feature-card card"
-                        style={`animation-delay: ${index * 100}ms`}
+                        class={`reason-card ${index % 2 === 0 ? "reason-left" : "reason-right"}`}
+                        style={`animation-delay: ${index * 150}ms`}
                     >
-                        <div
-                            class="feature-icon icon-box"
-                            set:html={feature.icon}
-                        />
-                        <h3 class="feature-title">{feature.title}</h3>
-                        <p class="feature-description">{feature.description}</p>
+                        <div class="reason-number-col">
+                            <span class="reason-num">{reason.number}</span>
+                            <div class="reason-line-v" />
+                        </div>
+
+                        <div class="reason-body">
+                            <div class="reason-title-row">
+                                <h3 class="reason-title">{reason.title}</h3>
+                                <div class="reason-stat-box">
+                                    <span class="reason-stat-val">
+                                        {reason.stat}
+                                    </span>
+                                    <span class="reason-stat-lbl">
+                                        {reason.statLabel}
+                                    </span>
+                                </div>
+                            </div>
+                            <span class="reason-tag">{reason.highlight}</span>
+                            <p class="reason-desc">{reason.description}</p>
+                            <div class="reason-bar">
+                                <div class="reason-bar-fill" />
+                            </div>
+                        </div>
                     </div>
                 ))
             }
         </div>
+        <div class="why-bottom">
+            <div class="why-cta-box glass">
+                <div class="why-cta-inner">
+                    <div>
+                        <h3 class="why-cta-h">Sudah yakin?</h3>
+                        <p class="why-cta-p">
+                            Atau mau bertanya2 dahulu supaya tidak beli kucing
+                            dalam karung
+                        </p>
+                    </div>
+                </div>
+                <a
+                    href="https://wa.me/6285783024799?text=Halo%2C%20saya%20tertarik%20dengan%20layanan%20Portal%20Online.%20Boleh%20saya%20tahu%20lebih%20lanjut%3F"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-gradient"
+                >
+                    Mulai Sekarang
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"
+                        ></path></svg
+                    >
+                </a>
+                <p class="text-center text-xs">
+                    Anda akan langsung berdiskusi dengan developer kami
+                </p>
+            </div>
+        </div>
     </div>
 </section>
 
-<style>
-    .features {
+<style is:global>
+    /* ===== WHY CHOOSE SECTION ===== */
+    .why-choose {
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Header */
+    .why-header {
+        text-align: center;
+        margin-bottom: 4.5rem;
         position: relative;
     }
 
-    .section-header {
-        text-align: center;
-        margin-bottom: 4rem;
-    }
-
-    .section-header .badge {
+    .why-header .badge {
         margin-bottom: 1rem;
     }
-
-    .section-header .section-subtitle {
-        margin: 1rem auto 0;
+    .why-header .section-subtitle {
+        margin: 1.25rem auto 0;
+        max-width: 560px;
     }
 
-    .features-grid {
-        display: grid;
-        grid-template-columns: 1fr;
+    /* ===== CARD CONTAINER ===== */
+    .reasons-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1.75rem;
+        max-width: 880px;
+        margin: 0 auto;
+    }
+
+    /* ===== CARD ===== */
+    .reason-card {
+        display: flex;
         gap: 1.5rem;
+        padding: 2rem;
+        border-radius: 1.5rem;
+        background: rgba(15, 23, 42, 0.75);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        position: relative;
+        transition: all 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+        animation: why-card-in 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
+        animation-play-state: paused;
     }
 
-    @media (min-width: 640px) {
-        .features-grid {
-            grid-template-columns: repeat(2, 1fr);
+    .reason-card.why-visible {
+        animation-play-state: running;
+    }
+
+    .reason-left {
+        animation-name: why-slide-left;
+    }
+    .reason-right {
+        animation-name: why-slide-right;
+    }
+
+    @keyframes why-slide-left {
+        from {
+            opacity: 0;
+            transform: translateX(-50px) translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0) translateY(0);
+        }
+    }
+
+    @keyframes why-slide-right {
+        from {
+            opacity: 0;
+            transform: translateX(50px) translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0) translateY(0);
+        }
+    }
+
+    /* Hover Glow Border */
+    .reason-card::before {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        border-radius: 1.5rem;
+        padding: 1px;
+        background: linear-gradient(
+            135deg,
+            rgba(var(--color-primary), 0),
+            rgba(var(--color-primary), 0),
+            rgba(var(--color-primary), 0)
+        );
+        -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        transition: background 0.45s ease;
+        pointer-events: none;
+    }
+
+    .reason-card:hover::before {
+        background: linear-gradient(
+            135deg,
+            rgba(var(--color-primary), 0.6),
+            rgba(var(--color-accent), 0.3),
+            rgba(var(--color-pink), 0.6)
+        );
+    }
+
+    .reason-card:hover {
+        border-color: rgba(var(--color-primary), 0.15);
+        box-shadow:
+            0 25px 60px -15px rgba(var(--color-primary), 0.12),
+            0 0 40px -10px rgba(var(--color-primary), 0.08);
+        transform: translateY(-5px);
+    }
+
+    /* Number Column */
+    .reason-number-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        flex-shrink: 0;
+        padding-top: 0.25rem;
+    }
+
+    .reason-num {
+        font-family: var(--font-display);
+        font-size: 1.75rem;
+        font-weight: 800;
+        background: linear-gradient(
+            135deg,
+            rgb(var(--color-primary)),
+            rgb(var(--color-accent))
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+    }
+
+    .reason-line-v {
+        width: 2px;
+        flex: 1;
+        min-height: 30px;
+        background: linear-gradient(
+            to bottom,
+            rgba(var(--color-primary), 0.35),
+            transparent
+        );
+        border-radius: 999px;
+    }
+
+    /* Body */
+    .reason-body {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .reason-title-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 0.375rem;
+    }
+
+    .reason-title-row .reason-title {
+        margin-bottom: 0;
+    }
+
+    .reason-stat-box {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.125rem;
+    }
+
+    .reason-stat-val {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: rgb(var(--color-primary));
+        line-height: 1;
+    }
+
+    .reason-stat-lbl {
+        font-size: 0.6875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--color-text-subtle);
+        font-weight: 600;
+    }
+
+    .reason-title {
+        font-family: var(--font-display);
+        font-size: 1.375rem;
+        font-weight: 800;
+        line-height: 1.3;
+        margin-bottom: 0.375rem;
+        color: var(--color-text);
+    }
+
+    .reason-tag {
+        display: inline-block;
+        font-size: 0.6875rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: rgb(var(--color-primary));
+        background: rgba(var(--color-primary), 0.1);
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        margin-bottom: 0.75rem;
+        border: 1px solid rgba(var(--color-primary), 0.15);
+    }
+
+    .reason-desc {
+        color: var(--color-text-muted);
+        font-size: 0.9375rem;
+        line-height: 1.7;
+    }
+
+    /* Animated Progress Bar */
+    .reason-bar {
+        margin-top: 1.25rem;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 999px;
+        overflow: hidden;
+    }
+
+    .reason-bar-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(
+            90deg,
+            rgb(var(--color-primary)),
+            rgb(var(--color-accent)),
+            rgb(var(--color-pink))
+        );
+        border-radius: 999px;
+        transition: width 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .reason-card:hover .reason-bar-fill {
+        width: 100%;
+    }
+
+    /* ===== STAGGER OFFSET ===== */
+    @media (min-width: 768px) {
+        .reason-left {
+            margin-right: 4rem;
+        }
+        .reason-right {
+            margin-left: 4rem;
         }
     }
 
     @media (min-width: 1024px) {
-        .features-grid {
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
+        .reason-left {
+            margin-right: 6rem;
+        }
+        .reason-right {
+            margin-left: 6rem;
         }
     }
 
-    .feature-card {
+    /* ===== BOTTOM CTA ===== */
+    .why-bottom {
+        margin-top: 4rem;
         display: flex;
-        flex-direction: column;
+        justify-content: center;
+    }
+
+    .why-cta-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        padding: 1.5rem 2rem;
+        border-radius: 1.5rem;
+        width: 100%;
+        max-width: 700px;
+    }
+
+    .why-cta-inner {
+        display: flex;
+        align-items: center;
         gap: 1rem;
-        padding: 2rem;
     }
 
-    .feature-icon {
-        width: 3.5rem;
-        height: 3.5rem;
+    .why-cta-ico {
+        font-size: 2rem;
     }
 
-    .feature-title {
+    .why-cta-h {
         font-family: var(--font-display);
-        font-size: 1.25rem;
-        font-weight: 700;
+        font-size: 1.125rem;
+        font-weight: 800;
     }
 
-    .feature-description {
+    .why-cta-p {
         color: var(--color-text-muted);
-        font-size: 0.9375rem;
-        line-height: 1.6;
+        font-size: 0.875rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+        .why-header {
+            margin-bottom: 3rem;
+        }
+
+        .reason-card {
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1.5rem;
+        }
+
+        .reason-number-col {
+            flex-direction: row;
+            gap: 1rem;
+        }
+
+        .reason-line-v {
+            min-height: 2px;
+            height: 2px;
+            width: 40px;
+            min-width: 40px;
+            background: linear-gradient(
+                to right,
+                rgba(var(--color-primary), 0.35),
+                transparent
+            );
+        }
+
+        .reason-title {
+            font-size: 1.1875rem;
+        }
+        .reasons-container {
+            gap: 1.25rem;
+        }
+
+        .why-cta-box {
+            flex-direction: column;
+            text-align: center;
+            gap: 1.5rem;
+        }
+
+        .why-cta-inner {
+            flex-direction: column;
+        }
     }
 </style>
+
+<script>
+    function initWhyCards() {
+        const whyCards = document.querySelectorAll<HTMLElement>(".reason-card");
+        if (whyCards.length === 0) return;
+
+        // Disconnect any previous observer to avoid duplicates
+        if ((window as any).__whyObserver) {
+            (window as any).__whyObserver.disconnect();
+        }
+
+        const whyObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("why-visible");
+                        whyObserver.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
+        );
+
+        (window as any).__whyObserver = whyObserver;
+
+        whyCards.forEach((card) => {
+            // Reset class agar animasi bisa berjalan ulang
+            card.classList.remove("why-visible");
+            whyObserver.observe(card);
+
+            // 3D tilt effect on mouse move
+            card.addEventListener("mousemove", (e: MouseEvent) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const cx = rect.width / 2;
+                const cy = rect.height / 2;
+                const rx = ((y - cy) / cy) * -3;
+                const ry = ((x - cx) / cx) * 3;
+                card.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-5px)`;
+            });
+
+            card.addEventListener("mouseleave", () => {
+                card.style.transform = "";
+            });
+        });
+    }
+
+    // Jalankan saat pertama kali load
+    document.addEventListener("DOMContentLoaded", initWhyCards);
+    // Jalankan ulang setiap navigasi Astro View Transitions
+    document.addEventListener("astro:page-load", initWhyCards);
+</script>

@@ -66,29 +66,6 @@ const {
         <!-- Scanline Transition Overlay -->
         <div class="transition-scanline" id="transition-scanline"></div>
 
-        <!-- Cosmic Background (persistent during transitions) -->
-        <div
-            class="fixed inset-0 pointer-events-none overflow-hidden"
-            style="z-index: -1;"
-            transition:persist
-        >
-            <div
-                class="cosmic-glow cosmic-glow-primary animate-pulse-glow"
-                style="width: 600px; height: 600px; top: -200px; left: 50%; transform: translateX(-50%);"
-            >
-            </div>
-            <div
-                class="cosmic-glow cosmic-glow-accent animate-float-slow"
-                style="width: 400px; height: 400px; bottom: 20%; right: -100px;"
-            >
-            </div>
-            <div
-                class="cosmic-glow cosmic-glow-primary animate-float-slow"
-                style="width: 300px; height: 300px; bottom: 10%; left: -50px; animation-delay: -5s;"
-            >
-            </div>
-        </div>
-
         <slot />
 
         <!-- WhatsApp Chat Widget -->
