@@ -1,0 +1,600 @@
+---
+const navLinks = [
+    { name: "Beranda", href: "/" },
+    {
+        name: "Free Service",
+        href: "#",
+        dropdown: [
+            { name: "Google Submit", href: "/seo/google-submit" },
+            { name: "Generate Text", href: "/text/lorem-ipsum" },
+            { name: "Seo Analyzer", href: "#" },
+        ],
+    },
+    {
+        name: "Article",
+        href: "#",
+        dropdown: [
+            { name: "Dokumentasi", href: "/tutorial" },
+            { name: "Update", href: "/update" },
+            { name: "Tips", href: "/tips" },
+            { name: "Artikel", href: "/article" },
+        ],
+    },
+    { name: "Tema", href: "/themes" },
+    { name: "Harga", href: "/pricing" },
+    { name: "Tentang", href: "/about" },
+    { name: "Kontak", href: "/contact" },
+];
+---
+
+<nav class="navbar" id="navbar">
+    <div class="container navbar-container">
+        <!-- Logo -->
+        <a href="/" class="navbar-logo">
+            <img
+                src="/portalonline-sm.webp"
+                alt="Portal Online Logo"
+                class="logo-icon-img"
+                width="40"
+                height="40"
+                fetchpriority="high"
+                decoding="async"
+            />
+            <span class="logo-text font-display"
+                >Portal<span class="text-gradient">Online</span></span
+            >
+        </a>
+
+        <!-- Desktop Navigation -->
+        <div class="navbar-links hide-mobile">
+            {
+                navLinks.map((link) =>
+                    link.dropdown ? (
+                        <div class="nav-item-dropdown">
+                            <button class="nav-link dropdown-trigger">
+                                {link.name}
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="chevron-down"
+                                >
+                                    <path d="m6 9 6 6 6-6" />
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu">
+                                {link.dropdown.map((subItem) => (
+                                    <a
+                                        href={subItem.href}
+                                        class="dropdown-item"
+                                    >
+                                        {subItem.name}
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+                    ) : (
+                        <a href={link.href} class="nav-link">
+                            {link.name}
+                        </a>
+                    ),
+                )
+            }
+        </div>
+
+        <!-- CTA Button -->
+        <div class="navbar-actions">
+            <a href="#" class="btn btn-gradient hide-mobile">
+                Mulai Sekarang
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                </svg>
+            </a>
+
+            <!-- Mobile Menu Button -->
+            <button
+                class="mobile-menu-btn hide-desktop"
+                id="mobile-menu-btn"
+                aria-label="Toggle menu"
+            >
+                <svg
+                    class="menu-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <line x1="4" x2="20" y1="12" y2="12"></line>
+                    <line x1="4" x2="20" y1="6" y2="6"></line>
+                    <line x1="4" x2="20" y1="18" y2="18"></line>
+                </svg>
+                <svg
+                    class="close-icon"
+                    style="display: none;"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M18 6 6 18"></path>
+                    <path d="m6 6 12 12"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-inner glass">
+            {
+                navLinks.map((link) =>
+                    link.dropdown ? (
+                        <div class="mobile-dropdown-container">
+                            <button class="mobile-nav-link mobile-dropdown-btn">
+                                {link.name}
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path d="m6 9 6 6 6-6" />
+                                </svg>
+                            </button>
+                            <div class="mobile-dropdown-menu">
+                                {link.dropdown.map((subItem) => (
+                                    <a
+                                        href={subItem.href}
+                                        class="mobile-nav-link sub-link"
+                                    >
+                                        {subItem.name}
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+                    ) : (
+                        <a href={link.href} class="mobile-nav-link">
+                            {link.name}
+                        </a>
+                    ),
+                )
+            }
+            <a
+                href="#"
+                class="btn btn-gradient"
+                style="width: 100%; margin-top: 1rem;">Mulai Sekarang</a
+            >
+        </div>
+    </div>
+</nav>
+
+<style>
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 1rem;
+        transition: padding var(--transition-base);
+    }
+
+    .navbar.scrolled {
+        padding: 0.75rem 1rem;
+    }
+
+    .navbar-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem 1rem;
+        border-radius: 2rem;
+        transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        border: 1px solid transparent;
+        background: transparent;
+    }
+
+    @media (min-width: 640px) {
+        .navbar-container {
+            padding: 0.75rem 1.5rem;
+        }
+    }
+
+    /* Scrolled state - floating capsule with glassmorphism */
+    .navbar.scrolled .navbar-container {
+        background: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(245, 158, 11, 0.15);
+        box-shadow:
+            0 4px 30px rgba(0, 0, 0, 0.4),
+            0 0 40px rgba(245, 158, 11, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .navbar-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .logo-icon-img {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.75rem;
+        object-fit: cover;
+        transition: transform var(--transition-base);
+    }
+
+    .navbar-logo:hover .logo-icon-img {
+        transform: rotate(10deg);
+    }
+
+    .logo-text {
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+
+    .navbar-links {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .nav-link {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--color-text-muted);
+        border-radius: 0.75rem;
+        transition: all var(--transition-fast);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+        color: var(--color-text);
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Dropdown Styles */
+    .nav-item-dropdown {
+        position: relative;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .dropdown-trigger {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+    }
+
+    .dropdown-trigger .chevron-down {
+        transition: transform var(--transition-fast);
+        width: 16px;
+        height: 16px;
+    }
+
+    .nav-item-dropdown:hover .dropdown-trigger .chevron-down {
+        transform: rotate(180deg);
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(10px);
+        min-width: 220px;
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 0.5rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        z-index: 1000;
+        pointer-events: none; /* Prevent accidental clicks when hidden */
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .nav-item-dropdown:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+        pointer-events: auto;
+    }
+
+    /* Add a transparent bridge to prevent menu closing when moving cursor */
+    .nav-item-dropdown::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        height: 20px;
+        background: transparent;
+    }
+
+    .dropdown-item {
+        display: block;
+        padding: 0.75rem 1rem;
+        color: var(--color-text-muted);
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: 0.75rem;
+        transition: all var(--transition-fast);
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .dropdown-item:hover {
+        background: rgba(var(--color-primary), 0.1);
+        color: rgb(var(--color-primary));
+        padding-left: 1.25rem;
+    }
+
+    .navbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        color: var(--color-text);
+        background: var(--color-bg-secondary);
+        border-radius: 0.75rem;
+        border: 1px solid var(--color-border);
+        cursor: pointer;
+    }
+
+    .mobile-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 1rem;
+        right: 1rem;
+        padding-top: 0.5rem;
+    }
+
+    .mobile-menu.open {
+        display: block;
+    }
+
+    .mobile-menu-inner {
+        padding: 1rem;
+        border-radius: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .mobile-nav-link {
+        padding: 1rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--color-text-muted);
+        border-radius: 1rem;
+        transition: all var(--transition-fast);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        text-align: left;
+        text-decoration: none;
+    }
+
+    .mobile-nav-link:hover {
+        color: var(--color-text);
+        background: rgba(var(--color-primary), 0.1);
+    }
+
+    /* Mobile Dropdown */
+    .mobile-dropdown-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .mobile-dropdown-menu {
+        display: none;
+        padding-left: 1rem;
+        flex-direction: column;
+        gap: 0.25rem;
+        overflow: hidden;
+    }
+
+    .mobile-dropdown-container.active .mobile-dropdown-menu {
+        display: flex;
+        animation: slideDown 0.3s ease-out forwards;
+    }
+
+    .mobile-dropdown-container.active .mobile-dropdown-btn svg {
+        transform: rotate(180deg);
+    }
+
+    .mobile-dropdown-btn svg {
+        transition: transform 0.3s ease;
+    }
+
+    .mobile-nav-link.sub-link {
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+        color: var(--color-text-muted);
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    .mobile-nav-link.sub-link:hover {
+        background: rgba(var(--color-primary), 0.15);
+        color: rgb(var(--color-primary));
+        padding-left: 1.25rem;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<script is:inline>
+    // Initialize navbar functionality
+    function initNavbar() {
+        const navbar = document.getElementById("navbar");
+        const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const menuIcon = mobileMenuBtn?.querySelector(".menu-icon");
+        const closeIcon = mobileMenuBtn?.querySelector(".close-icon");
+
+        // Navbar scroll effect
+        function handleScroll() {
+            if (window.scrollY > 20) {
+                navbar?.classList.add("scrolled");
+            } else {
+                navbar?.classList.remove("scrolled");
+            }
+        }
+
+        // Remove existing listener to prevent duplicates
+        window.removeEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll);
+        handleScroll();
+
+        // Mobile menu toggle
+        if (mobileMenuBtn) {
+            // Clone and replace to remove old event listeners
+            const newBtn = mobileMenuBtn.cloneNode(true);
+            mobileMenuBtn.parentNode?.replaceChild(newBtn, mobileMenuBtn);
+
+            const newMenuIcon = newBtn.querySelector(".menu-icon");
+            const newCloseIcon = newBtn.querySelector(".close-icon");
+
+            newBtn.addEventListener("click", (e) => {
+                e.stopPropagation(); // Prevent document click from closing immediately
+                const isOpen = mobileMenu?.classList.toggle("open");
+                newBtn.setAttribute("aria-expanded", isOpen);
+                if (newMenuIcon && newCloseIcon) {
+                    newMenuIcon.style.display = isOpen ? "none" : "block";
+                    newCloseIcon.style.display = isOpen ? "block" : "none";
+                }
+            });
+        }
+
+        // Mobile Dropdown Toggles
+        const mobileDropdownBtns = document.querySelectorAll(
+            ".mobile-dropdown-btn",
+        );
+        mobileDropdownBtns.forEach((btn) => {
+            // Remove old listeners by cloning
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode?.replaceChild(newBtn, btn);
+
+            newBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const parent = newBtn.parentElement;
+                parent.classList.toggle("active");
+                const icon = newBtn.querySelector("svg");
+                if (icon) {
+                    icon.style.transform = parent.classList.contains("active")
+                        ? "rotate(180deg)"
+                        : "rotate(0deg)";
+                }
+            });
+        });
+
+        // Close mobile menu when clicking a link (but not dropdown toggles)
+        mobileMenu
+            ?.querySelectorAll("a:not(.mobile-dropdown-btn)")
+            .forEach((link) => {
+                link.addEventListener("click", () => {
+                    mobileMenu.classList.remove("open");
+                    if (menuIcon && closeIcon) {
+                        menuIcon.style.display = "block";
+                        closeIcon.style.display = "none";
+                    }
+                });
+            });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener("click", (e) => {
+            if (
+                mobileMenu?.classList.contains("open") &&
+                !mobileMenu.contains(e.target) &&
+                !mobileMenuBtn?.contains(e.target)
+            ) {
+                mobileMenu.classList.remove("open");
+                if (menuIcon && closeIcon) {
+                    menuIcon.style.display = "block";
+                    closeIcon.style.display = "none";
+                }
+            }
+        });
+    }
+
+    // Run on initial load
+    initNavbar();
+
+    // Re-run after View Transitions navigation
+    document.addEventListener("astro:page-load", initNavbar);
+</script>

@@ -1,0 +1,637 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import { googleUrls } from "../../data/googleUrlList";
+---
+
+<Layout title="Google SEO Submit Tool | Portal Online">
+    <Navbar />
+
+    <main class="seo-page">
+        <!-- Background Decorations -->
+        <div class="seo-bg-glow">
+            <div
+                class="cosmic-glow cosmic-glow-primary animate-float-slow"
+                style="top: 15%; left: 5%; width: 500px; height: 500px; opacity: 0.35;"
+            >
+            </div>
+            <div
+                class="cosmic-glow cosmic-glow-accent animate-float-slow delay-500"
+                style="bottom: 10%; right: 5%; width: 400px; height: 400px; opacity: 0.25;"
+            >
+            </div>
+        </div>
+
+        <div class="seo-wrapper">
+            <!-- Header -->
+            <div class="seo-header animate-fade-in">
+                <span class="badge">Free Tool</span>
+                <h1
+                    class="section-title text-balance"
+                    style="text-align:center;"
+                >
+                    Google SEO <span class="text-gradient">Submitter</span>
+                </h1>
+                <p class="seo-subtitle">
+                    Percepat indexing website Anda dengan melakukan ping
+                    otomatis ke berbagai layanan Google.
+                </p>
+            </div>
+
+            <!-- Form Card -->
+            <div class="seo-card glass animate-slide-up">
+                <form id="submitForm" class="seo-form">
+                    <div class="seo-form-group">
+                        <label for="urlInput" class="seo-label"
+                            >Website URL</label
+                        >
+                        <div class="seo-input-wrap">
+                            <svg
+                                class="seo-input-icon-left"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                ><path
+                                    d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"
+                                ></path><path
+                                    d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
+                                ></path></svg
+                            >
+                            <input
+                                type="url"
+                                id="urlInput"
+                                placeholder="https://example.com"
+                                required
+                                class="seo-input"
+                            />
+                        </div>
+                    </div>
+
+                    <button
+                        type="submit"
+                        id="submitBtn"
+                        class="btn btn-gradient seo-submit-btn"
+                    >
+                        <span class="seo-btn-label">
+                            Mulai Submit
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="seo-btn-arrow"
+                                ><line x1="22" y1="2" x2="11" y2="13"
+                                ></line><polygon
+                                    points="22 2 15 22 11 13 2 9 22 2"
+                                ></polygon></svg
+                            >
+                        </span>
+                    </button>
+                </form>
+
+                <!-- Progress Section -->
+                <div
+                    id="progress-container"
+                    class="seo-progress"
+                    style="display:none;"
+                >
+                    <div class="seo-progress-top">
+                        <span class="seo-progress-label">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="seo-spinner"
+                                ><path d="M21 12a9 9 0 1 1-6.219-8.56"
+                                ></path></svg
+                            >
+                            Progres
+                        </span>
+                        <span id="progress-text" class="seo-progress-pct"
+                            >0%</span
+                        >
+                    </div>
+                    <div class="seo-progress-track">
+                        <div
+                            id="progress-bar"
+                            class="seo-progress-bar"
+                            style="width: 0%"
+                        >
+                        </div>
+                    </div>
+                    <div id="status" class="seo-status"></div>
+                </div>
+
+                <!-- Results Section -->
+                <div
+                    id="results-container"
+                    class="seo-results"
+                    style="display:none;"
+                >
+                    <div class="seo-results-header">
+                        <span class="seo-results-title">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                ><polyline points="9 11 12 14 22 4"
+                                ></polyline><path
+                                    d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
+                                ></path></svg
+                            >
+                            Hasil Submit
+                        </span>
+                        <span id="results-count" class="seo-results-count"
+                            >0/0</span
+                        >
+                    </div>
+                    <div id="results-list" class="seo-results-list"></div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="seo-stats animate-fade-in delay-300">
+                <div class="seo-stat glass-light">
+                    <div
+                        class="seo-stat-val"
+                        style="color: rgb(var(--color-primary));"
+                    >
+                        90+
+                    </div>
+                    <div class="seo-stat-lbl">Google Servers</div>
+                </div>
+                <div class="seo-stat glass-light">
+                    <div
+                        class="seo-stat-val"
+                        style="color: rgb(var(--color-accent));"
+                    >
+                        Fast
+                    </div>
+                    <div class="seo-stat-lbl">Indexing Ping</div>
+                </div>
+                <div class="seo-stat glass-light">
+                    <div
+                        class="seo-stat-val"
+                        style="color: rgb(var(--color-pink));"
+                    >
+                        100%
+                    </div>
+                    <div class="seo-stat-lbl">Free to Use</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <Footer />
+</Layout>
+
+<style is:global>
+    .seo-page {
+        padding-top: 140px;
+        padding-bottom: 5rem;
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+    }
+    .seo-bg-glow {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+    }
+    .seo-wrapper {
+        position: relative;
+        z-index: 1;
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 0 1.25rem;
+    }
+    .seo-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    .seo-subtitle {
+        color: var(--color-text-muted);
+        font-size: 1.05rem;
+        line-height: 1.6;
+        max-width: 480px;
+    }
+    .seo-card {
+        border-radius: 1.25rem;
+        padding: 2rem;
+        margin-bottom: 2rem;
+    }
+    .seo-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .seo-form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .seo-label {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--color-text-muted);
+        padding-left: 0.25rem;
+    }
+    .seo-input-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    .seo-input-icon-left {
+        position: absolute;
+        left: 1rem;
+        color: var(--color-text-subtle);
+        pointer-events: none;
+        transition: color var(--transition-fast);
+    }
+    .seo-input-wrap:focus-within .seo-input-icon-left {
+        color: rgb(var(--color-primary));
+    }
+    .seo-input {
+        width: 100%;
+        padding: 0.9rem 1rem 0.9rem 3rem;
+        background: var(--color-bg-secondary);
+        color: var(--color-text);
+        border: 1px solid var(--color-border);
+        border-radius: 0.75rem;
+        font-size: 1rem;
+        font-family: var(--font-primary);
+        transition: all var(--transition-fast);
+    }
+    .seo-input::placeholder {
+        color: var(--color-text-subtle);
+    }
+    .seo-input:focus {
+        outline: none;
+        border-color: rgba(var(--color-primary), 0.6);
+        box-shadow: 0 0 0 3px rgba(var(--color-primary), 0.15);
+    }
+    .seo-submit-btn {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+    .seo-btn-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    .seo-btn-arrow {
+        transition: transform var(--transition-fast);
+    }
+    .seo-submit-btn:hover .seo-btn-arrow {
+        transform: translateX(3px);
+    }
+    .seo-submit-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none !important;
+    }
+    .seo-progress {
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--color-border-light);
+    }
+    .seo-progress-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.625rem;
+        font-size: 0.85rem;
+    }
+    .seo-progress-label {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        color: var(--color-text-muted);
+        font-weight: 500;
+    }
+    .seo-spinner {
+        animation: seo-spin 1s linear infinite;
+    }
+    .seo-progress-pct {
+        color: rgb(var(--color-primary));
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+    }
+    .seo-progress-track {
+        width: 100%;
+        height: 0.625rem;
+        background: var(--color-bg-secondary);
+        border-radius: 999px;
+        overflow: hidden;
+        position: relative;
+    }
+    .seo-progress-bar {
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(
+            90deg,
+            rgb(var(--color-primary)),
+            rgb(var(--color-accent)),
+            rgb(var(--color-pink))
+        );
+        transition: width 0.35s ease-out;
+        position: relative;
+    }
+    .seo-progress-bar::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.25),
+            transparent
+        );
+        animation: seo-shimmer 1.8s ease-in-out infinite;
+    }
+    .seo-status {
+        margin-top: 1rem;
+        text-align: center;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--color-text-muted);
+        min-height: 1.5rem;
+    }
+    .seo-status.success {
+        color: #22c55e;
+        font-weight: 700;
+    }
+    .seo-status.error {
+        color: #ef4444;
+        font-weight: 700;
+    }
+    .seo-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+    .seo-stat {
+        text-align: center;
+        padding: 1.25rem 0.75rem;
+        border-radius: 1rem;
+    }
+    .seo-stat-val {
+        font-family: var(--font-display);
+        font-size: 1.75rem;
+        font-weight: 800;
+        line-height: 1;
+        margin-bottom: 0.35rem;
+    }
+    .seo-stat-lbl {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-text-subtle);
+        font-weight: 600;
+    }
+    .seo-results {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--color-border-light);
+    }
+    .seo-results-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+    }
+    .seo-results-title {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--color-text-muted);
+    }
+    .seo-results-count {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: rgb(var(--color-primary));
+        font-variant-numeric: tabular-nums;
+    }
+    .seo-results-list {
+        max-height: 280px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 0.375rem;
+        padding-right: 0.25rem;
+    }
+    .seo-results-list::-webkit-scrollbar {
+        width: 4px;
+    }
+    .seo-results-list::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .seo-results-list::-webkit-scrollbar-thumb {
+        background: rgba(var(--color-primary), 0.3);
+        border-radius: 999px;
+    }
+    .seo-result-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        background: var(--color-bg-secondary);
+        border: 1px solid var(--color-border-light);
+        border-radius: 0.5rem;
+        font-size: 0.75rem;
+        color: var(--color-text-muted);
+        text-decoration: none;
+        transition: all var(--transition-fast);
+        word-break: break-all;
+        line-height: 1.4;
+    }
+    .seo-result-item:hover {
+        background: rgba(var(--color-primary), 0.08);
+        border-color: rgba(var(--color-primary), 0.3);
+        color: rgb(var(--color-primary));
+    }
+    .seo-result-icon {
+        flex-shrink: 0;
+        opacity: 0.5;
+    }
+    .seo-result-item:hover .seo-result-icon {
+        opacity: 1;
+    }
+    .seo-result-item.success {
+        border-left: 2px solid #22c55e;
+    }
+    .seo-result-item.fail {
+        border-left: 2px solid #ef4444;
+        opacity: 0.6;
+    }
+    @keyframes seo-spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    @keyframes seo-shimmer {
+        0% {
+            transform: translateX(-100%);
+        }
+        100% {
+            transform: translateX(100%);
+        }
+    }
+    @media (min-width: 640px) {
+        .seo-card {
+            padding: 2.5rem;
+        }
+    }
+    @media (max-width: 480px) {
+        .seo-stats {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<script define:vars={{ googleUrls }} is:inline>
+    document.addEventListener("astro:page-load", () => {
+        const form = document.getElementById("submitForm");
+        const urlInput = document.getElementById("urlInput");
+        const submitBtn = document.getElementById("submitBtn");
+        const statusDiv = document.getElementById("status");
+        const progressContainer = document.getElementById("progress-container");
+        const progressBar = document.getElementById("progress-bar");
+        const progressText = document.getElementById("progress-text");
+        const resultsContainer = document.getElementById("results-container");
+        const resultsList = document.getElementById("results-list");
+        const resultsCount = document.getElementById("results-count");
+
+        if (!form) return;
+
+        function addResultItem(url, success) {
+            const a = document.createElement("a");
+            a.href = url;
+            a.target = "_blank";
+            a.rel = "noopener noreferrer";
+            a.className = "seo-result-item " + (success ? "success" : "fail");
+            a.innerHTML =
+                '<svg class="seo-result-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>' +
+                "<span>" +
+                url +
+                "</span>";
+            resultsList.appendChild(a);
+            resultsList.scrollTop = resultsList.scrollHeight;
+        }
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const targetUrl = urlInput.value.trim();
+
+            if (!targetUrl) {
+                if (statusDiv) {
+                    statusDiv.textContent = "Mohon masukkan URL yang valid.";
+                    statusDiv.className = "seo-status error";
+                }
+                return;
+            }
+
+            // Reset UI
+            if (statusDiv) {
+                statusDiv.textContent = "Sedang memproses...";
+                statusDiv.className = "seo-status";
+            }
+            submitBtn.disabled = true;
+
+            if (progressContainer) progressContainer.style.display = "block";
+            if (progressBar) progressBar.style.width = "0%";
+            if (progressText) progressText.textContent = "0%";
+
+            // Show & clear results
+            if (resultsContainer) resultsContainer.style.display = "block";
+            if (resultsList) resultsList.innerHTML = "";
+            if (resultsCount)
+                resultsCount.textContent = "0/" + googleUrls.length;
+
+            let completed = 0;
+            let successCount = 0;
+            const total = googleUrls.length;
+            const batchSize = 10;
+
+            for (let i = 0; i < total; i += batchSize) {
+                const batch = googleUrls.slice(i, i + batchSize);
+                const results = await Promise.all(
+                    batch.map(async (baseUrl) => {
+                        const fullUrl = baseUrl + encodeURIComponent(targetUrl);
+                        return fetch(fullUrl, { mode: "no-cors" })
+                            .then(() => ({ url: fullUrl, ok: true }))
+                            .catch(() => ({ url: fullUrl, ok: false }));
+                    }),
+                );
+
+                results.forEach((r) => {
+                    if (r.ok) successCount++;
+                    addResultItem(r.url, r.ok);
+                });
+
+                completed += batch.length;
+                const progress = Math.min((completed / total) * 100, 100);
+
+                if (progressBar) progressBar.style.width = progress + "%";
+                if (progressText)
+                    progressText.textContent = Math.round(progress) + "%";
+                if (resultsCount)
+                    resultsCount.textContent =
+                        Math.min(completed, total) + "/" + total;
+                if (statusDiv)
+                    statusDiv.textContent =
+                        "Memproses... " +
+                        Math.min(completed, total) +
+                        "/" +
+                        total;
+            }
+
+            if (statusDiv) {
+                statusDiv.textContent =
+                    "✓ Submit selesai! " +
+                    successCount +
+                    "/" +
+                    total +
+                    " berhasil.";
+                statusDiv.className = "seo-status success";
+            }
+            submitBtn.disabled = false;
+        });
+    });
+</script>

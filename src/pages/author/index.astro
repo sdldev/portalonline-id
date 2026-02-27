@@ -1,0 +1,197 @@
+---
+import { getCollection } from "../../utils/collections";
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+
+const authors = await getCollection("author");
+authors.sort((a, b) => a.data.name.localeCompare(b.data.name));
+---
+
+<Layout
+    title="Penulis | Portal Online"
+    description="Daftar penulis dan kontributor konten di Portal Online."
+>
+    <Navbar />
+
+    <main class="page-content">
+        <!-- Hero -->
+        <section class="page-hero">
+            <div class="container">
+                <span class="badge">👥 Tim Kami</span>
+                <h1 class="page-title font-display">
+                    Penulis & <span class="text-gradient">Kontributor</span>
+                </h1>
+                <p class="page-subtitle">
+                    Kenali orang-orang di balik artikel, tutorial, dan tips di
+                    Portal Online.
+                </p>
+            </div>
+        </section>
+
+        <!-- Author list -->
+        <section class="section">
+            <div class="container" style="max-width: 760px;">
+                <ul class="author-list">
+                    {
+                        authors.map((author) => (
+                            <li class="author-item">
+                                <a
+                                    href={`/author/${author.id}`}
+                                    class="author-link"
+                                >
+                                    <img
+                                        src={
+                                            author.data.avatar ||
+                                            `https://ui-avatars.com/api/?name=${encodeURIComponent(author.data.name)}&background=random`
+                                        }
+                                        alt={author.data.name}
+                                        class="author-avatar"
+                                        loading="lazy"
+                                        width="48"
+                                        height="48"
+                                    />
+                                    <div class="author-info">
+                                        <span class="author-name">
+                                            {author.data.name}
+                                        </span>
+                                        {author.body && (
+                                            <p class="author-bio">
+                                                {author.body.substring(0, 120)}
+                                                {author.body.length > 120
+                                                    ? "…"
+                                                    : ""}
+                                            </p>
+                                        )}
+                                    </div>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="author-arrow"
+                                    >
+                                        <path d="M5 12h14" />
+                                        <path d="m12 5 7 7-7 7" />
+                                    </svg>
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+</Layout>
+
+<style>
+    .page-content {
+        padding-top: 6rem;
+    }
+
+    .page-hero {
+        padding: 3.5rem 0 2rem;
+        text-align: center;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .page-hero .badge {
+        margin-bottom: 0.75rem;
+    }
+
+    .page-title {
+        font-size: clamp(1.75rem, 5vw, 3rem);
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 1rem;
+    }
+
+    .page-subtitle {
+        max-width: 520px;
+        margin: 0 auto;
+        color: var(--color-text-muted);
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+
+    /* Author list */
+    .author-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .author-item {
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .author-item:last-child {
+        border-bottom: none;
+    }
+
+    .author-link {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.25rem 0;
+        text-decoration: none;
+        transition: color var(--transition-fast);
+    }
+
+    .author-link:hover .author-name {
+        color: rgb(var(--color-primary));
+    }
+
+    .author-link:hover .author-arrow {
+        color: rgb(var(--color-primary));
+        transform: translateX(4px);
+    }
+
+    .author-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex-shrink: 0;
+        background: var(--color-bg-elevated);
+        border: 2px solid var(--color-border);
+    }
+
+    .author-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .author-name {
+        display: block;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--color-text);
+        margin-bottom: 0.25rem;
+        transition: color var(--transition-fast);
+    }
+
+    .author-bio {
+        font-size: 0.875rem;
+        color: var(--color-text-muted);
+        line-height: 1.5;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .author-arrow {
+        flex-shrink: 0;
+        color: var(--color-text-subtle);
+        transition:
+            color var(--transition-fast),
+            transform var(--transition-fast);
+    }
+</style>

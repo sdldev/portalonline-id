@@ -1,0 +1,124 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+
+const pages = [
+    { name: "Beranda", href: "/", desc: "Halaman utama Portal Online" },
+    {
+        name: "Tentang Kami",
+        href: "/about",
+        desc: "Informasi tentang Portal Online",
+    },
+    { name: "Kontak", href: "/contact", desc: "Hubungi tim kami" },
+    { name: "Harga", href: "/pricing", desc: "Paket langganan dan harga" },
+    { name: "Tema", href: "/themes", desc: "Galeri tema dan template" },
+    {
+        name: "Kebijakan Privasi",
+        href: "/privacy",
+        desc: "Kebijakan privasi kami",
+    },
+    {
+        name: "Syarat & Ketentuan",
+        href: "/terms",
+        desc: "Syarat dan ketentuan penggunaan",
+    },
+];
+---
+
+<Layout title="Sitemap | Portal Online">
+    <Navbar />
+
+    <main class="page-content">
+        <section class="page-hero">
+            <div class="container">
+                <h1 class="page-title font-display">Sitemap</h1>
+                <p class="page-subtitle">
+                    Daftar semua halaman di Portal Online
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container content-container">
+                <div class="sitemap-grid">
+                    {
+                        pages.map((page) => (
+                            <a href={page.href} class="sitemap-item glass">
+                                <h3>{page.name}</h3>
+                                <p>{page.desc}</p>
+                                <span class="sitemap-url">{page.href}</span>
+                            </a>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+</Layout>
+
+<style>
+    .page-content {
+        padding-top: 6rem;
+    }
+
+    .page-hero {
+        padding: 4rem 0 2rem;
+        text-align: center;
+    }
+
+    .page-title {
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+        color: var(--color-text-muted);
+    }
+
+    .content-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .sitemap-grid {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .sitemap-item {
+        display: block;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        transition:
+            transform var(--transition-base),
+            border-color var(--transition-base);
+    }
+
+    .sitemap-item:hover {
+        transform: translateX(8px);
+        border-color: rgba(var(--color-primary), 0.3);
+    }
+
+    .sitemap-item h3 {
+        font-family: var(--font-display);
+        font-size: 1.125rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+    }
+
+    .sitemap-item p {
+        color: var(--color-text-muted);
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .sitemap-url {
+        font-size: 0.75rem;
+        color: rgb(var(--color-primary));
+        font-family: monospace;
+    }
+</style>

@@ -1,0 +1,195 @@
+---
+const footerLinks = [
+    { name: "Beranda", href: "/" },
+    { name: "Tema", href: "/themes" },
+    { name: "Tutorial", href: "/tutorial" },
+    { name: "Harga", href: "/pricing" },
+    { name: "Tentang Kami", href: "/about" },
+    { name: "Kontak", href: "/contact" },
+];
+
+const legalLinks = [
+    { name: "Privacy", href: "/privacy" },
+    { name: "Terms", href: "/terms" },
+    { name: "Sitemap", href: "/sitemap" },
+];
+---
+
+<footer class="footer">
+    <!-- Main Footer Row -->
+    <div class="footer-main">
+        <div class="container footer-row">
+            <!-- Logo -->
+            <a href="/" class="footer-logo">
+                <div class="logo-icon">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.5"
+                    >
+                        <path
+                            d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"
+                        ></path>
+                        <path d="M18 14h-8"></path>
+                        <path d="M15 18h-5"></path>
+                        <path d="M10 6h8v4h-8V6Z"></path>
+                    </svg>
+                </div>
+                <span class="logo-text font-display"
+                    >Portal<span class="text-gradient">Online</span></span
+                >
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="footer-nav">
+                {footerLinks.map((link) => <a href={link.href}>{link.name}</a>)}
+            </nav>
+        </div>
+    </div>
+
+    <!-- Bottom Row -->
+    <div class="footer-bottom">
+        <div class="container footer-bottom-row">
+            <span class="copyright"
+                >© {new Date().getFullYear()} Portal Online. All rights reserved.</span
+            >
+            <div class="legal-links">
+                {legalLinks.map((link) => <a href={link.href}>{link.name}</a>)}
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .footer {
+        border-top: 1px solid var(--color-border);
+        background: var(--color-bg);
+    }
+
+    /* Main Footer */
+    .footer-main {
+        padding: 2rem 0;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .footer-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    @media (min-width: 1024px) {
+        .footer-row {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+
+    /* Logo */
+    .footer-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .logo-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        background: linear-gradient(
+            135deg,
+            rgb(var(--color-primary)),
+            rgb(var(--color-accent))
+        );
+        border-radius: 0.75rem;
+        color: white;
+        box-shadow: 0 5px 20px rgba(var(--color-primary), 0.3);
+    }
+
+    .logo-text {
+        font-size: 1.25rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+
+    /* Navigation */
+    .footer-nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem 1.5rem;
+    }
+
+    .footer-nav a {
+        font-size: 0.875rem;
+        color: var(--color-text-muted);
+        transition: color var(--transition-fast);
+    }
+
+    .footer-nav a:hover {
+        color: var(--color-text);
+    }
+
+    /* Bottom Row */
+    .footer-bottom {
+        padding: 1.25rem 0;
+    }
+
+    .footer-bottom-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    @media (min-width: 768px) {
+        .footer-bottom-row {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+
+    .copyright {
+        font-size: 0.75rem;
+        color: var(--color-text-subtle);
+    }
+
+    .legal-links {
+        display: flex;
+        gap: 1.5rem;
+    }
+
+    .legal-links a {
+        font-size: 0.75rem;
+        color: var(--color-text-subtle);
+        transition: color var(--transition-fast);
+    }
+
+    .legal-links a:hover {
+        color: var(--color-text);
+    }
+</style>
+
+<script is:inline>
+    function initBackToTop() {
+        const backToTopBtn = document.getElementById("back-to-top");
+        if (backToTopBtn) {
+            const newBtn = backToTopBtn.cloneNode(true);
+            backToTopBtn.parentNode?.replaceChild(newBtn, backToTopBtn);
+
+            newBtn.addEventListener("click", () => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+        }
+    }
+
+    initBackToTop();
+    document.addEventListener("astro:page-load", initBackToTop);
+</script>

@@ -1,0 +1,135 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout title="Kebijakan Privasi | Portal Online">
+    <Navbar />
+
+    <main class="page-content">
+        <section class="page-hero">
+            <div class="container">
+                <h1 class="page-title font-display">Kebijakan Privasi</h1>
+                <p class="page-subtitle">Terakhir diperbarui: Januari 2026</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container content-container">
+                <div class="content-block glass">
+                    <h2>1. Informasi yang Kami Kumpulkan</h2>
+                    <p>
+                        Portal Online mengumpulkan informasi yang Anda berikan
+                        secara langsung, seperti nama, email, dan preferensi
+                        berita saat Anda mendaftar atau berlangganan newsletter
+                        kami.
+                    </p>
+
+                    <h2>2. Penggunaan Informasi</h2>
+                    <p>Informasi yang kami kumpulkan digunakan untuk:</p>
+                    <ul>
+                        <li>Menyediakan dan meningkatkan layanan kami</li>
+                        <li>Mengirimkan newsletter dan update berita</li>
+                        <li>Personalisasi pengalaman membaca Anda</li>
+                        <li>Analisis dan peningkatan performa website</li>
+                    </ul>
+
+                    <h2>3. Keamanan Data</h2>
+                    <p>
+                        Kami menerapkan langkah-langkah keamanan yang wajar
+                        untuk melindungi informasi pribadi Anda dari akses yang
+                        tidak sah, penggunaan, atau pengungkapan.
+                    </p>
+
+                    <h2>4. Cookie</h2>
+                    <p>
+                        Website kami menggunakan cookie untuk meningkatkan
+                        pengalaman pengguna. Anda dapat mengatur browser Anda
+                        untuk menolak cookie, namun beberapa fitur mungkin tidak
+                        berfungsi optimal.
+                    </p>
+
+                    <h2>5. Perubahan Kebijakan</h2>
+                    <p>
+                        Kami berhak mengubah kebijakan privasi ini
+                        sewaktu-waktu. Perubahan akan diumumkan melalui website
+                        kami.
+                    </p>
+
+                    <h2>6. Hubungi Kami</h2>
+                    <p>
+                        Jika Anda memiliki pertanyaan tentang kebijakan privasi
+                        ini, silakan hubungi kami melalui halaman <a
+                            href="/contact">Kontak</a
+                        >.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+</Layout>
+
+<style>
+    .page-content {
+        padding-top: 6rem;
+    }
+
+    .page-hero {
+        padding: 4rem 0 2rem;
+        text-align: center;
+    }
+
+    .page-title {
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+        color: var(--color-text-muted);
+    }
+
+    .content-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .content-block {
+        padding: 2rem;
+        border-radius: 1.5rem;
+    }
+
+    .content-block h2 {
+        font-family: var(--font-display);
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 2rem 0 1rem;
+    }
+
+    .content-block h2:first-child {
+        margin-top: 0;
+    }
+
+    .content-block p {
+        color: var(--color-text-muted);
+        line-height: 1.7;
+        margin-bottom: 1rem;
+    }
+
+    .content-block ul {
+        color: var(--color-text-muted);
+        padding-left: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .content-block li {
+        margin-bottom: 0.5rem;
+    }
+
+    .content-block a {
+        color: rgb(var(--color-primary));
+    }
+</style>

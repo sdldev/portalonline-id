@@ -1,0 +1,110 @@
+---
+interface Props {
+    href: string;
+    title: string;
+    description: string;
+    date: Date;
+    author: string;
+    category: string;
+    tags: string[];
+}
+
+const {
+    href,
+    title,
+    description,
+    date,
+    author,
+    category,
+    tags = [],
+} = Astro.props;
+---
+
+<a
+    href={href}
+    class="tutorial-card glass relative w-full flex flex-col p-6 rounded-3xl no-underline transition-all duration-300 cursor-pointer overflow-hidden border border-white/5 hover:-translate-y-1 hover:border-primary-500/30 hover:shadow-[0_20px_60px_-15px_rgba(239,68,68,0.1)] group"
+>
+    <div class="tutorial-card-header flex items-center justify-between mb-4">
+        <span
+            class="tutorial-category text-xs font-bold py-1.5 px-3 rounded-full uppercase tracking-wider bg-primary-500/10 text-primary-400"
+        >
+            {category}
+        </span>
+        <span class="tutorial-date text-sm text-gray-400">
+            {
+                new Date(date).toLocaleDateString("id-ID", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                })
+            }
+        </span>
+    </div>
+
+    <h3
+        class="tutorial-title text-xl font-bold leading-tight mb-3 text-white group-hover:text-primary-400 transition-colors"
+    >
+        {title}
+    </h3>
+
+    <p
+        class="tutorial-desc text-[15px] leading-relaxed text-gray-400 mb-5 flex-1"
+    >
+        {description}
+    </p>
+
+    <div
+        class="tutorial-card-footer flex items-center justify-between mb-4 gap-3 flex-wrap"
+    >
+        <span
+            class="tutorial-author text-[13px] text-gray-400 flex items-center gap-1.5"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"
+                ></path><circle cx="12" cy="7" r="4"></circle></svg
+            >
+            {author}
+        </span>
+        <div class="tutorial-tags flex gap-1.5 flex-wrap">
+            {
+                tags
+                    .slice(0, 3)
+                    .map((tag) => (
+                        <span class="tutorial-tag text-[11px] py-[3px] px-2 rounded-md bg-white/5 text-gray-400 border border-white/10">
+                            #{tag}
+                        </span>
+                    ))
+            }
+        </div>
+    </div>
+
+    <div
+        class="tutorial-read-more flex items-center gap-2 text-sm font-semibold text-primary-400 mt-auto opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
+    >
+        <span>Baca selengkapnya</span>
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="translate-x-0 group-hover:translate-x-1 transition-transform"
+        >
+            <path d="M5 12h14"></path>
+            <path d="m12 5 7 7-7 7"></path>
+        </svg>
+    </div>
+</a>

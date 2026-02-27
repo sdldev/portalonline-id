@@ -1,0 +1,391 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+
+const team = [
+    {
+        name: "Ahmad Rizki",
+        role: "Founder & CEO",
+        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face",
+    },
+    {
+        name: "Siti Nurhaliza",
+        role: "Editor in Chief",
+        image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=300&fit=crop&crop=face",
+    },
+    {
+        name: "Budi Santoso",
+        role: "Head of Technology",
+        image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face",
+    },
+    {
+        name: "Maya Dewi",
+        role: "Marketing Director",
+        image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop&crop=face",
+    },
+];
+
+const milestones = [
+    {
+        year: "2020",
+        title: "Didirikan",
+        desc: "Portal Online didirikan dengan visi menyajikan berita berkualitas",
+    },
+    {
+        year: "2021",
+        title: "100K Pembaca",
+        desc: "Mencapai milestone 100.000 pembaca aktif bulanan",
+    },
+    {
+        year: "2023",
+        title: "Ekspansi",
+        desc: "Memperluas cakupan ke seluruh Indonesia dengan 50+ jurnalis",
+    },
+    {
+        year: "2024",
+        title: "Penghargaan",
+        desc: "Meraih penghargaan Media Digital Terbaik Indonesia",
+    },
+];
+---
+
+<Layout title="Tentang Kami | Portal Online">
+    <Navbar />
+
+    <main class="page-content">
+        <!-- Hero Section -->
+        <section class="page-hero">
+            <div class="container">
+                <span class="badge">Tentang Kami</span>
+                <h1 class="page-title font-display">
+                    Menyajikan Kebenaran,<br />
+                    <span class="text-gradient">Membangun Kepercayaan</span>
+                </h1>
+                <p class="page-subtitle">
+                    Portal Online adalah platform berita digital yang
+                    berkomitmen menyajikan informasi akurat, berimbang, dan
+                    terpercaya untuk masyarakat Indonesia.
+                </p>
+            </div>
+        </section>
+
+        <!-- Mission Section -->
+        <section class="section">
+            <div class="container">
+                <div class="mission-grid">
+                    <div class="mission-card glass">
+                        <div class="mission-icon">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="32"
+                                height="32"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="m9 12 2 2 4-4"></path>
+                            </svg>
+                        </div>
+                        <h3>Visi</h3>
+                        <p>
+                            Menjadi sumber berita digital terdepan dan
+                            terpercaya di Indonesia yang mendorong masyarakat
+                            informasi.
+                        </p>
+                    </div>
+                    <div class="mission-card glass">
+                        <div class="mission-icon">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="32"
+                                height="32"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <path
+                                    d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"
+                                ></path>
+                            </svg>
+                        </div>
+                        <h3>Misi</h3>
+                        <p>
+                            Menyajikan berita yang akurat, cepat, dan berimbang
+                            dengan menjunjung tinggi etika jurnalistik.
+                        </p>
+                    </div>
+                    <div class="mission-card glass">
+                        <div class="mission-icon">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="32"
+                                height="32"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <path
+                                    d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"
+                                ></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <h3>Nilai</h3>
+                        <p>
+                            Integritas, profesionalisme, dan dedikasi tinggi
+                            dalam setiap pemberitaan yang kami sajikan.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline Section -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        Perjalanan <span class="text-gradient">Kami</span>
+                    </h2>
+                </div>
+                <div class="timeline">
+                    {
+                        milestones.map((item, index) => (
+                            <div
+                                class="timeline-item"
+                                style={`animation-delay: ${index * 150}ms`}
+                            >
+                                <div class="timeline-year">{item.year}</div>
+                                <div class="timeline-content glass">
+                                    <h4>{item.title}</h4>
+                                    <p>{item.desc}</p>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        Tim <span class="text-gradient">Kami</span>
+                    </h2>
+                    <p class="section-subtitle">
+                        Para profesional di balik Portal Online
+                    </p>
+                </div>
+                <div class="team-grid">
+                    {
+                        team.map((member, index) => (
+                            <div
+                                class="team-card"
+                                style={`animation-delay: ${index * 100}ms`}
+                            >
+                                <div class="team-image">
+                                    <img
+                                        src={member.image}
+                                        alt={member.name}
+                                        loading="lazy"
+                                    />
+                                </div>
+                                <h4 class="team-name">{member.name}</h4>
+                                <p class="team-role">{member.role}</p>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+</Layout>
+
+<style>
+    .page-content {
+        padding-top: 6rem;
+    }
+
+    .page-hero {
+        padding: 4rem 0;
+        text-align: center;
+    }
+
+    .page-hero .badge {
+        margin-bottom: 1rem;
+    }
+
+    .page-title {
+        font-size: clamp(2rem, 6vw, 3.5rem);
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+    }
+
+    .page-subtitle {
+        max-width: 600px;
+        margin: 0 auto;
+        color: var(--color-text-muted);
+        font-size: 1.125rem;
+        line-height: 1.7;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .section-header .section-subtitle {
+        margin: 1rem auto 0;
+    }
+
+    /* Mission */
+    .mission-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+        .mission-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+    }
+
+    .mission-card {
+        padding: 2rem;
+        border-radius: 1.5rem;
+        text-align: center;
+    }
+
+    .mission-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 4rem;
+        height: 4rem;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(
+            135deg,
+            rgb(var(--color-primary)),
+            rgb(var(--color-accent))
+        );
+        border-radius: 1rem;
+        color: white;
+    }
+
+    .mission-card h3 {
+        font-family: var(--font-display);
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+    }
+
+    .mission-card p {
+        color: var(--color-text-muted);
+        font-size: 0.9375rem;
+        line-height: 1.6;
+    }
+
+    /* Timeline */
+    .timeline {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .timeline-item {
+        display: flex;
+        gap: 1.5rem;
+        align-items: flex-start;
+    }
+
+    .timeline-year {
+        flex-shrink: 0;
+        width: 70px;
+        font-family: var(--font-display);
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: rgb(var(--color-primary));
+    }
+
+    .timeline-content {
+        flex: 1;
+        padding: 1.5rem;
+        border-radius: 1rem;
+    }
+
+    .timeline-content h4 {
+        font-family: var(--font-display);
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .timeline-content p {
+        color: var(--color-text-muted);
+        font-size: 0.9375rem;
+    }
+
+    /* Team */
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+        .team-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+    }
+
+    .team-card {
+        text-align: center;
+    }
+
+    .team-image {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 1rem;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid var(--color-border);
+        transition: border-color var(--transition-base);
+    }
+
+    .team-card:hover .team-image {
+        border-color: rgb(var(--color-primary));
+    }
+
+    .team-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .team-name {
+        font-family: var(--font-display);
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+    }
+
+    .team-role {
+        color: var(--color-text-muted);
+        font-size: 0.875rem;
+    }
+</style>

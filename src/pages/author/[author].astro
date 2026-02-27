@@ -1,0 +1,269 @@
+---
+import { render } from "astro:content";
+import { getCollection } from "../../utils/collections";
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import Card from "../../components/Card.astro";
+
+export async function getStaticPaths() {
+    const authors = await getCollection("author");
+
+    // Fetch all content to find articles by this author
+    const allTutorials = await getCollection("tutorial");
+    const allArticles = await getCollection("article");
+    const allTips = await getCollection("tips");
+    const allUpdates = await getCollection("update");
+
+    const allContent = [
+        ...allTutorials,
+        ...allArticles,
+        ...allTips,
+        ...allUpdates,
+    ];
+
+    return authors.map((author) => {
+        // Find content where the author matches
+        const authorContent = allContent.filter(
+            (item) => item.data.author === author.data.name,
+        );
+
+        return {
+            params: { author: author.id },
+            props: { authorProfile: author, content: authorContent },
+        };
+    });
+}
+
+const { authorProfile, content } = Astro.props;
+const { Content } = await render(authorProfile);
+
+// Sort content by date latest
+content.sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
+---
+
+<Layout
+    title={`${authorProfile.data.name} | Portal Online`}
+    description={`Profil dan daftar tulisan dari ${authorProfile.data.name} di Portal Online.`}
+>
+    <Navbar />
+
+    <main class="page-content">
+        <!-- Author Profile Section -->
+        <section class="page-hero">
+            <div class="container">
+                <nav
+                    aria-label="Breadcrumb"
+                    class="doc-breadcrumb hide-mobile-block mb-8 text-center mx-auto"
+                >
+                    <ol
+                        style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; list-style: none; padding: 0; margin: 0;"
+                        class="text-sm text-gray-400"
+                    >
+                        <li style="display: flex; align-items: center;">
+                            <a
+                                href="/"
+                                class="hover:text-white transition-colors"
+                                >Beranda</a
+                            >
+                        </li>
+                        <li
+                            style="display: flex; align-items: center; gap: 0.5rem;"
+                        >
+                            <svg
+                                width="16"
+                                height="16"
+                                class="text-gray-600"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg"
+                                ><path
+                                    fill-rule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd"></path></svg
+                            >
+                            <a
+                                href="/author"
+                                class="hover:text-white transition-colors"
+                                >Penulis</a
+                            >
+                        </li>
+                        <li
+                            style="display: flex; align-items: center; gap: 0.5rem;"
+                        >
+                            <svg
+                                width="16"
+                                height="16"
+                                class="text-gray-600"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg"
+                                ><path
+                                    fill-rule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd"></path></svg
+                            >
+                            <span class="text-gray-200" aria-current="page"
+                                >{authorProfile.data.name}</span
+                            >
+                        </li>
+                    </ol>
+                </nav>
+
+                <div class="author-profile-box glass">
+                    <div class="author-avatar-wrapper">
+                        <img
+                            src={authorProfile.data.avatar ||
+                                `https://ui-avatars.com/api/?name=${encodeURIComponent(authorProfile.data.name)}&background=random`}
+                            alt={authorProfile.data.name}
+                            class="author-avatar"
+                        />
+                    </div>
+                    <div class="author-details">
+                        <h1 class="page-title font-display m-0">
+                            {authorProfile.data.name}
+                        </h1>
+                        <div
+                            class="author-bio prose prose-invert mx-auto my-4 max-w-2xl"
+                        >
+                            <Content />
+                        </div>
+                        <div class="author-stats">
+                            <span class="badge"
+                                >📝 {content.length} Tulisan</span
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Article Grid -->
+        <section class="section pt-0">
+            <div class="container">
+                {
+                    content.length > 0 ? (
+                        <div>
+                            <h2 class="text-2xl font-bold mb-8 text-center">
+                                Ditulis oleh {authorProfile.data.name}
+                            </h2>
+                            <div class="tutorial-grid">
+                                {content.map((item) => (
+                                    <Card
+                                        href={`/${item.collection}/${item.id}`}
+                                        title={item.data.title}
+                                        description={item.data.description}
+                                        date={item.data.date}
+                                        author={item.data.author}
+                                        category={item.data.category}
+                                        tags={item.data.tags}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    ) : (
+                        <div class="text-center py-12 glass rounded-2xl">
+                            <p class="text-gray-400">
+                                Belum ada artikel yang dipublikasikan oleh
+                                penulis ini.
+                            </p>
+                        </div>
+                    )
+                }
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+</Layout>
+
+<style>
+    .page-content {
+        padding-top: 6rem;
+    }
+
+    .page-hero {
+        padding: 4rem 0 2rem 0;
+        text-align: center;
+    }
+
+    .page-title {
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 800;
+        line-height: 1.2;
+    }
+
+    .author-profile-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+        border-radius: 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .author-profile-box::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(
+            90deg,
+            rgb(var(--color-primary)),
+            rgb(var(--color-secondary))
+        );
+    }
+
+    .author-avatar-wrapper {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin-bottom: 2rem;
+        padding: 5px;
+        background: linear-gradient(
+            135deg,
+            rgba(var(--color-primary), 0.5),
+            rgba(var(--color-secondary), 0.5)
+        );
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .author-avatar {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        background-color: var(--color-bg-elevated);
+    }
+
+    .author-details {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .author-stats {
+        margin-top: 1rem;
+    }
+
+    /* Grid */
+    .tutorial-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+        .tutorial-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+    }
+</style>

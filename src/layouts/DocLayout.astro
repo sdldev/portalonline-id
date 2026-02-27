@@ -1,0 +1,1570 @@
+---
+import Layout from "./Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import { getCollection } from "../utils/collections";
+
+export interface Props {
+    title: string;
+    description: string;
+    date: Date;
+    author: string;
+    category: string;
+    tags: string[];
+    image?: string;
+    imageCaption?: string;
+    headings?: import("astro").MarkdownHeading[];
+}
+
+const {
+    title,
+    description,
+    date,
+    author,
+    category,
+    tags,
+    image,
+    imageCaption,
+    headings,
+} = Astro.props;
+
+const formattedDate = new Date(date).toLocaleDateString("id-ID", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+});
+
+// Fetch widgets and categories
+const allTutorials = await getCollection("tutorial");
+const allArticles = await getCollection("article");
+const allTips = await getCollection("tips");
+const allUpdates = await getCollection("update");
+
+// Fetch author data for the bottom box
+const allAuthors = await getCollection("author");
+// Find the author matching the string `author` passed to layout
+const authorProfile = allAuthors.find((a) => a.data.name === author);
+
+const authorSnippet = authorProfile?.body
+    ? authorProfile.body.substring(0, 180) +
+      (authorProfile.body.length > 180 ? "..." : "")
+    : "";
+const authorAvatar =
+    authorProfile?.data.avatar ||
+    (authorProfile
+        ? `https://ui-avatars.com/api/?name=${encodeURIComponent(authorProfile.data.name)}&background=random`
+        : "");
+
+const allItems = [...allTutorials, ...allArticles, ...allTips, ...allUpdates];
+
+// Get latest 5 articles
+const latestArticles = allItems
+    .sort(
+        (a, b) =>
+            new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+    )
+    .slice(0, 5);
+
+// Get unique categories and their counts
+const categoryCounts = allItems.reduce(
+    (acc, item) => {
+        const cat = item.data.category;
+        if (cat) acc[cat] = (acc[cat] || 0) + 1;
+        return acc;
+    },
+    {} as Record<string, number>,
+);
+
+const categories = Object.keys(categoryCounts)
+    .map((cat) => ({
+        name: cat,
+        count: categoryCounts[cat],
+    }))
+    .sort((a, b) => b.count - a.count);
+---
+
+<Layout title={`${title} | Portal Online`} description={description}>
+    <Navbar />
+
+    <main class="page-content">
+        <!-- Hero Section -->
+        <section class="doc-hero">
+            <div class="container">
+                <!-- Breadcrumbs -->
+                <nav
+                    aria-label="Breadcrumb"
+                    class="doc-breadcrumb hide-mobile-block mb-8 text-center mx-auto"
+                >
+                    <ol
+                        style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; list-style: none; padding: 0; margin: 0;"
+                        class="text-sm text-gray-400"
+                    >
+                        <li style="display: flex; align-items: center;">
+                            <a
+                                href="/"
+                                class="hover:text-white transition-colors"
+                                >Beranda</a
+                            >
+                        </li>
+                        <li
+                            style="display: flex; align-items: center; gap: 0.5rem;"
+                        >
+                            <svg
+                                width="16"
+                                height="16"
+                                class="text-gray-600"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg"
+                                ><path
+                                    fill-rule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd"></path></svg
+                            >
+                            <a
+                                href={`/${category.toLowerCase() === "artikel" ? "article" : category.toLowerCase() === "dokumentasi" ? "tutorial" : category.toLowerCase()}`}
+                                class="hover:text-white transition-colors capitalize"
+                                >{category}</a
+                            >
+                        </li>
+                        <li
+                            style="display: flex; align-items: center; gap: 0.5rem;"
+                        >
+                            <svg
+                                width="16"
+                                height="16"
+                                class="text-gray-600"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg"
+                                ><path
+                                    fill-rule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd"></path></svg
+                            >
+                            <span class="text-gray-200" aria-current="page"
+                                >{title}</span
+                            >
+                        </li>
+                    </ol>
+                </nav>
+
+                <div
+                    class="doc-hero-inner mx-auto text-center flex flex-col items-center"
+                >
+                    <div
+                        class="doc-meta flex justify-center items-center gap-4 mb-6"
+                    >
+                        <span class="badge">{category}</span>
+                        <span class="doc-date">{formattedDate}</span>
+                    </div>
+                    <h1 class="doc-title font-display text-center">{title}</h1>
+                    <p class="doc-description text-center">{description}</p>
+                    <div
+                        class="doc-author-tags flex justify-center items-center flex-wrap gap-4 mt-2"
+                    >
+                        <a
+                            href={`/author/${author.toLowerCase().replace(/\\s+/g, "-")}`}
+                            class="doc-author hover:text-white transition-colors cursor-pointer block flex items-center gap-1"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path
+                                    d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"
+                                ></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            {author}
+                        </a>
+                        {
+                            tags.length > 0 && (
+                                <div class="doc-tags">
+                                    {tags.map((tag) => (
+                                        <a
+                                            href={`/tags/${tag}`}
+                                            class="doc-tag hover:border-primary-500 hover:text-primary-400 transition-colors inline-block cursor-pointer"
+                                        >
+                                            #{tag}
+                                        </a>
+                                    ))}
+                                </div>
+                            )
+                        }
+                    </div>
+                </div>
+
+                <!-- Content & Sidebar -->
+                <section class="doc-content-section">
+                    <div class="container">
+                        <div class="doc-layout-grid">
+                            <!-- Main Content -->
+                            <div class="doc-main-content">
+                                {
+                                    image && (
+                                        <figure class="doc-featured-image-wrapper mb-10">
+                                            <img
+                                                src={image}
+                                                alt={title}
+                                                class="doc-featured-image w-full h-auto rounded-2xl border border-white/10 shadow-lg object-cover"
+                                            />
+                                            {imageCaption && (
+                                                <figcaption class="doc-image-caption text-center text-xs text-gray-400 mt-3 italic">
+                                                    {imageCaption}
+                                                </figcaption>
+                                            )}
+                                        </figure>
+                                    )
+                                }
+                                <article class="prose">
+                                    <slot />
+                                </article>
+
+                                <!-- WhatsApp CTA -->
+                                <div class="wa-cta">
+                                    <div class="wa-cta-icon">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="32"
+                                            height="32"
+                                            viewBox="0 0 24 24"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+                                            ></path>
+                                        </svg>
+                                    </div>
+                                    <div class="wa-cta-content">
+                                        <p class="wa-cta-eyebrow">
+                                            Butuh bantuan lebih lanjut?
+                                        </p>
+                                        <h3 class="wa-cta-title">
+                                            Konsultasi Gratis via WhatsApp
+                                        </h3>
+                                        <p class="wa-cta-desc">
+                                            Tim kami siap membantu Anda
+                                            membangun portal berita online yang
+                                            profesional dan SEO-friendly.
+                                            Hubungi kami sekarang — respons
+                                            cepat!
+                                        </p>
+                                    </div>
+                                    <a
+                                        href={`https://wa.me/6285783024799?text=${encodeURIComponent('Halo! Saya baru saja membaca artikel "' + title + '" di Portal Online dan ingin berkonsultasi lebih lanjut. Boleh saya tanya-tanya? 😊')}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="wa-cta-btn"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="18"
+                                            height="18"
+                                            viewBox="0 0 24 24"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+                                            ></path>
+                                        </svg>
+                                        Chat Sekarang
+                                    </a>
+                                </div>
+
+                                <!-- Mobile-only Back Button -->
+                                <div class="doc-back hide-desktop-block mt-8">
+                                    <a
+                                        href={`/${category.toLowerCase() === "artikel" ? "article" : category.toLowerCase() === "dokumentasi" ? "tutorial" : category.toLowerCase()}`}
+                                        class="btn btn-secondary w-full"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <path d="m12 19-7-7 7-7"></path>
+                                            <path d="M19 12H5"></path>
+                                        </svg>
+                                        Kembali ke {category}
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Sidebar: Widgets -->
+                            <aside class="doc-sidebar">
+                                <!-- Sidebar: Table of Contents -->
+                                {
+                                    headings && headings.length > 0 && (
+                                        <div class="toc-widget hide-mobile-block">
+                                            <div class="toc-header">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="14"
+                                                    height="14"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    stroke-width="2"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                >
+                                                    <line
+                                                        x1="8"
+                                                        y1="6"
+                                                        x2="21"
+                                                        y2="6"
+                                                    />
+                                                    <line
+                                                        x1="8"
+                                                        y1="12"
+                                                        x2="21"
+                                                        y2="12"
+                                                    />
+                                                    <line
+                                                        x1="8"
+                                                        y1="18"
+                                                        x2="21"
+                                                        y2="18"
+                                                    />
+                                                    <line
+                                                        x1="3"
+                                                        y1="6"
+                                                        x2="3.01"
+                                                        y2="6"
+                                                    />
+                                                    <line
+                                                        x1="3"
+                                                        y1="12"
+                                                        x2="3.01"
+                                                        y2="12"
+                                                    />
+                                                    <line
+                                                        x1="3"
+                                                        y1="18"
+                                                        x2="3.01"
+                                                        y2="18"
+                                                    />
+                                                </svg>
+                                                <span>Daftar Isi</span>
+                                            </div>
+                                            <nav class="toc-nav">
+                                                <ul class="toc-list">
+                                                    {headings
+                                                        .filter(
+                                                            (h) => h.depth <= 3,
+                                                        )
+                                                        .map((heading) => (
+                                                            <li
+                                                                class={`toc-item depth-${heading.depth}`}
+                                                            >
+                                                                <a
+                                                                    href={`#${heading.slug}`}
+                                                                    class="toc-link"
+                                                                >
+                                                                    {heading.depth ===
+                                                                        2 && (
+                                                                        <span class="toc-dot toc-dot--h2" />
+                                                                    )}
+                                                                    {heading.depth ===
+                                                                        3 && (
+                                                                        <span class="toc-dot toc-dot--h3" />
+                                                                    )}
+                                                                    <span class="toc-text">
+                                                                        {
+                                                                            heading.text
+                                                                        }
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        ))}
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    )
+                                }
+
+                                <!-- Author Profile in Sidebar -->
+                                {
+                                    authorProfile && (
+                                        <div class="author-widget">
+                                            <div class="author-widget-top" />
+                                            <div class="author-widget-body">
+                                                <a
+                                                    href={`/author/${authorProfile.id}`}
+                                                    class="author-avatar-wrap"
+                                                    style="text-decoration:none;"
+                                                >
+                                                    <div class="author-avatar-ring">
+                                                        <img
+                                                            src={authorAvatar}
+                                                            alt={
+                                                                authorProfile
+                                                                    .data.name
+                                                            }
+                                                            class="author-avatar-img"
+                                                            width="80"
+                                                            height="80"
+                                                        />
+                                                    </div>
+                                                </a>
+                                                <a
+                                                    href={`/author/${authorProfile.id}`}
+                                                    class="author-name"
+                                                    style="text-decoration:none;"
+                                                >
+                                                    {authorProfile.data.name}
+                                                </a>
+                                                <span class="author-role">
+                                                    Penulis
+                                                </span>
+                                                {authorSnippet && (
+                                                    <p class="author-snippet">
+                                                        {authorSnippet}
+                                                    </p>
+                                                )}
+                                                <div class="author-actions">
+                                                    <a
+                                                        href="https://www.facebook.com/sharer/sharer.php?u="
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        class="author-action-btn"
+                                                        title="Bagikan ke Facebook"
+                                                        onclick="this.setAttribute('href','https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.href))"
+                                                    >
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="14"
+                                                            height="14"
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            stroke-width="2"
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                        >
+                                                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                                                        </svg>
+                                                    </a>
+                                                    <button
+                                                        id="copy-link-btn"
+                                                        class="author-action-btn"
+                                                        title="Salin Tautan"
+                                                    >
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="14"
+                                                            height="14"
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            stroke-width="2"
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                        >
+                                                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                                                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                                                        </svg>
+                                                    </button>
+                                                    <button
+                                                        onclick="window.print()"
+                                                        class="author-action-btn"
+                                                        title="Cetak Artikel"
+                                                    >
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="14"
+                                                            height="14"
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            stroke-width="2"
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                        >
+                                                            <polyline points="6 9 6 2 18 2 18 9" />
+                                                            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                                                            <rect
+                                                                x="6"
+                                                                y="14"
+                                                                width="12"
+                                                                height="8"
+                                                            />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                }
+
+                                <!-- Sidebar: Categories -->
+                                <div class="sidebar-widget glass">
+                                    <h3 class="widget-title">Kategori</h3>
+                                    <ul class="category-list">
+                                        {
+                                            categories.map((cat) => {
+                                                let routeName =
+                                                    cat.name.toLowerCase();
+                                                if (routeName === "artikel")
+                                                    routeName = "article";
+                                                if (routeName === "dokumentasi")
+                                                    routeName = "tutorial";
+
+                                                return (
+                                                    <li>
+                                                        <a
+                                                            href={`/${routeName}`}
+                                                            class="category-item group"
+                                                        >
+                                                            <span class="category-indicator" />
+                                                            <span class="category-name">
+                                                                {cat.name}
+                                                            </span>
+                                                            <span class="category-count">
+                                                                {cat.count}
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                );
+                                            })
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="sidebar-widget glass">
+                                    <h3 class="widget-title">Update Terbaru</h3>
+                                    <div class="latest-articles-list">
+                                        {
+                                            latestArticles.map((item) => (
+                                                <a
+                                                    href={`/${item.collection}/${item.id}`}
+                                                    class="latest-article-item group"
+                                                >
+                                                    <div class="latest-article-meta flex items-center gap-2 mb-1">
+                                                        <span class="latest-article-cat">
+                                                            {item.data.category}
+                                                        </span>
+                                                        <span class="latest-article-date">
+                                                            •{" "}
+                                                            {new Date(
+                                                                item.data.date,
+                                                            ).toLocaleDateString(
+                                                                "id-ID",
+                                                                {
+                                                                    month: "short",
+                                                                    day: "numeric",
+                                                                    year: "numeric",
+                                                                },
+                                                            )}
+                                                        </span>
+                                                    </div>
+                                                    <h4 class="latest-article-title">
+                                                        {item.data.title}
+                                                    </h4>
+                                                </a>
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+
+                                <!-- Desktop-only Back Button -->
+                                <div class="doc-back hide-mobile-block mt-6">
+                                    <a
+                                        href={`/${category.toLowerCase() === "artikel" ? "article" : category.toLowerCase() === "dokumentasi" ? "tutorial" : category.toLowerCase()}`}
+                                        class="btn btn-secondary w-full"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <path d="m12 19-7-7 7-7"></path>
+                                            <path d="M19 12H5"></path>
+                                        </svg>
+                                        Kembali ke {category}
+                                    </a>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <Footer />
+
+            <script is:inline>
+                // Copy link functionality
+                document.addEventListener("astro:page-load", () => {
+                    const copyBtn = document.getElementById("copy-link-btn");
+                    const copyText = document.getElementById("copy-text");
+
+                    if (copyBtn && copyText) {
+                        copyBtn.addEventListener("click", async () => {
+                            try {
+                                await navigator.clipboard.writeText(
+                                    window.location.href,
+                                );
+
+                                // Visual feedback
+                                const originalHTML = copyBtn.innerHTML;
+
+                                copyBtn.innerHTML = `
+                        <span class="action-icon text-green-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </span>
+                        <span class="text-green-500">Tautan Disalin!</span>
+                    `;
+
+                                setTimeout(() => {
+                                    copyBtn.innerHTML = originalHTML;
+                                }, 2000);
+                            } catch (err) {
+                                console.error("Failed to copy text: ", err);
+                            }
+                        });
+                    }
+                });
+            </script>
+
+            <style>
+                .page-content {
+                    padding-top: 6rem;
+                }
+
+                /* Hero */
+                .doc-hero {
+                    padding: 3rem 0 2rem;
+                    border-bottom: 1px solid var(--color-border);
+                }
+
+                .doc-hero-inner {
+                    max-width: 800px;
+                    margin: 0 auto;
+                    text-align: center;
+                }
+
+                .doc-meta {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 1rem;
+                    margin-bottom: 1.5rem;
+                }
+
+                .doc-date {
+                    font-size: 0.875rem;
+                    color: var(--color-text-muted);
+                }
+
+                .doc-title {
+                    font-size: clamp(1.75rem, 5vw, 2.75rem);
+                    font-weight: 800;
+                    line-height: 1.2;
+                    margin-bottom: 1rem;
+                }
+
+                .doc-description {
+                    font-size: 1.125rem;
+                    color: var(--color-text-muted);
+                    line-height: 1.7;
+                    margin: 0 auto 1.5rem;
+                    max-width: 640px;
+                }
+
+                .doc-author-tags {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 1rem;
+                }
+
+                .doc-author {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    font-size: 0.875rem;
+                    color: var(--color-text-muted);
+                }
+
+                .doc-author svg {
+                    color: rgb(var(--color-primary));
+                }
+
+                .doc-tags {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 0.5rem;
+                }
+
+                .doc-tag {
+                    font-size: 0.75rem;
+                    color: rgb(var(--color-primary));
+                    background: rgba(var(--color-primary), 0.1);
+                    padding: 0.25rem 0.75rem;
+                    border-radius: 9999px;
+                }
+
+                /* Content Grid */
+                .doc-content-section {
+                    padding: 3rem 0;
+                }
+
+                .doc-layout-grid {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 2.5rem;
+                }
+
+                @media (min-width: 1024px) {
+                    .doc-layout-grid {
+                        grid-template-columns: 1fr 300px;
+                        align-items: flex-start;
+                    }
+                }
+
+                /* Main Content */
+                .doc-main-content {
+                    min-width: 0; /* Prevents flex/grid blowout */
+                }
+
+                .doc-image-caption {
+                    text-align: center;
+                    font-size: 0.75rem;
+                    color: var(--color-text-muted);
+                    margin-top: 0.75rem;
+                    font-style: italic;
+                }
+
+                /* WhatsApp CTA */
+                .wa-cta {
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 1.25rem;
+                    margin-top: 3rem;
+                    padding: 1.75rem;
+                    border-radius: 1.25rem;
+                    background: linear-gradient(
+                        135deg,
+                        rgba(18, 140, 126, 0.12),
+                        rgba(37, 211, 102, 0.08)
+                    );
+                    border: 1px solid rgba(37, 211, 102, 0.2);
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .wa-cta::before {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    background: radial-gradient(
+                        ellipse at top left,
+                        rgba(37, 211, 102, 0.06) 0%,
+                        transparent 60%
+                    );
+                    pointer-events: none;
+                }
+
+                .wa-cta-icon {
+                    flex-shrink: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 50%;
+                    background: rgba(37, 211, 102, 0.1);
+                    color: #25d366;
+                    border: 1px solid rgba(37, 211, 102, 0.2);
+                }
+
+                .wa-cta-content {
+                    flex: 1;
+                    min-width: 180px;
+                }
+
+                .wa-cta-eyebrow {
+                    font-size: 0.75rem;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    letter-spacing: 0.08em;
+                    color: #25d366;
+                    margin-bottom: 0.3rem;
+                }
+
+                .wa-cta-title {
+                    font-size: 1.125rem;
+                    font-weight: 700;
+                    color: var(--color-text);
+                    margin-bottom: 0.4rem;
+                    line-height: 1.3;
+                }
+
+                .wa-cta-desc {
+                    font-size: 0.875rem;
+                    color: var(--color-text-muted);
+                    line-height: 1.6;
+                    margin: 0;
+                }
+
+                .wa-cta-btn {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 9999px;
+                    background: #25d366;
+                    color: #fff;
+                    font-weight: 700;
+                    font-size: 0.9375rem;
+                    text-decoration: none;
+                    white-space: nowrap;
+                    flex-shrink: 0;
+                    transition: all var(--transition-fast);
+                    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+                }
+
+                .wa-cta-btn:hover {
+                    background: #1ebe5a;
+                    transform: translateY(-2px);
+                    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.45);
+                }
+
+                .doc-featured-image-wrapper {
+                    margin-bottom: 2.5rem;
+                }
+
+                .doc-featured-image {
+                    width: 100%;
+                    height: auto;
+                    border-radius: 1rem;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    box-shadow:
+                        0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                    object-fit: cover;
+                }
+
+                /* Sidebar */
+                .doc-sidebar {
+                    position: sticky;
+                    top: 6rem;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1.5rem;
+                    align-self: flex-start;
+                }
+
+                .doc-sidebar::-webkit-scrollbar {
+                    width: 4px;
+                }
+                .doc-sidebar::-webkit-scrollbar-track {
+                    background: transparent;
+                }
+                .doc-sidebar::-webkit-scrollbar-thumb {
+                    background: rgba(255, 255, 255, 0.1);
+                    border-radius: 4px;
+                }
+
+                .sidebar-widget {
+                    padding: 1.5rem;
+                    border-radius: 1rem;
+                }
+
+                /* ── Table of Contents Widget ────────────────── */
+                .toc-widget {
+                    border-radius: 1rem;
+                    overflow: hidden;
+                    border: 1px solid rgba(255, 255, 255, 0.07);
+                    background: rgba(15, 23, 42, 0.6);
+                    backdrop-filter: blur(12px);
+                }
+
+                .toc-header {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    padding: 0.875rem 1.125rem;
+                    font-size: 0.75rem;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    letter-spacing: 0.08em;
+                    color: var(--color-text-subtle);
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+                    background: rgba(255, 255, 255, 0.03);
+                }
+
+                .toc-nav {
+                    padding: 0.625rem 0;
+                }
+
+                .toc-list {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .toc-item {
+                    line-height: 1.4;
+                }
+
+                .toc-item.depth-3 {
+                    padding-left: 0.75rem;
+                }
+
+                .toc-link {
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 0.5rem;
+                    font-size: 0.8125rem;
+                    color: var(--color-text-subtle);
+                    text-decoration: none;
+                    padding: 0.45rem 1.125rem;
+                    border-left: 2px solid transparent;
+                    transition: all var(--transition-fast);
+                    line-height: 1.5;
+                }
+
+                .toc-link:hover {
+                    color: rgb(var(--color-primary));
+                    border-left-color: rgba(var(--color-primary), 0.5);
+                    background: rgba(var(--color-primary), 0.06);
+                }
+
+                .toc-link.active {
+                    color: rgb(var(--color-primary));
+                    border-left-color: rgb(var(--color-primary));
+                    background: rgba(var(--color-primary), 0.09);
+                    font-weight: 600;
+                }
+
+                .toc-dot {
+                    display: inline-block;
+                    border-radius: 50%;
+                    flex-shrink: 0;
+                    margin-top: 0.35rem;
+                }
+
+                .toc-dot--h2 {
+                    width: 5px;
+                    height: 5px;
+                    background: rgb(var(--color-primary));
+                }
+
+                .toc-dot--h3 {
+                    width: 4px;
+                    height: 4px;
+                    background: var(--color-text-subtle);
+                }
+
+                .toc-text {
+                    flex: 1;
+                }
+
+                /* ── Author Widget ───────────────────────────── */
+                .author-widget {
+                    border-radius: 1rem;
+                    overflow: hidden;
+                    border: 1px solid rgba(255, 255, 255, 0.07);
+                    background: rgba(15, 23, 42, 0.6);
+                    backdrop-filter: blur(12px);
+                }
+
+                .author-widget-top {
+                    height: 3px;
+                    background: linear-gradient(
+                        90deg,
+                        rgb(var(--color-primary)),
+                        rgb(var(--color-secondary)),
+                        rgb(var(--color-accent))
+                    );
+                }
+
+                .author-widget-body {
+                    padding: 1.5rem 1.25rem 1.25rem;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                }
+
+                .author-avatar-wrap {
+                    display: block;
+                    margin-bottom: 1rem;
+                }
+
+                .author-avatar-ring {
+                    width: 80px;
+                    height: 80px;
+                    padding: 3px;
+                    border-radius: 50%;
+                    background: linear-gradient(
+                        135deg,
+                        rgba(var(--color-primary), 0.5),
+                        rgba(var(--color-secondary), 0.5)
+                    );
+                    transition: background var(--transition-base);
+                }
+
+                .author-avatar-wrap:hover .author-avatar-ring {
+                    background: linear-gradient(
+                        135deg,
+                        rgb(var(--color-primary)),
+                        rgb(var(--color-secondary))
+                    );
+                }
+
+                .author-avatar-img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    background: var(--color-bg-elevated);
+                    display: block;
+                }
+
+                .author-name {
+                    display: block;
+                    font-size: 1rem;
+                    font-weight: 700;
+                    color: var(--color-text);
+                    margin-bottom: 0.35rem;
+                    transition: color var(--transition-fast);
+                }
+
+                .author-name:hover {
+                    color: rgb(var(--color-primary));
+                }
+
+                .author-role {
+                    display: inline-block;
+                    font-size: 0.6875rem;
+                    font-weight: 700;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                    padding: 0.2rem 0.65rem;
+                    border-radius: 9999px;
+                    background: rgba(var(--color-primary), 0.12);
+                    color: rgb(var(--color-primary));
+                    margin-bottom: 0.875rem;
+                }
+
+                .author-snippet {
+                    font-size: 0.8125rem;
+                    color: var(--color-text-muted);
+                    line-height: 1.6;
+                    margin-bottom: 1rem;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                }
+
+                .author-actions {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 0.5rem;
+                    padding-top: 0.875rem;
+                    border-top: 1px solid rgba(255, 255, 255, 0.06);
+                    width: 100%;
+                }
+
+                .author-action-btn {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 34px;
+                    height: 34px;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.05);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    color: var(--color-text-subtle);
+                    cursor: pointer;
+                    transition: all var(--transition-fast);
+                    text-decoration: none;
+                    font-family: inherit;
+                }
+
+                .author-action-btn:hover {
+                    background: rgba(var(--color-primary), 0.15);
+                    border-color: rgba(var(--color-primary), 0.4);
+                    color: rgb(var(--color-primary));
+                    transform: translateY(-2px);
+                }
+
+                /* Category widget */
+                .category-list {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.25rem;
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                }
+
+                .category-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                    padding: 0.5rem;
+                    border-radius: 0.5rem;
+                    text-decoration: none;
+                    transition: all var(--transition-fast);
+                }
+
+                .category-item:hover {
+                    background: rgba(255, 255, 255, 0.03);
+                }
+
+                .category-indicator {
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 50%;
+                    background: var(--color-border-light);
+                    transition: background var(--transition-fast);
+                }
+
+                .category-item:hover .category-indicator {
+                    background: rgb(var(--color-primary));
+                }
+
+                .category-name {
+                    flex: 1;
+                    font-size: 0.9375rem;
+                    color: var(--color-text-muted);
+                    transition: color var(--transition-fast);
+                }
+
+                .category-item:hover .category-name {
+                    color: var(--color-text);
+                }
+
+                .category-count {
+                    font-size: 0.75rem;
+                    font-weight: 600;
+                    padding: 0.125rem 0.5rem;
+                    border-radius: 9999px;
+                    background: rgba(255, 255, 255, 0.05);
+                    color: var(--color-text-subtle);
+                    transition: all var(--transition-fast);
+                }
+
+                .category-item:hover .category-count {
+                    background: rgba(var(--color-primary), 0.1);
+                    color: rgb(var(--color-primary));
+                }
+
+                /* Latest Articles Widget */
+                .latest-articles-list {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1.25rem;
+                }
+
+                .latest-article-item {
+                    display: flex;
+                    flex-direction: column;
+                    text-decoration: none;
+                    padding-bottom: 1.25rem;
+                    border-bottom: 1px solid var(--color-border-light);
+                }
+
+                .latest-article-item:last-child {
+                    padding-bottom: 0;
+                    border-bottom: none;
+                }
+
+                .latest-article-meta {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    margin-bottom: 0.375rem;
+                }
+
+                .latest-article-cat {
+                    font-size: 0.75rem;
+                    color: var(--color-text-muted);
+                }
+
+                .latest-article-date {
+                    font-size: 0.75rem;
+                    color: var(--color-text-subtle);
+                }
+
+                .latest-article-title {
+                    font-size: 0.9375rem;
+                    font-weight: 600;
+                    line-height: 1.5;
+                    color: var(--color-text);
+                    transition: color var(--transition-fast);
+                }
+
+                .latest-article-item:hover .latest-article-title {
+                    color: rgb(var(--color-primary));
+                }
+
+                .widget-title {
+                    font-family: var(--font-display);
+                    font-size: 1.125rem;
+                    font-weight: 700;
+                    margin-bottom: 1.25rem;
+                    color: var(--color-text);
+                }
+
+                .widget-subtitle {
+                    font-size: 0.875rem;
+                    font-weight: 600;
+                    margin-bottom: 1rem;
+                    color: var(--color-text-muted);
+                    text-transform: uppercase;
+                    letter-spacing: 0.05em;
+                }
+
+                .widget-divider {
+                    border: none;
+                    border-top: 1px solid var(--color-border);
+                    margin: 1.5rem 0;
+                }
+
+                /* Action Buttons (Print, Copy) */
+                .widget-actions {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.75rem;
+                }
+
+                .action-btn {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                    width: 100%;
+                    padding: 0.75rem 1rem;
+                    border-radius: 0.75rem;
+                    background: rgba(255, 255, 255, 0.03);
+                    border: 1px solid var(--color-border-light);
+                    color: var(--color-text-muted);
+                    font-size: 0.9375rem;
+                    font-weight: 500;
+                    transition: all var(--transition-fast);
+                    text-align: left;
+                }
+
+                .action-btn:hover {
+                    background: rgba(var(--color-primary), 0.1);
+                    border-color: rgba(var(--color-primary), 0.3);
+                    color: var(--color-text);
+                }
+
+                .action-icon {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: var(--color-text-subtle);
+                }
+
+                .action-btn:hover .action-icon {
+                    color: rgb(var(--color-primary));
+                }
+
+                /* Social Share Buttons */
+                .share-buttons {
+                    display: flex;
+                    gap: 0.75rem;
+                }
+
+                .share-btn {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 2.5rem;
+                    height: 2.5rem;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.05);
+                    color: var(--color-text-muted);
+                    transition: all var(--transition-fast);
+                }
+
+                .share-btn:hover {
+                    transform: translateY(-2px);
+                    color: white;
+                }
+
+                .share-btn.twitter:hover {
+                    background: #1da1f2;
+                    box-shadow: 0 4px 12px rgba(29, 161, 242, 0.3);
+                }
+
+                .share-btn.facebook:hover {
+                    background: #1877f2;
+                    box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
+                }
+
+                .share-btn.linkedin:hover {
+                    background: #0a66c2;
+                    box-shadow: 0 4px 12px rgba(10, 102, 194, 0.3);
+                }
+
+                /* Utility classes for mobile/desktop visibility */
+                .hide-desktop-block {
+                    display: block;
+                }
+
+                .hide-mobile-block {
+                    display: none;
+                }
+
+                @media (min-width: 1024px) {
+                    .hide-desktop-block {
+                        display: none;
+                    }
+
+                    .hide-mobile-block {
+                        display: block;
+                    }
+                }
+
+                .mt-6 {
+                    margin-top: 1.5rem;
+                }
+
+                .w-full {
+                    width: 100%;
+                }
+            </style>
+
+            <style is:global>
+                /* Print Styles (Global scope is REQUIRED for Astro slots and layout components) */
+                @media print {
+                    /* Force standard print behavior & disable view transitions which break print layout */
+                    *,
+                    *::before,
+                    *::after {
+                        view-transition-name: none !important;
+                        contain: none !important;
+                        -webkit-print-color-adjust: exact !important;
+                        print-color-adjust: exact !important;
+                        color: black !important;
+                        text-shadow: none !important;
+                        box-shadow: none !important;
+                        opacity: 1 !important;
+                    }
+
+                    @page {
+                        margin: 1.5cm;
+                        size: auto;
+                    }
+
+                    /* Reset structural elements */
+                    html,
+                    body {
+                        background: white !important;
+                        height: auto !important;
+                        min-height: auto !important;
+                        width: 100% !important;
+                        overflow: visible !important;
+                        position: static !important;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                        display: block !important;
+                    }
+
+                    /* Hide everything not related to the article */
+                    header,
+                    nav,
+                    footer,
+                    .doc-sidebar,
+                    .doc-back,
+                    .widget-actions,
+                    .share-buttons,
+                    .widget-divider,
+                    .sidebar-widget,
+                    #transition-scanline,
+                    .cosmic-glow {
+                        display: none !important;
+                    }
+
+                    /* Adjust layout to use full width and pure block flow */
+                    main,
+                    .page-content,
+                    .doc-content-section,
+                    .doc-main-content,
+                    .container,
+                    .doc-layout-grid {
+                        display: block !important;
+                        width: 100% !important;
+                        max-width: none !important;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                        height: auto !important;
+                        overflow: visible !important;
+                        position: static !important;
+                        float: none !important;
+                        clear: both !important;
+                    }
+
+                    /* Added some padding to the top to explicitly prevent top-clipping */
+                    .page-content {
+                        padding: 1rem 0 !important;
+                    }
+
+                    /* Text colors for print */
+                    .prose,
+                    .doc-hero,
+                    .doc-meta,
+                    .doc-author-tags {
+                        background: transparent !important;
+                        display: block !important;
+                    }
+
+                    /* Print Hero */
+                    .doc-hero {
+                        padding: 0 0 1.5rem 0 !important;
+                        margin: 0 0 2rem 0 !important;
+                        border-bottom: 2px solid #ddd !important;
+                        /* CRITICAL: removing page-break-inside avoid here to prevent Chrome from hiding the header entirely */
+                        page-break-after: avoid !important;
+                    }
+
+                    .doc-hero-inner {
+                        display: block !important;
+                        width: 100% !important;
+                    }
+
+                    /* Badges & Meta */
+                    .doc-meta {
+                        display: flex !important;
+                        align-items: center !important;
+                        gap: 1rem !important;
+                        margin-bottom: 1rem !important;
+                    }
+
+                    .badge {
+                        border: 1px solid #666 !important;
+                        background: transparent !important;
+                        padding: 0.1rem 0.6rem !important;
+                        border-radius: 4px !important;
+                        flex-shrink: 0 !important;
+                    }
+
+                    .doc-date {
+                        font-size: 11pt !important;
+                    }
+
+                    /* The Missing Title */
+                    .doc-title {
+                        font-size: 26pt !important;
+                        font-weight: bold !important;
+                        margin: 0.5rem 0 1rem 0 !important;
+                        padding: 0 !important;
+                        line-height: 1.25 !important;
+                        page-break-after: avoid !important;
+                        /* No page-break-inside avoid for tall text */
+                    }
+
+                    .doc-description {
+                        font-size: 14pt !important;
+                        margin-bottom: 1.5rem !important;
+                        line-height: 1.5 !important;
+                        page-break-inside: avoid !important;
+                    }
+
+                    .doc-author-tags {
+                        margin-top: 1rem !important;
+                    }
+
+                    .doc-author svg {
+                        color: black !important;
+                    }
+
+                    .doc-tag {
+                        border: 1px solid #888 !important;
+                        background: transparent !important;
+                        padding: 0.1rem 0.5rem !important;
+                        border-radius: 4px !important;
+                    }
+
+                    /* Typography controls */
+                    .prose h1,
+                    .prose h2,
+                    .prose h3,
+                    .prose h4,
+                    .prose h5,
+                    .prose h6 {
+                        page-break-after: avoid !important;
+                        margin-top: 2rem !important;
+                        margin-bottom: 0.75rem !important;
+                        line-height: 1.3 !important;
+                        color: black !important;
+                    }
+
+                    .prose p,
+                    .prose li,
+                    .prose span,
+                    .prose a {
+                        font-size: 11pt !important;
+                        line-height: 1.6 !important;
+                        orphans: 3 !important;
+                        widows: 3 !important;
+                        color: black !important;
+                        opacity: 1 !important;
+                    }
+
+                    /* Ensure code blocks print nicely */
+                    .prose pre {
+                        background: transparent !important;
+                        border: 1px solid #ccc !important;
+                        page-break-inside: avoid !important;
+                        white-space: pre-wrap !important;
+                        word-wrap: break-word !important;
+                        padding: 1rem !important;
+                        margin: 1.5rem 0 !important;
+                    }
+
+                    .prose pre code,
+                    .prose pre span {
+                        color: black !important;
+                    }
+
+                    /* Lists */
+                    .prose ul,
+                    .prose ol {
+                        padding-left: 1.5rem !important;
+                        margin-bottom: 1rem !important;
+                    }
+
+                    .prose li {
+                        margin-bottom: 0.5rem !important;
+                    }
+
+                    .prose li::marker {
+                        color: black !important;
+                    }
+                }
+            </style>
+        </section>
+    </main>
+</Layout>

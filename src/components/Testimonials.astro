@@ -1,0 +1,173 @@
+---
+const testimonials = [
+    {
+        name: "Zainal Asikin",
+        role: "PIMRED SWM (Jurnalis Madya AJI)",
+        avatar: "https://i.pravatar.cc/80?img=12",
+        content:
+            "Portal Online mengubah cara kami mengelola berita. Setup cepat, dashboard intuitif, dan SEO-nya luar biasa. Traffic kami naik 150% dalam 3 bulan!",
+        rating: 5,
+    },
+    {
+        name: "Iskandar Yuan",
+        role: "Iskandar Yuan, (Pimpinan Rasionalis) ",
+        avatar: "https://i.pravatar.cc/80?img=25",
+        content:
+            "Tim redaksi kami sangat terbantu dengan fitur workflow approval. Kolaborasi jadi lebih efisien dan kualitas artikel meningkat signifikan.",
+        rating: 5,
+    },
+    {
+        name: "Ridwan Saleh, S.H. (Pimpinan Jasaku.co.id)",
+        role: "Founder, TechNews.id",
+        avatar: "https://i.pravatar.cc/80?img=33",
+        content:
+            "Sebagai portal teknologi, performa sangat penting. Portal Online memberikan loading time yang sangat cepat dan uptime 99.9%. Highly recommended!",
+        rating: 5,
+    },
+];
+---
+
+<section class="section testimonials-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="badge">Testimoni</span>
+            <h2 class="section-title">
+                Dipercaya oleh <span class="text-gradient">Media Terbaik</span>
+            </h2>
+            <p class="section-subtitle">
+                Lihat apa kata klien kami tentang Portal Online.
+            </p>
+        </div>
+
+        <div class="testimonials-grid">
+            {
+                testimonials.map((testimonial) => (
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            {[...Array(testimonial.rating)].map(() => (
+                                <svg
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                >
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                                </svg>
+                            ))}
+                        </div>
+                        <p class="testimonial-content">
+                            "{testimonial.content}"
+                        </p>
+                        <div class="testimonial-author">
+                            <img
+                                src={testimonial.avatar}
+                                alt={testimonial.name}
+                                width="48"
+                                height="48"
+                                loading="lazy"
+                                class="author-avatar"
+                            />
+                            <div class="author-info">
+                                <h4 class="author-name">{testimonial.name}</h4>
+                                <p class="author-role">{testimonial.role}</p>
+                            </div>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .testimonials-section {
+        position: relative;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .section-header .badge {
+        margin-bottom: 1rem;
+    }
+
+    .section-header .section-subtitle {
+        margin: 1rem auto 0;
+    }
+
+    .testimonials-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+        .testimonials-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    .testimonial-card {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem;
+        background: rgba(var(--color-bg-secondary-rgb, 20, 20, 30), 0.5);
+        border: 1px solid var(--color-border);
+        border-radius: 1rem;
+        transition:
+            border-color 0.2s,
+            transform 0.2s;
+    }
+
+    .testimonial-card:hover {
+        border-color: rgba(var(--color-primary), 0.3);
+        transform: translateY(-4px);
+    }
+
+    .testimonial-rating {
+        display: flex;
+        gap: 0.25rem;
+        color: #fbbf24;
+    }
+
+    .testimonial-content {
+        font-size: 0.9375rem;
+        color: var(--color-text-muted);
+        line-height: 1.7;
+        flex: 1;
+    }
+
+    .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--color-border);
+    }
+
+    .author-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .author-info {
+        flex: 1;
+    }
+
+    .author-name {
+        font-family: var(--font-display);
+        font-size: 0.875rem;
+        font-weight: 700;
+    }
+
+    .author-role {
+        font-size: 0.75rem;
+        color: var(--color-text-muted);
+        margin-top: 0.125rem;
+    }
+</style>

@@ -1,0 +1,207 @@
+---
+const faqs = [
+    {
+        question: "Apa itu Portal Online?",
+        answer: "Portal Online adalah platform SaaS yang menyediakan solusi lengkap untuk membangun dan mengelola portal berita profesional. Dengan CMS canggih, tema siap pakai, dan fitur SEO bawaan, Anda bisa fokus pada konten berkualitas.",
+    },
+    {
+        question:
+            "Apakah saya perlu keahlian teknis untuk menggunakan platform ini?",
+        answer: "Tidak perlu! Portal Online dirancang untuk pengguna non-teknis. Antarmuka intuitif kami memungkinkan Anda mengelola konten, mengubah tema, dan mengatur SEO tanpa perlu coding sama sekali.",
+    },
+    {
+        question: "Berapa lama proses setup portal berita?",
+        answer: "Portal Anda bisa live dalam hitungan jam. Pilih tema, sesuaikan branding, dan mulai publikasikan artikel. Tim kami juga siap membantu proses migrasi jika Anda sudah memiliki konten sebelumnya.",
+    },
+    {
+        question: "Apakah ada batasan jumlah artikel atau pengunjung?",
+        answer: "Tergantung paket yang dipilih. Paket Starter cocok untuk portal baru, sementara paket Pro dan Enterprise menawarkan unlimited artikel dan bandwidth untuk traffic tinggi.",
+    },
+    {
+        question: "Bagaimana dengan keamanan data portal saya?",
+        answer: "Keamanan adalah prioritas kami. Semua portal dilengkapi SSL gratis, backup harian otomatis, proteksi keamanan berlapis, dan standar keamanan enterprise. Data Anda aman bersama kami.",
+    },
+    {
+        question: "Apakah bisa request tema kustom?",
+        answer: "Tentu! Tim desain kami siap membantu membuat tema kustom sesuai brand identity Anda. Hubungi kami untuk konsultasi gratis dan penawaran khusus.",
+    },
+];
+---
+
+<section class="section faq-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="badge">FAQ</span>
+            <h2 class="section-title">
+                Paling Sering <span class="text-gradient">Ditanyakan</span>
+            </h2>
+            <p class="section-subtitle">
+                Temukan jawaban untuk pertanyaan umum tentang Portal Online.
+            </p>
+        </div>
+
+        <div class="faq-list">
+            {
+                faqs.map((faq) => (
+                    <div class="faq-item">
+                        <button
+                            class="faq-question"
+                            type="button"
+                            aria-expanded="false"
+                        >
+                            <span>{faq.question}</span>
+                            <svg
+                                class="faq-icon"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <path d="M6 9l6 6 6-6" />
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>{faq.answer}</p>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .faq-section {
+        position: relative;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .section-header .badge {
+        margin-bottom: 1rem;
+    }
+
+    .section-header .section-subtitle {
+        margin: 1rem auto 0;
+    }
+
+    .faq-list {
+        max-width: 720px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .faq-item {
+        background: rgba(var(--color-bg-secondary-rgb, 20, 20, 30), 0.5);
+        border: 1px solid var(--color-border);
+        border-radius: 0.75rem;
+        overflow: hidden;
+        transition: border-color 0.2s;
+    }
+
+    .faq-item:hover {
+        border-color: rgba(var(--color-primary), 0.3);
+    }
+
+    .faq-item.open {
+        border-color: rgba(var(--color-primary), 0.4);
+    }
+
+    .faq-question {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1rem 1.25rem;
+        text-align: left;
+        font-family: var(--font-display);
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: var(--color-text);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    .faq-question:hover {
+        color: rgb(var(--color-primary));
+    }
+
+    .faq-icon {
+        flex-shrink: 0;
+        color: var(--color-text-muted);
+        transition:
+            transform 0.3s,
+            color 0.2s;
+    }
+
+    .faq-item.open .faq-icon {
+        transform: rotate(180deg);
+        color: rgb(var(--color-primary));
+    }
+
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+    }
+
+    .faq-item.open .faq-answer {
+        max-height: 200px;
+    }
+
+    .faq-answer p {
+        padding: 0 1.25rem 1.25rem;
+        font-size: 0.875rem;
+        color: var(--color-text-muted);
+        line-height: 1.7;
+    }
+</style>
+
+<script is:inline>
+    (function () {
+        function initFAQ() {
+            const faqItems = document.querySelectorAll(".faq-item");
+
+            faqItems.forEach((item) => {
+                const question = item.querySelector(".faq-question");
+                if (!question) return;
+
+                question.onclick = () => {
+                    const isOpen = item.classList.contains("open");
+
+                    // Close all others
+                    faqItems.forEach((other) => {
+                        if (other !== item) {
+                            other.classList.remove("open");
+                            other
+                                .querySelector(".faq-question")
+                                ?.setAttribute("aria-expanded", "false");
+                        }
+                    });
+
+                    // Toggle current
+                    item.classList.toggle("open", !isOpen);
+                    question.setAttribute("aria-expanded", !isOpen);
+                };
+            });
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initFAQ);
+        } else {
+            initFAQ();
+        }
+
+        document.addEventListener("astro:page-load", initFAQ);
+    })();
+</script>

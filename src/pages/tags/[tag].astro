@@ -1,0 +1,293 @@
+---
+import { getCollection } from "../../utils/collections";
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+
+export async function getStaticPaths() {
+    const allContent = [
+        ...(await getCollection("tutorial")),
+        ...(await getCollection("article")),
+        ...(await getCollection("tips")),
+        ...(await getCollection("update")),
+    ];
+
+    const tags = allContent
+        .map((item) => item.data.tags)
+        .flat()
+        .filter(Boolean);
+    const uniqueTags = [...new Set(tags)];
+
+    return uniqueTags.map((tag) => ({
+        params: { tag },
+        props: {
+            content: allContent.filter(
+                (item) => item.data.tags && item.data.tags.includes(tag),
+            ),
+        },
+    }));
+}
+
+const { tag } = Astro.params;
+const { content } = Astro.props;
+
+content.sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
+---
+
+<Layout
+    title={`#${tag} | Portal Online`}
+    description={`Semua artikel dengan tag ${tag} di Portal Online.`}
+>
+    <Navbar />
+
+    <main class="page-content">
+        <!-- Hero -->
+        <section class="page-hero">
+            <div class="container">
+                <!-- Breadcrumb -->
+                <nav aria-label="Breadcrumb" class="breadcrumb">
+                    <ol>
+                        <li><a href="/">Beranda</a></li>
+                        <li aria-hidden="true">›</li>
+                        <li><a href="/tags">Tag</a></li>
+                        <li aria-hidden="true">›</li>
+                        <li aria-current="page">#{tag}</li>
+                    </ol>
+                </nav>
+                <span class="badge">🏷️ Tag</span>
+                <h1 class="page-title font-display">
+                    <span class="text-gradient">#{tag}</span>
+                </h1>
+                <p class="page-subtitle">{content.length} artikel ditemukan</p>
+            </div>
+        </section>
+
+        <!-- Article List -->
+        <section class="section">
+            <div class="container">
+                {
+                    content.length === 0 ? (
+                        <p class="empty-state">
+                            Belum ada artikel dengan tag ini.
+                        </p>
+                    ) : (
+                        <ul class="article-list">
+                            {content.map((item) => (
+                                <li class="article-item">
+                                    <a
+                                        href={`/${item.collection}/${item.id}`}
+                                        class="article-link"
+                                    >
+                                        <div class="article-meta">
+                                            <span class="article-cat">
+                                                {item.data.category}
+                                            </span>
+                                            <span class="article-dot">·</span>
+                                            <time class="article-date">
+                                                {new Date(
+                                                    item.data.date,
+                                                ).toLocaleDateString("id-ID", {
+                                                    year: "numeric",
+                                                    month: "short",
+                                                    day: "numeric",
+                                                })}
+                                            </time>
+                                            <span class="article-dot">·</span>
+                                            <span class="article-author">
+                                                {item.data.author}
+                                            </span>
+                                        </div>
+                                        <h2 class="article-title">
+                                            {item.data.title}
+                                        </h2>
+                                        {item.data.description && (
+                                            <p class="article-desc">
+                                                {item.data.description}
+                                            </p>
+                                        )}
+                                        {item.data.tags &&
+                                            item.data.tags.length > 0 && (
+                                                <div class="article-tags">
+                                                    {item.data.tags
+                                                        .slice(0, 5)
+                                                        .map((t: string) => (
+                                                            <a
+                                                                href={`/tags/${t}`}
+                                                                class:list={[
+                                                                    "article-tag",
+                                                                    t === tag &&
+                                                                        "article-tag--active",
+                                                                ]}
+                                                            >
+                                                                #{t}
+                                                            </a>
+                                                        ))}
+                                                </div>
+                                            )}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    )
+                }
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+</Layout>
+
+<style>
+    .page-content {
+        padding-top: 6rem;
+    }
+
+    .page-hero {
+        padding: 3rem 0 2rem;
+        text-align: center;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+        margin-bottom: 1.25rem;
+    }
+    .breadcrumb ol {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.375rem;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        font-size: 0.8125rem;
+        color: var(--color-text-subtle);
+    }
+    .breadcrumb ol a {
+        color: var(--color-text-muted);
+        text-decoration: none;
+        transition: color var(--transition-fast);
+    }
+    .breadcrumb ol a:hover {
+        color: rgb(var(--color-primary));
+    }
+    .breadcrumb ol [aria-current="page"] {
+        color: var(--color-text);
+        font-weight: 600;
+    }
+
+    .page-hero .badge {
+        margin-bottom: 0.75rem;
+    }
+
+    .page-title {
+        font-size: clamp(1.75rem, 5vw, 3rem);
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+        color: var(--color-text-subtle);
+        font-size: 0.9375rem;
+    }
+
+    /* Article list */
+    .empty-state {
+        text-align: center;
+        color: var(--color-text-muted);
+        padding: 4rem 0;
+    }
+
+    .article-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .article-item {
+        border-bottom: 1px solid var(--color-border);
+    }
+    .article-item:last-child {
+        border-bottom: none;
+    }
+
+    .article-link {
+        display: block;
+        padding: 1.5rem 0;
+        text-decoration: none;
+    }
+    .article-link:hover .article-title {
+        color: rgb(var(--color-primary));
+    }
+
+    .article-meta {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.375rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.8125rem;
+    }
+    .article-cat {
+        color: rgb(var(--color-primary));
+        font-weight: 600;
+    }
+    .article-dot {
+        color: var(--color-border);
+    }
+    .article-date,
+    .article-author {
+        color: var(--color-text-subtle);
+    }
+
+    .article-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        line-height: 1.4;
+        color: var(--color-text);
+        margin-bottom: 0.375rem;
+        transition: color var(--transition-fast);
+    }
+
+    @media (min-width: 768px) {
+        .article-title {
+            font-size: 1.25rem;
+        }
+    }
+
+    .article-desc {
+        font-size: 0.9375rem;
+        color: var(--color-text-muted);
+        line-height: 1.6;
+        margin-bottom: 0.75rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .article-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.375rem;
+    }
+
+    .article-tag {
+        font-size: 0.75rem;
+        color: var(--color-text-subtle);
+        text-decoration: none;
+        transition: color var(--transition-fast);
+    }
+    .article-tag:hover {
+        color: rgb(var(--color-primary));
+    }
+
+    .article-tag--active {
+        color: rgb(var(--color-primary));
+        font-weight: 600;
+    }
+</style>

@@ -1,0 +1,295 @@
+---
+import { getCollection } from "../../utils/collections";
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+
+export async function getStaticPaths() {
+    const categories = ["article", "tips", "tutorial", "update"];
+    const paths = await Promise.all(
+        categories.map(async (cat) => {
+            const items = await getCollection(cat as any);
+            return {
+                params: { category: cat },
+                props: { items, categoryName: cat },
+            };
+        }),
+    );
+    return paths;
+}
+
+const { items, categoryName } = Astro.props;
+
+const sortedItems = items.sort(
+    (a: any, b: any) =>
+        new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
+
+const categoryMeta: Record<
+    string,
+    { badge: string; title: string; subtitle: string }
+> = {
+    article: {
+        badge: "📝 Artikel",
+        title: "Artikel & Opini",
+        subtitle:
+            "Berbagai sudut pandang dan ulasan mendalam mengenai industri digital dan teknologi jurnalisme.",
+    },
+    tips: {
+        badge: "💡 Tips",
+        title: "Tips & Trik",
+        subtitle:
+            "Panduan singkat dan trik cerdas untuk memaksimalkan performa portal berita Anda.",
+    },
+    tutorial: {
+        badge: "📚 Dokumentasi",
+        title: "Tutorial & Dokumentasi",
+        subtitle:
+            "Panduan lengkap memulai dan memaksimalkan penggunaan Portal Online.",
+    },
+    update: {
+        badge: "📢 Update",
+        title: "Berita & Pengumuman",
+        subtitle:
+            "Update terkini, peluncuran fitur baru, dan kabar penting dari tim Portal Online.",
+    },
+};
+
+const meta = categoryMeta[categoryName] || {
+    badge: `📂 ${categoryName}`,
+    title: categoryName.charAt(0).toUpperCase() + categoryName.slice(1),
+    subtitle: `Kumpulan artikel kategori ${categoryName}`,
+};
+---
+
+<Layout title={`${meta.title} | Portal Online`} description={meta.subtitle}>
+    <Navbar />
+
+    <main class="page-content">
+        <!-- Hero -->
+        <section class="page-hero">
+            <div class="container">
+                <span class="badge">{meta.badge}</span>
+                <h1 class="page-title font-display">{meta.title}</h1>
+                <p class="page-subtitle">{meta.subtitle}</p>
+            </div>
+        </section>
+
+        <!-- Article List -->
+        <section class="section">
+            <div class="container">
+                <div class="list-header">
+                    <span class="list-count">{sortedItems.length} artikel</span>
+                </div>
+
+                {
+                    sortedItems.length === 0 ? (
+                        <p class="empty-state">
+                            Belum ada artikel di kategori ini.
+                        </p>
+                    ) : (
+                        <ul class="article-list">
+                            {sortedItems.map((item: any) => (
+                                <li class="article-item">
+                                    <a
+                                        href={`/${categoryName}/${item.id}`}
+                                        class="article-link"
+                                    >
+                                        <div class="article-meta">
+                                            <span class="article-cat">
+                                                {item.data.category}
+                                            </span>
+                                            <span class="article-dot">·</span>
+                                            <time class="article-date">
+                                                {new Date(
+                                                    item.data.date,
+                                                ).toLocaleDateString("id-ID", {
+                                                    year: "numeric",
+                                                    month: "short",
+                                                    day: "numeric",
+                                                })}
+                                            </time>
+                                            <span class="article-dot">·</span>
+                                            <span class="article-author">
+                                                {item.data.author}
+                                            </span>
+                                        </div>
+                                        <h2 class="article-title">
+                                            {item.data.title}
+                                        </h2>
+                                        {item.data.description && (
+                                            <p class="article-desc">
+                                                {item.data.description}
+                                            </p>
+                                        )}
+                                        {item.data.tags &&
+                                            item.data.tags.length > 0 && (
+                                                <div class="article-tags">
+                                                    {item.data.tags
+                                                        .slice(0, 4)
+                                                        .map((tag: string) => (
+                                                            <a
+                                                                href={`/tags/${tag}`}
+                                                                class="article-tag"
+                                                            >
+                                                                #{tag}
+                                                            </a>
+                                                        ))}
+                                                </div>
+                                            )}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    )
+                }
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+</Layout>
+
+<style>
+    .page-content {
+        padding-top: 6rem;
+    }
+
+    .page-hero {
+        padding: 3.5rem 0 2rem;
+        text-align: center;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .page-hero .badge {
+        margin-bottom: 0.75rem;
+    }
+
+    .page-title {
+        font-size: clamp(1.75rem, 5vw, 3rem);
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 1rem;
+    }
+
+    .page-subtitle {
+        max-width: 560px;
+        margin: 0 auto;
+        color: var(--color-text-muted);
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+
+    /* List layout */
+    .list-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .list-count {
+        font-size: 0.8125rem;
+        color: var(--color-text-subtle);
+        font-weight: 500;
+    }
+
+    .empty-state {
+        text-align: center;
+        color: var(--color-text-muted);
+        padding: 4rem 0;
+        font-size: 1rem;
+    }
+
+    .article-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .article-item {
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .article-item:last-child {
+        border-bottom: none;
+    }
+
+    .article-link {
+        display: block;
+        padding: 1.5rem 0;
+        text-decoration: none;
+        transition: color var(--transition-fast);
+    }
+
+    .article-link:hover .article-title {
+        color: rgb(var(--color-primary));
+    }
+
+    .article-meta {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.375rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.8125rem;
+    }
+
+    .article-cat {
+        color: rgb(var(--color-primary));
+        font-weight: 600;
+    }
+
+    .article-dot {
+        color: var(--color-border);
+    }
+
+    .article-date,
+    .article-author {
+        color: var(--color-text-subtle);
+    }
+
+    .article-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        line-height: 1.4;
+        color: var(--color-text);
+        margin-bottom: 0.375rem;
+        transition: color var(--transition-fast);
+    }
+
+    @media (min-width: 768px) {
+        .article-title {
+            font-size: 1.25rem;
+        }
+    }
+
+    .article-desc {
+        font-size: 0.9375rem;
+        color: var(--color-text-muted);
+        line-height: 1.6;
+        margin-bottom: 0.75rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .article-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.375rem;
+    }
+
+    .article-tag {
+        font-size: 0.75rem;
+        color: var(--color-text-subtle);
+        text-decoration: none;
+        transition: color var(--transition-fast);
+    }
+
+    .article-tag:hover {
+        color: rgb(var(--color-primary));
+    }
+</style>
