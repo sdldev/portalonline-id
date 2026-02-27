@@ -37,7 +37,9 @@ export default defineConfig({
         return item;
       }
     }),
-    robotsTxt(),
+    robotsTxt({
+      sitemap: 'https://portalonline.id/sitemap-index.xml',
+    }),
     mdx()
   ],
   adapter: cloudflare({
