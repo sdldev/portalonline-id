@@ -10,7 +10,14 @@
 		"binding": "ASSETS",
 		"directory": "./dist"
 	},
+  	"kv_namespaces": [
+		{
+			"binding": "CACHE_KV",
+			"id": "f0a6a9469ce349179772cad58e55c609"
+		}
+	],
 	"observability": {
-    "enabled": true
-  }
+		"enabled": true
+	}
+
 }
