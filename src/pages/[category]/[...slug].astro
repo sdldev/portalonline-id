@@ -3,6 +3,8 @@ import { render } from "astro:content";
 import { getCollection } from "../../utils/collections";
 import DocLayout from "../../layouts/DocLayout.astro";
 
+export const prerender = true;
+
 export async function getStaticPaths() {
     const categories = ["article", "tips", "tutorial", "update"];
 

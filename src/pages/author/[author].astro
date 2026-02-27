@@ -6,6 +6,8 @@ import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
 import Card from "../../components/Card.astro";
 
+export const prerender = true;
+
 export async function getStaticPaths() {
     const authors = await getCollection("author");
 
