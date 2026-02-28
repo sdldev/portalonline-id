@@ -200,7 +200,7 @@ const categories = Object.keys(categoryCounts)
                         class="doc-author-tags flex justify-center items-center flex-wrap gap-4 mt-2"
                     >
                         <a
-                            href={`/author/${author.toLowerCase().replace(/\\s+/g, "-")}`}
+                            href={`/author/${authorProfile ? authorProfile.id : author.toLowerCase().replace(/\s+/g, "-")}`}
                             class="doc-author hover:text-white transition-colors cursor-pointer block flex items-center gap-1"
                         >
                             <svg

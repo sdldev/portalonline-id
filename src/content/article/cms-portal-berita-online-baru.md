@@ -2,7 +2,7 @@
 title: "Baru Bikin Media? Ini Alasan Anda Butuh CMS Portal Berita Online Khusus"
 description: "Pernah server down saat breaking news? Cari tahu kenapa media skala nasional wajib pakai CMS portal berita online khusus, bukan sekadar platform blog biasa." 
 date: 2026-03-02
-author: "Tim Redaksi"
+author: "Tim Developer"
 categories: ["Artikel"]
 tags: ["cms portal berita online", "portal berita online", "portal online sekolah", "sso"]
 image: "/images/articles/cms-portal-berita-online.webp"
