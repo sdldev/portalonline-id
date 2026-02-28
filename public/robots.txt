@@ -1,0 +1,94 @@
+# =============================================
+# robots.txt — portalonline.id
+# Updated: 2026-02-28
+# =============================================
+
+# ─── Googlebot ────────────────────────────────
+User-agent: Googlebot
+Allow: /
+Disallow: /seo/
+Disallow: /text/
+Disallow: /sitemap.astro
+Crawl-delay: 1
+
+# ─── Bingbot ──────────────────────────────────
+User-agent: Bingbot
+Allow: /
+Disallow: /seo/
+Disallow: /text/
+Crawl-delay: 3
+
+# ─── DuckDuckBot ──────────────────────────────
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /seo/
+Disallow: /text/
+
+# ─── Yandex ───────────────────────────────────
+User-agent: Yandex
+Allow: /
+Disallow: /seo/
+Disallow: /text/
+Crawl-delay: 5
+
+# ─── AI Crawlers — block all ──────────────────
+# OpenAI GPTBot
+User-agent: GPTBot
+Disallow: /
+
+# OpenAI ChatGPT-User
+User-agent: ChatGPT-User
+Disallow: /
+
+# Anthropic Claude
+User-agent: ClaudeBot
+Disallow: /
+
+# Anthropic Claude web requests
+User-agent: Claude-Web
+Disallow: /
+
+# Google Bard / Gemini
+User-agent: Google-Extended
+Disallow: /
+
+# Meta AI
+User-agent: FacebookBot
+Disallow: /
+
+# CommonCrawl (sumber data training AI)
+User-agent: CCBot
+Disallow: /
+
+# Cohere
+User-agent: cohere-ai
+Disallow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Disallow: /
+
+# ByteDance
+User-agent: Bytespider
+Disallow: /
+
+# Apple Applebot-Extended (AI training)
+User-agent: Applebot-Extended
+Disallow: /
+
+# ─── Semua crawler lainnya ────────────────────
+User-agent: *
+Allow: /
+# Halaman utilitas — tidak perlu diindex
+Disallow: /seo/
+Disallow: /text/
+# Query string pagination & filter
+Disallow: /*?page=
+Disallow: /*?sort=
+Disallow: /*?search=
+Disallow: /*?q=
+Disallow: /*?filter=
+Crawl-delay: 5
+
+# ─── Sitemaps ─────────────────────────────────
+Sitemap: https://portalonline.id/sitemap-index.xml

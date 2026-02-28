@@ -3,7 +3,6 @@ import { defineConfig } from 'astro/config';
 
 import sitemap from '@astrojs/sitemap';
 
-import robotsTxt from 'astro-robots-txt';
 
 import mdx from '@astrojs/mdx';
 
@@ -36,9 +35,6 @@ export default defineConfig({
         item.lastmod = new Date().toISOString();
         return item;
       }
-    }),
-    robotsTxt({
-      sitemap: 'https://portalonline.id/sitemap-index.xml',
     }),
     mdx()
   ],

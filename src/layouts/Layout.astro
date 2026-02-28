@@ -46,16 +46,14 @@ export interface Props {
 }
 
 const {
-    title = "Portal Online | Berita Terkini & Terpercaya",
-    description = "Portal berita online terkini dengan beragam kategori, breaking news, dan konten multimedia. Dapatkan informasi terpercaya dari sumber kredibel.",
+    title = "Portal Online | Custom CMS SaaS Terbaik untuk Portal Berita",
+    description = "Platform CMS modern dengan dashboard canggih & tema eksklusif untuk portal berita, website sekolah, perusahaan & organisasi — kelola konten tanpa coding, siap dalam menit.",
     image = "https://portalonline.id/og-default.png",
     canonical = Astro.url.href,
     noindex = false,
     openGraph,
     twitter,
 } = Astro.props;
-
-const siteUrl = Astro.site?.href ?? "https://portalonline.id";
 ---
 
 <!doctype html>
