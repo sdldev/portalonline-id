@@ -1,0 +1,22 @@
+# Portal Online
+
+> Platform Custom CMS SaaS modern untuk portal berita, website sekolah, perusahaan & organisasi. Kelola konten multi-kategori tanpa coding, siap pakai dalam menit.
+
+## Tentang Platform
+Portal Online bukan sekadar template atau hosting biasa. Kami adalah platform CMS (Content Management System) SaaS yang berfokus memberikan pengalaman pengelolaan portal berita bertaraf enterprise (seperti Kompas, Detik) kepada semua bisnis dan organisasi, tanpa memerlukan tim IT.
+
+## Fitur Utama
+- [Teknologi Terkini](https://portalonline.id/#why-choose): Dibangun menggunakan Bun, Elysia.js, Astro, React, dan Cloudflare.
+- **Server Enterprise Grade**: Pemisahan API, Backoffice, dan Frontend secara independen dengan loading di bawah 1 detik.
+- **Keamanan WAF & SSL**: Terjamin dari serangan DDoS dan kerentanan standar.
+- **Full Onpage SEO**: Semua metatag dan Schema markup dibuat dinamis dan optimal sejak hari pertama.
+- [Dashboard Intuitif](https://portalonline.id/#dashboard-preview): Dirancang dari riset UX mendalam, semua orang bisa menggunakannya tanpa dilatih.
+
+## Paket Layanan
+- [Media Siber](https://portalonline.id/#paket): Untuk berita jurnalisme. Rp 2.000k/tahun (Awal 3.500k).
+- [Company Profile](https://portalonline.id/#paket): Untuk perusahaan dan korporat. Rp 2.000k/tahun (Awal 3.500k).
+- [Pendidikan](https://portalonline.id/#paket): Untuk instansi dan lembaga sekolah. Rp 1.750k/tahun (Awal 2.500k).
+
+## Links
+- [Homepage](https://portalonline.id/)
+- [Konsultasi WhatsApp](https://wa.me/6285783024799)
