@@ -12,6 +12,7 @@
     "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/sitemap": "^3.7.0",
+    "@playform/compress": "^0.2.1",
     "astro": "5.18.0",
     "astro-robots-txt": "^1.0.0",
     "astro-seo": "^1.1.0"
