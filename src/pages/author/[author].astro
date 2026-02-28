@@ -4,32 +4,23 @@ import { getCollection } from "../../utils/collections";
 import Layout from "../../layouts/Layout.astro";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
-import Card from "../../components/Card.astro";
 
 export const prerender = true;
 
 export async function getStaticPaths() {
     const authors = await getCollection("author");
 
-    // Fetch all content to find articles by this author
-    const allTutorials = await getCollection("tutorial");
-    const allArticles = await getCollection("article");
-    const allTips = await getCollection("tips");
-    const allUpdates = await getCollection("update");
-
     const allContent = [
-        ...allTutorials,
-        ...allArticles,
-        ...allTips,
-        ...allUpdates,
+        ...(await getCollection("tutorial")),
+        ...(await getCollection("article")),
+        ...(await getCollection("tips")),
+        ...(await getCollection("update")),
     ];
 
     return authors.map((author) => {
-        // Find content where the author matches
         const authorContent = allContent.filter(
             (item) => item.data.author === author.data.name,
         );
-
         return {
             params: { author: author.id },
             props: { authorProfile: author, content: authorContent },
@@ -40,7 +31,6 @@ export async function getStaticPaths() {
 const { authorProfile, content } = Astro.props;
 const { Content } = await render(authorProfile);
 
-// Sort content by date latest
 content.sort(
     (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
 );
@@ -52,125 +42,98 @@ content.sort(
 >
     <Navbar />
 
-    <main class="page-content">
-        <!-- Author Profile Section -->
-        <section class="page-hero">
+    <main class="author-page">
+        <!-- Hero -->
+        <section class="author-hero">
             <div class="container">
-                <nav
-                    aria-label="Breadcrumb"
-                    class="doc-breadcrumb hide-mobile-block mb-8 text-center mx-auto"
-                >
-                    <ol
-                        style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; list-style: none; padding: 0; margin: 0;"
-                        class="text-sm text-gray-400"
-                    >
-                        <li style="display: flex; align-items: center;">
-                            <a
-                                href="/"
-                                class="hover:text-white transition-colors"
-                                >Beranda</a
-                            >
-                        </li>
-                        <li
-                            style="display: flex; align-items: center; gap: 0.5rem;"
-                        >
-                            <svg
-                                width="16"
-                                height="16"
-                                class="text-gray-600"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                                ><path
-                                    fill-rule="evenodd"
-                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                    clip-rule="evenodd"></path></svg
-                            >
-                            <a
-                                href="/author"
-                                class="hover:text-white transition-colors"
-                                >Penulis</a
-                            >
-                        </li>
-                        <li
-                            style="display: flex; align-items: center; gap: 0.5rem;"
-                        >
-                            <svg
-                                width="16"
-                                height="16"
-                                class="text-gray-600"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                                ><path
-                                    fill-rule="evenodd"
-                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                    clip-rule="evenodd"></path></svg
-                            >
-                            <span class="text-gray-200" aria-current="page"
-                                >{authorProfile.data.name}</span
-                            >
-                        </li>
-                    </ol>
+                <!-- Breadcrumb -->
+                <nav aria-label="Breadcrumb" class="author-breadcrumb">
+                    <a href="/">Beranda</a>
+                    <span aria-hidden="true">›</span>
+                    <a href="/author">Penulis</a>
+                    <span aria-hidden="true">›</span>
+                    <span aria-current="page">{authorProfile.data.name}</span>
                 </nav>
 
-                <div class="author-profile-box glass">
-                    <div class="author-avatar-wrapper">
+                <!-- Author Profile Card -->
+                <div class="author-card">
+                    <div class="author-avatar-ring">
                         <img
                             src={authorProfile.data.avatar ||
                                 `https://ui-avatars.com/api/?name=${encodeURIComponent(authorProfile.data.name)}&background=random`}
                             alt={authorProfile.data.name}
-                            class="author-avatar"
+                            class="author-avatar-img"
+                            width="90"
+                            height="90"
                         />
                     </div>
-                    <div class="author-details">
-                        <h1 class="page-title font-display m-0">
-                            {authorProfile.data.name}
-                        </h1>
-                        <div
-                            class="author-bio prose prose-invert mx-auto my-4 max-w-2xl"
-                        >
-                            <Content />
-                        </div>
-                        <div class="author-stats">
-                            <span class="badge"
-                                >📝 {content.length} Tulisan</span
+                    <div class="author-meta">
+                        <span class="badge">✍️ Penulis</span>
+                        <h1 class="author-name font-display">
+                            <span class="text-gradient"
+                                >{authorProfile.data.name}</span
                             >
-                        </div>
+                        </h1>
+                        <p class="author-count">
+                            {content.length} artikel dipublikasikan
+                        </p>
+                        <p class="author-bio"><Content /></p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Article Grid -->
-        <section class="section pt-0">
+        <!-- Article List -->
+        <section class="author-articles">
             <div class="container">
                 {
-                    content.length > 0 ? (
-                        <div>
-                            <h2 class="text-2xl font-bold mb-8 text-center">
-                                Ditulis oleh {authorProfile.data.name}
-                            </h2>
-                            <div class="tutorial-grid">
-                                {content.map((item) => (
-                                    <Card
-                                        href={`/${item.collection}/${item.id}`}
-                                        title={item.data.title}
-                                        description={item.data.description}
-                                        date={item.data.date}
-                                        author={item.data.author}
-                                        category={item.data.category}
-                                        tags={item.data.tags}
-                                    />
-                                ))}
-                            </div>
-                        </div>
+                    content.length === 0 ? (
+                        <p class="empty-msg">
+                            Belum ada artikel yang dipublikasikan oleh penulis
+                            ini.
+                        </p>
                     ) : (
-                        <div class="text-center py-12 glass rounded-2xl">
-                            <p class="text-gray-400">
-                                Belum ada artikel yang dipublikasikan oleh
-                                penulis ini.
-                            </p>
+                        <div class="art-list">
+                            {content.map((item) => (
+                                <a
+                                    href={`/${item.collection}/${item.id}`}
+                                    class="art-item"
+                                >
+                                    <div class="art-meta">
+                                        <span class="art-cat">
+                                            {item.data.category}
+                                        </span>
+                                        <span class="art-dot">·</span>
+                                        <time class="art-date">
+                                            {new Date(
+                                                item.data.date,
+                                            ).toLocaleDateString("id-ID", {
+                                                year: "numeric",
+                                                month: "short",
+                                                day: "numeric",
+                                            })}
+                                        </time>
+                                    </div>
+                                    <h2 class="art-title">{item.data.title}</h2>
+                                    {item.data.description && (
+                                        <p class="art-desc">
+                                            {item.data.description}
+                                        </p>
+                                    )}
+                                    {item.data.tags &&
+                                        item.data.tags.length > 0 && (
+                                            <div class="art-tags">
+                                                {item.data.tags
+                                                    .slice(0, 5)
+                                                    .map((t: string) => (
+                                                        <span class="art-tag">
+                                                            #{t}
+                                                        </span>
+                                                    ))}
+                                            </div>
+                                        )}
+                                </a>
+                            ))}
                         </div>
                     )
                 }
@@ -182,90 +145,190 @@ content.sort(
 </Layout>
 
 <style>
-    .page-content {
+    .author-page {
         padding-top: 6rem;
     }
 
-    .page-hero {
-        padding: 4rem 0 2rem 0;
-        text-align: center;
+    /* Hero */
+    .author-hero {
+        padding: 3rem 0 2rem;
+        border-bottom: 1px solid var(--color-border);
     }
 
-    .page-title {
-        font-size: clamp(2rem, 5vw, 3rem);
-        font-weight: 800;
-        line-height: 1.2;
-    }
-
-    .author-profile-box {
+    /* Breadcrumb */
+    .author-breadcrumb {
         display: flex;
-        flex-direction: column;
         align-items: center;
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 3rem 2rem;
-        border-radius: 2rem;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .author-profile-box::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 6px;
-        background: linear-gradient(
-            90deg,
-            rgb(var(--color-primary)),
-            rgb(var(--color-secondary))
-        );
-    }
-
-    .author-avatar-wrapper {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
+        gap: 0.375rem;
+        flex-wrap: wrap;
+        font-size: 0.8125rem;
+        color: var(--color-text-subtle);
         margin-bottom: 2rem;
-        padding: 5px;
+    }
+    .author-breadcrumb a {
+        color: var(--color-text-muted);
+        text-decoration: none;
+        transition: color var(--transition-fast);
+    }
+    .author-breadcrumb a:hover {
+        color: rgb(var(--color-primary));
+    }
+    .author-breadcrumb [aria-current="page"] {
+        color: var(--color-text);
+        font-weight: 600;
+    }
+
+    /* Author Card */
+    .author-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.75rem;
+    }
+
+    @media (max-width: 640px) {
+        .author-card {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+    }
+
+    .author-avatar-ring {
+        flex-shrink: 0;
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        padding: 3px;
         background: linear-gradient(
             135deg,
-            rgba(var(--color-primary), 0.5),
-            rgba(var(--color-secondary), 0.5)
+            rgba(var(--color-primary), 0.7),
+            rgba(var(--color-secondary), 0.7)
         );
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     }
 
-    .author-avatar {
+    .author-avatar-img {
+        display: block;
         width: 100%;
         height: 100%;
-        object-fit: cover;
         border-radius: 50%;
-        background-color: var(--color-bg-elevated);
+        object-fit: cover;
     }
 
-    .author-details {
+    .author-meta {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .author-meta .badge {
+        margin-bottom: 0.5rem;
+        display: inline-block;
+    }
+
+    .author-name {
+        font-size: clamp(1.5rem, 4vw, 2.25rem);
+        font-weight: 800;
+        line-height: 1.2;
+        margin: 0.25rem 0 0.3rem;
+    }
+
+    .author-count {
+        font-size: 0.9rem;
+        color: var(--color-text-subtle);
+        margin: 0 0 0.75rem;
+    }
+
+    .author-bio {
+        font-size: 0.9375rem;
+        color: var(--color-text-muted);
+        line-height: 1.7;
+        margin: 0;
+        max-width: 600px;
+    }
+
+    /* Articles */
+    .author-articles {
+        padding: 2rem 0 4rem;
+    }
+
+    .empty-msg {
+        text-align: center;
+        color: var(--color-text-muted);
+        padding: 4rem 0;
+    }
+
+    .art-list {
         display: flex;
         flex-direction: column;
+    }
+
+    .art-item {
+        display: block;
+        padding: 1.5rem 0;
+        border-bottom: 1px solid var(--color-border);
+        text-decoration: none;
+    }
+    .art-item:last-child {
+        border-bottom: none;
+    }
+    .art-item:hover .art-title {
+        color: rgb(var(--color-primary));
+    }
+
+    .art-meta {
+        display: flex;
         align-items: center;
+        gap: 0.375rem;
+        font-size: 0.8125rem;
+        margin-bottom: 0.5rem;
+        flex-wrap: wrap;
     }
 
-    .author-stats {
-        margin-top: 1rem;
+    .art-cat {
+        color: rgb(var(--color-primary));
+        font-weight: 600;
+    }
+    .art-dot {
+        color: var(--color-border);
+    }
+    .art-date {
+        color: var(--color-text-subtle);
     }
 
-    /* Grid */
-    .tutorial-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+    .art-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        line-height: 1.4;
+        color: var(--color-text);
+        margin: 0 0 0.375rem;
+        transition: color var(--transition-fast);
     }
 
     @media (min-width: 768px) {
-        .tutorial-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
+        .art-title {
+            font-size: 1.25rem;
         }
+    }
+
+    .art-desc {
+        font-size: 0.9375rem;
+        color: var(--color-text-muted);
+        line-height: 1.6;
+        margin: 0 0 0.75rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .art-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.375rem;
+    }
+
+    .art-tag {
+        font-size: 0.75rem;
+        color: var(--color-text-subtle);
     }
 </style>
