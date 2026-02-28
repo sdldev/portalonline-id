@@ -3,6 +3,7 @@ import Layout from "./Layout.astro";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import { getCollection } from "../utils/collections";
+import { slugify } from "../utils/slugify";
 
 export interface Props {
     title: string;
@@ -64,6 +65,14 @@ const latestArticles = allItems
             new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
     )
     .slice(0, 5);
+
+// Get related articles from the same category
+const relatedArticles = allItems
+    .filter(
+        (item) => item.data.category === category && item.data.title !== title,
+    )
+    .sort(() => 0.5 - Math.random()) // simple random shuffle
+    .slice(0, 3);
 
 // Get unique categories and their counts
 const categoryCounts = allItems.reduce(
@@ -226,7 +235,7 @@ const categories = Object.keys(categoryCounts)
                                 <div class="doc-tags">
                                     {tags.map((tag) => (
                                         <a
-                                            href={`/tags/${tag}`}
+                                            href={`/tags/${slugify(tag)}/`}
                                             class="doc-tag hover:border-primary-500 hover:text-primary-400 transition-colors inline-block cursor-pointer"
                                         >
                                             #{tag}
@@ -314,6 +323,60 @@ const categories = Object.keys(categoryCounts)
                                         Chat Sekarang
                                     </a>
                                 </div>
+
+                                <!-- Related Articles -->
+                                {
+                                    relatedArticles.length > 0 && (
+                                        <div class="related-articles-section mt-12 pt-8 border-t border-white/10">
+                                            <h3 class="text-xl font-display font-bold mb-6">
+                                                Artikel Terkait
+                                            </h3>
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                {relatedArticles.map((item) => {
+                                                    let routeName =
+                                                        item.data.category.toLowerCase();
+                                                    if (routeName === "artikel")
+                                                        routeName = "article";
+                                                    if (
+                                                        routeName ===
+                                                        "dokumentasi"
+                                                    )
+                                                        routeName = "tutorial";
+
+                                                    return (
+                                                        <a
+                                                            href={`/${routeName}/${item.id}`}
+                                                            class="related-article-card p-4 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-colors group"
+                                                        >
+                                                            <h4
+                                                                class="font-bold text-gray-200 group-hover:text-amber-400 transition-colors line-clamp-2"
+                                                                style="font-size: 1rem;"
+                                                            >
+                                                                {
+                                                                    item.data
+                                                                        .title
+                                                                }
+                                                            </h4>
+                                                            <span class="text-xs text-gray-500 mt-2 block">
+                                                                {new Date(
+                                                                    item.data
+                                                                        .date,
+                                                                ).toLocaleDateString(
+                                                                    "id-ID",
+                                                                    {
+                                                                        month: "short",
+                                                                        day: "numeric",
+                                                                        year: "numeric",
+                                                                    },
+                                                                )}
+                                                            </span>
+                                                        </a>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    )
+                                }
 
                                 <!-- Mobile-only Back Button -->
                                 <div class="doc-back hide-desktop-block mt-8">

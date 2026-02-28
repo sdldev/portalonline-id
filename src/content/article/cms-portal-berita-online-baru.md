@@ -1,5 +1,5 @@
 ---
-title: "Baru Bikin Media? Ini Alasan Anda Butuh CMS Portal Berita Online Khusus"
+title: "Alasan Anda Butuh CMS Portal Berita Khusus"
 description: "Pernah server down saat breaking news? Cari tahu kenapa media skala nasional wajib pakai CMS portal berita online khusus, bukan sekadar platform blog biasa." 
 date: 2026-01-23
 author: "Tim Developer"

@@ -3,6 +3,7 @@ import { getCollection } from "../../utils/collections";
 import Layout from "../../layouts/Layout.astro";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
+import { slugify } from "../../utils/slugify";
 
 const allContent = [
     ...(await getCollection("tutorial")),
@@ -42,6 +43,14 @@ const sortedTags = Object.entries(tagCounts).sort((a, b) => b[1] - a[1]);
                     {sortedTags.length} topik tersedia — temukan artikel yang relevan
                     dengan minat Anda.
                 </p>
+                <div
+                    class="page-intro-text text-gray-300 mt-6 max-w-3xl mx-auto leading-relaxed"
+                >
+                    Direktori lengkap seluruh kata kunci dan topik yang dibahas
+                    di Portal Online. Gunakan halaman ini untuk menavigasi
+                    ribuan artikel, panduan teknis, dan berita industri dengan
+                    lebih spesifik sesuai dengan preferensi bacaan Anda.
+                </div>
             </div>
         </section>
 
@@ -51,7 +60,7 @@ const sortedTags = Object.entries(tagCounts).sort((a, b) => b[1] - a[1]);
                 <div class="tags-cloud">
                     {
                         sortedTags.map(([tag, count]) => (
-                            <a href={`/tags/${tag}`} class="tag-item">
+                            <a href={`/tags/${slugify(tag)}/`} class="tag-item">
                                 <span class="tag-name">#{tag}</span>
                                 <span class="tag-count">{count}</span>
                             </a>

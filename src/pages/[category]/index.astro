@@ -3,6 +3,7 @@ import { getCollection } from "../../utils/collections";
 import Layout from "../../layouts/Layout.astro";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
+import { slugify } from "../../utils/slugify";
 
 export const prerender = true;
 
@@ -29,31 +30,39 @@ const sortedItems = items.sort(
 
 const categoryMeta: Record<
     string,
-    { badge: string; title: string; subtitle: string }
+    { badge: string; title: string; subtitle: string; introText: string }
 > = {
     article: {
         badge: "📝 Artikel",
         title: "Artikel & Opini",
         subtitle:
             "Berbagai sudut pandang dan ulasan mendalam mengenai industri digital dan teknologi jurnalisme.",
+        introText:
+            "Jelajahi kumpulan artikel eksklusif dari redaksi Portal Online. Kami menyajikan ulasan tajam mengenai tren terkini dalam teknologi jurnalisme, panduan monetisasi, hingga strategi pengembangan portal berita era modern. Semuanya ditulis oleh praktisi yang berpengalaman di bidangnya.",
     },
     tips: {
         badge: "💡 Tips",
         title: "Tips & Trik",
         subtitle:
             "Panduan singkat dan trik cerdas untuk memaksimalkan performa portal berita Anda.",
+        introText:
+            "Temukan berbagai tips dan trik praktis untuk mengoptimalkan website berita Anda. Mulai dari peningkatan kecepatan akses (pagespeed), teknik SEO on-page, strategi distribusi konten ke media sosial, hingga keamanan server.",
     },
     tutorial: {
         badge: "📚 Dokumentasi",
         title: "Tutorial & Dokumentasi",
         subtitle:
             "Panduan lengkap memulai dan memaksimalkan penggunaan Portal Online.",
+        introText:
+            "Pusat bantuan komprehensif untuk menguasai sistem manajemen konten (CMS) Portal Online. Pelajari cara publikasi artikel, pengaturan navigasi, integrasi iklan adsense, hingga kostumisasi tampilan dasar menggunakan Astro.",
     },
     update: {
         badge: "📢 Update",
         title: "Berita & Pengumuman",
         subtitle:
             "Update terkini, peluncuran fitur baru, dan kabar penting dari tim Portal Online.",
+        introText:
+            "Ikuti terus perkembangan produk dan layanan terbaru. Di sini kami merangkum rilis fitur baru, perbaikan celah keamanan (patch notes), serta agenda dan acara penting yang diadakan oleh tim Portal Online untuk komunitas jurnalisme digital.",
     },
 };
 
@@ -61,6 +70,7 @@ const meta = categoryMeta[categoryName] || {
     badge: `📂 ${categoryName}`,
     title: categoryName.charAt(0).toUpperCase() + categoryName.slice(1),
     subtitle: `Kumpulan artikel kategori ${categoryName}`,
+    introText: `Menampilkan semua arsip tulisan untuk kategori ${categoryName}. Selamat membaca dan memperkaya wawasan Anda.`,
 };
 ---
 
@@ -74,6 +84,11 @@ const meta = categoryMeta[categoryName] || {
                 <span class="badge">{meta.badge}</span>
                 <h1 class="page-title font-display">{meta.title}</h1>
                 <p class="page-subtitle">{meta.subtitle}</p>
+                <div
+                    class="page-intro-text text-gray-300 mt-6 max-w-3xl mx-auto leading-relaxed"
+                >
+                    {meta.introText}
+                </div>
             </div>
         </section>
 
@@ -131,7 +146,7 @@ const meta = categoryMeta[categoryName] || {
                                                         .slice(0, 4)
                                                         .map((tag: string) => (
                                                             <a
-                                                                href={`/tags/${tag}`}
+                                                                href={`/tags/${slugify(tag)}/`}
                                                                 class="article-tag"
                                                             >
                                                                 #{tag}

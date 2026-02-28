@@ -3,6 +3,7 @@ import { getCollection } from "../../utils/collections";
 import Layout from "../../layouts/Layout.astro";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
+import { slugify } from "../../utils/slugify";
 
 export const prerender = true;
 
@@ -21,8 +22,9 @@ export async function getStaticPaths() {
     const uniqueTags = [...new Set(tags)];
 
     return uniqueTags.map((tag) => ({
-        params: { tag },
+        params: { tag: slugify(tag) },
         props: {
+            originalTag: tag,
             content: allContent.filter(
                 (item) => item.data.tags && item.data.tags.includes(tag),
             ),
@@ -31,7 +33,7 @@ export async function getStaticPaths() {
 }
 
 const { tag } = Astro.params;
-const { content } = Astro.props;
+const { originalTag, content } = Astro.props;
 
 content.sort(
     (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
@@ -39,8 +41,8 @@ content.sort(
 ---
 
 <Layout
-    title={`#${tag} | Portal Online`}
-    description={`Semua artikel dengan tag ${tag} di Portal Online.`}
+    title={`#${originalTag} | Portal Online`}
+    description={`Semua artikel dengan tag ${originalTag} di Portal Online.`}
 >
     <Navbar />
 
@@ -55,14 +57,24 @@ content.sort(
                         <li aria-hidden="true">›</li>
                         <li><a href="/tags">Tag</a></li>
                         <li aria-hidden="true">›</li>
-                        <li aria-current="page">#{tag}</li>
+                        <li aria-current="page">#{originalTag}</li>
                     </ol>
                 </nav>
                 <span class="badge">🏷️ Tag</span>
                 <h1 class="page-title font-display">
-                    <span class="text-gradient">#{tag}</span>
+                    <span class="text-gradient">#{originalTag}</span>
                 </h1>
                 <p class="page-subtitle">{content.length} artikel ditemukan</p>
+                <div
+                    class="page-intro-text text-gray-300 mt-6 max-w-3xl mx-auto leading-relaxed"
+                >
+                    Sedang menelusuri koleksi artikel dengan topik spesifik <strong
+                        >#{originalTag}</strong
+                    >. Halaman ini mengkurasi seluruh tulisan, tutorial, dan
+                    update terbaru yang berkaitan dengan kata kunci tersebut
+                    untuk memudahkan Anda menemukan informasi yang paling
+                    relevan.
+                </div>
             </div>
         </section>
 
@@ -116,10 +128,11 @@ content.sort(
                                                         .slice(0, 5)
                                                         .map((t: string) => (
                                                             <a
-                                                                href={`/tags/${t}`}
+                                                                href={`/tags/${slugify(t)}/`}
                                                                 class:list={[
                                                                     "article-tag",
-                                                                    t === tag &&
+                                                                    t ===
+                                                                        originalTag &&
                                                                         "article-tag--active",
                                                                 ]}
                                                             >
