@@ -45,11 +45,23 @@ export interface Props {
     };
 }
 
+let canonicalUrlStr = Astro.props.canonical || Astro.url.href;
+try {
+    const urlObj = new URL(canonicalUrlStr);
+    if (
+        !urlObj.pathname.endsWith("/") &&
+        !/\.[a-z0-9]+$/i.test(urlObj.pathname)
+    ) {
+        urlObj.pathname += "/";
+        canonicalUrlStr = urlObj.href;
+    }
+} catch (e) {}
+
 const {
     title = "Portal Online | Custom CMS SaaS Terbaik untuk Portal Berita",
     description = "Platform CMS modern dengan dashboard canggih & tema eksklusif untuk portal berita, website sekolah, perusahaan & organisasi — kelola konten tanpa coding, siap dalam menit.",
     image = "https://portalonline.id/og-default.png",
-    canonical = Astro.url.href,
+    canonical = canonicalUrlStr,
     noindex = false,
     openGraph,
     twitter,
