@@ -1,4 +1,5 @@
 ---
+import { SEO } from "astro-seo";
 import { ClientRouter } from "astro:transitions";
 import ChatWidget from "../components/ChatWidget.astro";
 import "../styles/global.css";
@@ -6,12 +7,55 @@ import "../styles/global.css";
 export interface Props {
     title?: string;
     description?: string;
+    image?: string;
+    canonical?: string;
+    noindex?: boolean;
+    openGraph?: {
+        basic: {
+            title: string;
+            type: string;
+            image: string;
+            url?: string;
+        };
+        optional?: {
+            description?: string;
+            locale?: string;
+            siteName?: string;
+        };
+        article?: {
+            publishedTime?: string;
+            modifiedTime?: string;
+            authors?: string[];
+            section?: string;
+            tags?: string[];
+        };
+        image?: {
+            url?: string;
+            secureUrl?: string;
+            type?: string;
+            width?: number;
+            height?: number;
+            alt?: string;
+        };
+    };
+    twitter?: {
+        card?: "summary" | "summary_large_image" | "app" | "player";
+        site?: string;
+        creator?: string;
+    };
 }
 
 const {
     title = "Portal Online | Berita Terkini & Terpercaya",
     description = "Portal berita online terkini dengan beragam kategori, breaking news, dan konten multimedia. Dapatkan informasi terpercaya dari sumber kredibel.",
+    image = "https://portalonline.id/og-default.png",
+    canonical = Astro.url.href,
+    noindex = false,
+    openGraph,
+    twitter,
 } = Astro.props;
+
+const siteUrl = Astro.site?.href ?? "https://portalonline.id";
 ---
 
 <!doctype html>
@@ -19,7 +63,6 @@ const {
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content={description} />
 
         <!-- Force HTTPS for all resources -->
         <meta
@@ -35,29 +78,61 @@ const {
             type="image/webp"
         />
 
-        <!-- Favicon -->
-        <link rel="icon" href="/favicon.ico" sizes="48x48" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-        <meta name="theme-color" content="#f59e0b" />
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
-            rel="stylesheet"
+        <!-- astro-seo: handles title, description, canonical, OG, Twitter -->
+        <SEO
+            title={title}
+            description={description}
+            canonical={canonical}
+            noindex={noindex}
+            nofollow={noindex}
+            openGraph={openGraph ?? {
+                basic: {
+                    title: title,
+                    type: "website",
+                    image: image,
+                    url: canonical,
+                },
+                optional: {
+                    description: description,
+                    locale: "id_ID",
+                    siteName: "Portal Online",
+                },
+                image: {
+                    alt: title,
+                },
+            }}
+            twitter={twitter ?? {
+                card: "summary_large_image",
+                site: "@portalonlineid",
+            }}
+            extend={{
+                link: [
+                    { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
+                    {
+                        rel: "icon",
+                        type: "image/svg+xml",
+                        href: "/favicon.svg",
+                    },
+                    { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+                    { rel: "manifest", href: "/site.webmanifest" },
+                    { rel: "preconnect", href: "https://fonts.googleapis.com" },
+                    {
+                        rel: "preconnect",
+                        href: "https://fonts.gstatic.com",
+                        crossorigin: "",
+                    },
+                    {
+                        rel: "stylesheet",
+                        href: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap",
+                    },
+                ],
+                meta: [
+                    { name: "theme-color", content: "#f59e0b" },
+                    { name: "twitter:image", content: image },
+                    { name: "twitter:image:alt", content: title },
+                ],
+            }}
         />
-
-        <!-- SEO -->
-        <meta name="robots" content="index, follow" />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-
-        <title>{title}</title>
 
         <!-- View Transitions -->
         <ClientRouter />

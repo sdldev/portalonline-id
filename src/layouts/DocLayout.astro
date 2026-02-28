@@ -83,7 +83,43 @@ const categories = Object.keys(categoryCounts)
     .sort((a, b) => b.count - a.count);
 ---
 
-<Layout title={`${title} | Portal Online`} description={description}>
+<Layout
+    title={`${title} | Portal Online`}
+    description={description}
+    image={image}
+    canonical={Astro.url.href}
+    openGraph={{
+        basic: {
+            title: `${title} | Portal Online`,
+            type: "article",
+            image: image ?? "https://portalonline.id/og-default.png",
+            url: Astro.url.href,
+        },
+        optional: {
+            description: description,
+            locale: "id_ID",
+            siteName: "Portal Online",
+        },
+        article: {
+            publishedTime: new Date(date).toISOString(),
+            modifiedTime: new Date(date).toISOString(),
+            authors: [author],
+            section: category,
+            tags: tags,
+        },
+        image: {
+            url: image ?? "https://portalonline.id/og-default.png",
+            alt: title,
+            width: 1200,
+            height: 630,
+        },
+    }}
+    twitter={{
+        card: "summary_large_image",
+        site: "@portalonlineid",
+        creator: `@${author.toLowerCase().replace(/\s+/g, "")}`,
+    }}
+>
     <Navbar />
 
     <main class="page-content">
