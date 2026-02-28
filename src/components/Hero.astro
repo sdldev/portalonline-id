@@ -1,4 +1,7 @@
 ---
+import { Image } from "astro:assets";
+import logoPortal from "../../public/portalonline-sm.png";
+
 // 6 Large nodes (outer radius, 60° apart)
 const bigNodes = [
     {
@@ -142,13 +145,15 @@ const smallNodes = [
 
                     <!-- Center Logo -->
                     <div class="orbit-center">
-                        <img
-                            src="/portalonline-sm.png"
+                        <Image
+                            src={logoPortal}
                             alt="Portal Online"
                             class="orbit-logo"
-                            width="60"
-                            height="60"
+                            width={60}
+                            height={60}
                             fetchpriority="high"
+                            loading="eager"
+                            format="webp"
                         />
                     </div>
 
