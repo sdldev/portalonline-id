@@ -1,6 +1,5 @@
 ---
-// WhatsApp number (replace with actual number)
-const whatsappNumber = "6285783024799"; // Format: country code + number without + or spaces
+// WhatsApp number passed via data attribute to the form
 ---
 
 <!-- Floating Chat Button -->
@@ -60,7 +59,7 @@ const whatsappNumber = "6285783024799"; // Format: country code + number without
         </div>
     </div>
 
-    <form class="chat-form" id="chat-form">
+    <form class="chat-form" id="chat-form" data-wa="6285783024799">
         <div class="form-field">
             <label for="sender-name">Nama Anda</label>
             <input
@@ -289,29 +288,38 @@ const whatsappNumber = "6285783024799"; // Format: country code + number without
     }
 </style>
 
-<script is:inline define:vars={{ whatsappNumber }}>
+<script>
     (function () {
         // Track if already initialized to prevent duplicates
-        if (window.__chatWidgetInitialized) return;
-        window.__chatWidgetInitialized = true;
+        if ((window as any).__chatWidgetInitialized) return;
+        (window as any).__chatWidgetInitialized = true;
 
         function setupChatWidget() {
             const chatFab = document.getElementById("chat-fab");
             const chatWidget = document.getElementById("chat-widget");
-            const chatForm = document.getElementById("chat-form");
+            const chatForm = document.getElementById(
+                "chat-form",
+            ) as HTMLFormElement | null;
 
             if (!chatFab || !chatWidget || !chatForm) return;
 
-            const chatIcon = chatFab.querySelector(".chat-icon");
-            const closeIcon = chatFab.querySelector(".close-icon");
+            // Get WhatsApp number from data attribute
+            const whatsappNumber = chatForm.dataset.wa || "";
+
+            const chatIcon = chatFab.querySelector(
+                ".chat-icon",
+            ) as HTMLElement | null;
+            const closeIcon = chatFab.querySelector(
+                ".close-icon",
+            ) as HTMLElement | null;
 
             function toggleWidget(forceClose = false) {
                 const shouldOpen = forceClose
                     ? false
-                    : !chatWidget.classList.contains("open");
+                    : !chatWidget!.classList.contains("open");
 
-                chatWidget.classList.toggle("open", shouldOpen);
-                chatFab.classList.toggle("active", shouldOpen);
+                chatWidget!.classList.toggle("open", shouldOpen);
+                chatFab!.classList.toggle("active", shouldOpen);
 
                 if (chatIcon && closeIcon) {
                     chatIcon.style.display = shouldOpen ? "none" : "block";
@@ -324,22 +332,26 @@ const whatsappNumber = "6285783024799"; // Format: country code + number without
             }
 
             // FAB click handler
-            chatFab.onclick = function (e) {
+            chatFab.onclick = function (e: Event) {
                 e.stopPropagation();
                 toggleWidget();
             };
 
             // Prevent clicks inside widget from closing it
-            chatWidget.onclick = function (e) {
+            chatWidget.onclick = function (e: Event) {
                 e.stopPropagation();
             };
 
             // Form submission
-            chatForm.onsubmit = function (e) {
+            chatForm.onsubmit = function (e: Event) {
                 e.preventDefault();
 
-                const senderInput = document.getElementById("sender-name");
-                const messageInput = document.getElementById("message-content");
+                const senderInput = document.getElementById(
+                    "sender-name",
+                ) as HTMLInputElement | null;
+                const messageInput = document.getElementById(
+                    "message-content",
+                ) as HTMLTextAreaElement | null;
 
                 const sender = senderInput?.value?.trim();
                 const message = messageInput?.value?.trim();
@@ -359,20 +371,21 @@ const whatsappNumber = "6285783024799"; // Format: country code + number without
                     );
 
                     // Reset and close
-                    chatForm.reset();
+                    chatForm!.reset();
                     closeWidget();
                 }
             };
 
             // Close on outside click
-            document.addEventListener("click", function (e) {
-                const isClickInsideWidget = e.target.closest("#chat-widget");
-                const isClickOnFab = e.target.closest("#chat-fab");
+            document.addEventListener("click", function (e: Event) {
+                const target = e.target as HTMLElement;
+                const isClickInsideWidget = target.closest("#chat-widget");
+                const isClickOnFab = target.closest("#chat-fab");
 
                 if (
                     !isClickInsideWidget &&
                     !isClickOnFab &&
-                    chatWidget.classList.contains("open")
+                    chatWidget!.classList.contains("open")
                 ) {
                     closeWidget();
                 }
@@ -388,9 +401,9 @@ const whatsappNumber = "6285783024799"; // Format: country code + number without
 
         // Re-setup after View Transitions (elements get replaced)
         document.addEventListener("astro:after-swap", function () {
-            window.__chatWidgetInitialized = false;
+            (window as any).__chatWidgetInitialized = false;
             setupChatWidget();
-            window.__chatWidgetInitialized = true;
+            (window as any).__chatWidgetInitialized = true;
         });
     })();
 </script>
