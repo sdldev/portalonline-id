@@ -11,6 +11,9 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
     site: "https://portalonline.id",
     output: "server",
+    build: {
+        inlineStylesheets: "always",
+    },
     integrations: [
         sitemap({
             /** @param {any} item */

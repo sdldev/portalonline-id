@@ -706,12 +706,8 @@ const navLinks = [
         const navbar = document.getElementById("navbar");
         const mobileMenuBtn = document.getElementById("mobile-menu-btn");
         const mobileMenu = document.getElementById("mobile-menu");
-        const menuIcon = mobileMenuBtn?.querySelector(
-            ".menu-icon",
-        ) as HTMLElement | null;
-        const closeIcon = mobileMenuBtn?.querySelector(
-            ".close-icon",
-        ) as HTMLElement | null;
+        const menuIcon = mobileMenuBtn?.querySelector(".menu-icon");
+        const closeIcon = mobileMenuBtn?.querySelector(".close-icon");
 
         // Navbar scroll effect
         function handleScroll() {
@@ -730,25 +726,16 @@ const navLinks = [
         // Mobile menu toggle
         if (mobileMenuBtn) {
             // Clone and replace to remove old event listeners
-            const newBtn = mobileMenuBtn.cloneNode(true) as HTMLElement;
+            const newBtn = mobileMenuBtn.cloneNode(true);
             mobileMenuBtn.parentNode?.replaceChild(newBtn, mobileMenuBtn);
 
-            const newMenuIcon = newBtn.querySelector(
-                ".menu-icon",
-            ) as HTMLElement | null;
-            const newCloseIcon = newBtn.querySelector(
-                ".close-icon",
-            ) as HTMLElement | null;
+            const newMenuIcon = newBtn.querySelector(".menu-icon");
+            const newCloseIcon = newBtn.querySelector(".close-icon");
 
             newBtn.addEventListener("click", (e) => {
                 e.stopPropagation(); // Prevent document click from closing immediately
                 const isOpen = mobileMenu?.classList.toggle("open");
-                if (isOpen !== undefined) {
-                    (newBtn as Element).setAttribute(
-                        "aria-expanded",
-                        String(isOpen),
-                    );
-                }
+                newBtn.setAttribute("aria-expanded", isOpen);
                 if (newMenuIcon && newCloseIcon) {
                     newMenuIcon.style.display = isOpen ? "none" : "block";
                     newCloseIcon.style.display = isOpen ? "block" : "none";
@@ -762,24 +749,18 @@ const navLinks = [
         );
         mobileDropdownBtns.forEach((btn) => {
             // Remove old listeners by cloning
-            const newBtn = btn.cloneNode(true) as HTMLElement;
+            const newBtn = btn.cloneNode(true);
             btn.parentNode?.replaceChild(newBtn, btn);
 
             newBtn.addEventListener("click", (e) => {
                 e.stopPropagation();
-                const parent = (newBtn as HTMLElement).parentElement;
-                if (parent) {
-                    parent.classList.toggle("active");
-                    const icon = (newBtn as HTMLElement).querySelector(
-                        "svg",
-                    ) as HTMLElement | null;
-                    if (icon) {
-                        icon.style.transform = parent.classList.contains(
-                            "active",
-                        )
-                            ? "rotate(180deg)"
-                            : "rotate(0deg)";
-                    }
+                const parent = newBtn.parentElement;
+                parent.classList.toggle("active");
+                const icon = newBtn.querySelector("svg");
+                if (icon) {
+                    icon.style.transform = parent.classList.contains("active")
+                        ? "rotate(180deg)"
+                        : "rotate(0deg)";
                 }
             });
         });
@@ -799,13 +780,11 @@ const navLinks = [
 
         // Close mobile menu when clicking outside
         document.addEventListener("click", (e) => {
-            const target = e.target as HTMLElement | null;
             if (
                 mobileMenu?.classList.contains("open") &&
-                target &&
-                !mobileMenu.contains(target) &&
-                !mobileMenuBtn?.contains(target) &&
-                !target.closest(".ms-modal-content")
+                !mobileMenu.contains(e.target) &&
+                !mobileMenuBtn?.contains(e.target) &&
+                !e.target.closest(".ms-modal-content")
             ) {
                 mobileMenu.classList.remove("open");
                 if (menuIcon && closeIcon) {

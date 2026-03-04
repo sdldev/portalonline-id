@@ -288,9 +288,12 @@ const {
                 const scanline = document.getElementById("transition-scanline");
                 if (scanline) {
                     scanline.classList.remove("active");
-                    // Force reflow
-                    void scanline.offsetWidth;
-                    scanline.classList.add("active");
+                    // Use requestAnimationFrame to avoid forced reflow
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            scanline.classList.add("active");
+                        });
+                    });
                 }
             });
 
