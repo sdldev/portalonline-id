@@ -1,23 +1,19 @@
 {
-	"main": "dist/_worker.js/index.js",
-	"name": "portalonline-id",
-  "compatibility_date": "2026-02-27",
-  "compatibility_flags": [
-    "nodejs_compat",
-    "global_fetch_strictly_public"
-  ],
-	"assets": {
-		"binding": "ASSETS",
-		"directory": "./dist"
-	},
-  	"kv_namespaces": [
-		{
-			"binding": "CACHE_KV",
-			"id": "f0a6a9469ce349179772cad58e55c609"
-		}
-	],
-	"observability": {
-		"enabled": true
-	}
-
+    "main": "dist/_worker.js/index.js",
+    "name": "portalonline-id",
+    "compatibility_date": "2026-02-27",
+    "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+    "assets": {
+        "binding": "ASSETS",
+        "directory": "./dist",
+    },
+    "kv_namespaces": [
+        {
+            "binding": "CACHE_KV",
+            "id": "f0a6a9469ce349179772cad58e55c609",
+        },
+    ],
+    "observability": {
+        "enabled": true,
+    },
 }

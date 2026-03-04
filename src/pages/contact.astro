@@ -249,17 +249,17 @@ const contactInfo = [
             const subjek = fd.get("subject") || "";
             const pesan = fd.get("message") || "";
 
-            var text =
+            let text =
                 "Halo, saya menghubungi melalui halaman Kontak Portal Online.\n";
             text += "*Nama:* " + nama + "\n";
             text += "*Email:* " + email + "\n";
             text += "*Subjek:* " + subjek + "\n";
             text += "*Pesan:* " + pesan;
 
-            var phone = "6285783024799";
-            var url =
-                "https://wa.me/" + phone + "?text=" + encodeURIComponent(text);
-            var link = document.createElement("a");
+            const phone = "6285783024799";
+            const url =
+            "https://wa.me/" + phone + "?text=" + encodeURIComponent(text);
+            const link = document.createElement("a");
             link.href = url;
             link.target = "_blank";
             link.rel = "nofollow noopener noreferrer";

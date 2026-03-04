@@ -1,25 +1,34 @@
 {
-  "name": "portalonline-id",
-  "type": "module",
-  "version": "1.0.0",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/cloudflare": "^12.6.12",
-    "@astrojs/mdx": "^4.3.13",
-    "@astrojs/sitemap": "^3.7.0",
-    "@playform/compress": "^0.2.1",
-    "astro": "5.18.0",
-    "astro-robots-txt": "^1.0.0",
-    "astro-seo": "^1.1.0",
-    "isomorphic-dompurify": "^3.0.0"
-  },
-  "devDependencies": {
-    "@astrojs/check": "^0.9.6",
-    "typescript": "^5.9.3"
-  }
+    "name": "portalonline-id",
+    "type": "module",
+    "version": "1.0.0",
+    "scripts": {
+        "dev": "astro dev",
+        "build": "astro build",
+        "preview": "astro preview",
+        "astro": "astro",
+        "lint": "eslint .",
+        "format": "prettier -w ."
+    },
+    "dependencies": {
+        "@astrojs/cloudflare": "^12.6.12",
+        "@astrojs/mdx": "^4.3.13",
+        "@astrojs/sitemap": "^3.7.0",
+        "@playform/compress": "^0.2.1",
+        "astro": "5.18.0",
+        "astro-robots-txt": "^1.0.0",
+        "astro-seo": "^1.1.0",
+        "isomorphic-dompurify": "^3.0.0"
+    },
+    "devDependencies": {
+        "@astrojs/check": "^0.9.6",
+        "@eslint/js": "^10.0.1",
+        "eslint": "^10.0.2",
+        "eslint-plugin-astro": "^1.6.0",
+        "globals": "^17.4.0",
+        "prettier": "^3.8.1",
+        "prettier-plugin-astro": "^0.14.1",
+        "typescript": "^5.9.3",
+        "typescript-eslint": "^8.56.1"
+    }
 }

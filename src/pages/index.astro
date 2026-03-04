@@ -13,49 +13,49 @@ import Footer from "../components/Footer.astro";
 import Customers from "../components/Customers.astro";
 
 const schema = {
-	"@context": "https://schema.org",
-	"@graph": [
-		{
-			"@type": "WebSite",
-			"@id": "https://portalonline.id/#website",
-			url: "https://portalonline.id/",
-			name: "Portal Online",
-			description:
-				"Platform CMS modern dengan dashboard canggih & tema eksklusif untuk portal berita, website sekolah, perusahaan & organisasi.",
-			publisher: {
-				"@id": "https://portalonline.id/#organization",
-			},
-		},
-		{
-			"@type": "Organization",
-			"@id": "https://portalonline.id/#organization",
-			name: "Portal Online",
-			url: "https://portalonline.id/",
-			logo: {
-				"@type": "ImageObject",
-				url: "https://portalonline.id/portalonline-sm.png",
-			},
-		},
-	],
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "WebSite",
+            "@id": "https://portalonline.id/#website",
+            url: "https://portalonline.id/",
+            name: "Portal Online",
+            description:
+                "Platform CMS modern dengan dashboard canggih & tema eksklusif untuk portal berita, website sekolah, perusahaan & organisasi.",
+            publisher: {
+                "@id": "https://portalonline.id/#organization",
+            },
+        },
+        {
+            "@type": "Organization",
+            "@id": "https://portalonline.id/#organization",
+            name: "Portal Online",
+            url: "https://portalonline.id/",
+            logo: {
+                "@type": "ImageObject",
+                url: "https://portalonline.id/portalonline-sm.png",
+            },
+        },
+    ],
 };
 ---
 
 <Layout
-	title="Portal Online | Custom CMS SaaS Terbaik untuk Portal Berita"
-	description="Portal Online adalah platform SaaS CMS terbaik di Indonesia untuk membuat website portal berita, sekolah, perusahaan, dan organisasi dengan cepat tanpa coding."
-	schema={schema}
+    title="Portal Online | Custom CMS SaaS Terbaik untuk Portal Berita"
+    description="Portal Online adalah platform SaaS CMS terbaik di Indonesia untuk membuat website portal berita, sekolah, perusahaan, dan organisasi dengan cepat tanpa coding."
+    schema={schema}
 >
-	<Navbar />
-	<main>
-		<Hero />
-		<Customers />
-		<Features />
-		<!-- <DashboardPreview /> -->
-		<Comparison />
-		<Pricing />
-		<Testimonials />
-		<!-- <FAQ /> -->
-		<CTA />
-	</main>
-	<Footer />
+    <Navbar />
+    <main>
+        <Hero />
+        <Customers />
+        <Features />
+        <!-- <DashboardPreview /> -->
+        <Comparison />
+        <Pricing />
+        <Testimonials />
+        <!-- <FAQ /> -->
+        <CTA />
+    </main>
+    <Footer />
 </Layout>

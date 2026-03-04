@@ -1,0 +1,57 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+    error?: unknown;
+}
+
+const { error } = Astro.props;
+---
+
+<Layout title="500 - Kesalahan Server | Portal Online">
+    <Navbar />
+    <main class="error-page section pb-0">
+        <div class="container text-center pb-8">
+            <h1
+                class="page-title font-display text-gradient mb-4"
+                style="font-size: 6rem;"
+            >
+                500
+            </h1>
+            <h2 class="mb-4">Kesalahan Server Internal</h2>
+            <p class="page-subtitle mb-8">
+                Maaf, terjadi kesalahan pada server kami. Kami sedang berusaha
+                memperbaikinya secepat mungkin.
+            </p>
+            {
+                import.meta.env.DEV && error instanceof Error ? (
+                    <div
+                        class="error-details glass p-4 mb-8 text-left max-w-2xl mx-auto rounded-xl overflow-auto text-sm"
+                        style="color:red"
+                    >
+                        <pre>
+                            <code>
+                                {error.message}\n{error.stack}
+                            </code>
+                        </pre>
+                    </div>
+                ) : null
+            }
+            <a href="/" class="btn btn-primary"> Kembali ke Beranda </a>
+        </div>
+    </main>
+    <Footer />
+</Layout>
+
+<style>
+    .error-page {
+        min-height: calc(100vh - 100px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 120px;
+        color: var(--color-text);
+    }
+</style>

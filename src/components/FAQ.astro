@@ -211,7 +211,7 @@ const faqs = [
 <script is:inline>
     (function () {
         function initFaqReveal() {
-            var reveals = document.querySelectorAll(".faq-section .reveal");
+            const reveals = document.querySelectorAll(".faq-section .reveal");
             if (reveals.length === 0) return;
 
             var observer = new IntersectionObserver(

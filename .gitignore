@@ -25,3 +25,4 @@ pnpm-debug.log*
 
 # Wrangler / Cloudflare local dev cache
 .wrangler/
+.env*\n.env.local
