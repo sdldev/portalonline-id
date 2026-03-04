@@ -30,7 +30,7 @@ const faqs = [
 
 <section class="section faq-section">
     <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal">
             <span class="badge">FAQ</span>
             <h2 class="section-title">
                 Paling Sering <span class="text-gradient">Ditanyakan</span>
@@ -42,8 +42,10 @@ const faqs = [
 
         <div class="faq-list">
             {
-                faqs.map((faq) => (
-                    <div class="faq-item">
+                faqs.map((faq, index) => (
+                    <div
+                        class={`faq-item reveal reveal-delay-${Math.min(index + 1, 4)}`}
+                    >
                         <button
                             class="faq-question"
                             type="button"
@@ -203,5 +205,38 @@ const faqs = [
         }
 
         document.addEventListener("astro:page-load", initFAQ);
+    })();
+</script>
+
+<script is:inline>
+    (function () {
+        function initFaqReveal() {
+            var reveals = document.querySelectorAll(".faq-section .reveal");
+            if (reveals.length === 0) return;
+
+            var observer = new IntersectionObserver(
+                function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("reveal-visible");
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                },
+                { threshold: 0.1, rootMargin: "0px 0px -30px 0px" },
+            );
+
+            reveals.forEach(function (el) {
+                el.classList.remove("reveal-visible");
+                observer.observe(el);
+            });
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initFaqReveal);
+        } else {
+            initFaqReveal();
+        }
+        document.addEventListener("astro:page-load", initFaqReveal);
     })();
 </script>

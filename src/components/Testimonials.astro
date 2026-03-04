@@ -30,7 +30,7 @@ const testimonials = [
 <section class="section testi-section">
     <div class="container">
         <!-- Header -->
-        <div class="testi-header">
+        <div class="testi-header reveal">
             <h2 class="section-title">
                 Testimoni <span class="text-gradient">Klien Kami</span>
             </h2>
@@ -178,7 +178,13 @@ const testimonials = [
         align-items: center;
         opacity: 0;
         transform: translateY(28px);
-        animation: testiEnter 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+        transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+                    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .testi-grid.reveal-visible {
+        opacity: 1;
+        transform: translateY(0);
     }
 
     @media (min-width: 1024px) {
@@ -186,10 +192,6 @@ const testimonials = [
             grid-template-columns: 1fr 3fr;
             gap: 3rem;
         }
-    }
-
-    @keyframes testiEnter {
-        to { opacity: 1; transform: translateY(0); }
     }
 
     /* ── Left: Avatar Stack ── */
@@ -593,5 +595,32 @@ const testimonials = [
 
     // Run on first load AND on every Astro View Transition navigation
     document.addEventListener("astro:page-load", initTestimonials);
+
+    // Scroll-reveal for testimonials section
+    function initTestiReveal() {
+        const header = document.querySelector<HTMLElement>(".testi-header.reveal");
+        const grid = document.querySelector<HTMLElement>(".testi-grid");
+        const targets = [header, grid].filter(Boolean) as HTMLElement[];
+        if (targets.length === 0) return;
+
+        const obs = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("reveal-visible");
+                        obs.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
+        );
+
+        targets.forEach((el) => {
+            el.classList.remove("reveal-visible");
+            obs.observe(el);
+        });
+    }
+
+    document.addEventListener("astro:page-load", initTestiReveal);
 </script>
 

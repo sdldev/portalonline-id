@@ -86,7 +86,10 @@ const navLinks = [
 
         <!-- CTA Button -->
         <div class="navbar-actions">
-            <a href="#" class="btn btn-gradient hide-mobile">
+            <a
+                href="#"
+                class="btn btn-gradient hide-mobile btn-mulai-sekarang-trigger"
+            >
                 Mulai Sekarang
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -189,12 +192,100 @@ const navLinks = [
             }
             <a
                 href="#"
-                class="btn btn-gradient"
+                class="btn btn-gradient btn-mulai-sekarang-trigger"
                 style="width: 100%; margin-top: 1rem;">Mulai Sekarang</a
             >
         </div>
     </div>
 </nav>
+
+<!-- Mulai Sekarang Modal -->
+<div id="mulaiSekarangModal" class="mulai-sekarang-modal">
+    <div class="ms-modal-overlay" id="closeMsModalOverlay"></div>
+    <div class="ms-modal-content glass">
+        <div class="ms-modal-header">
+            <h3>Konfirmasi</h3>
+            <button
+                id="closeMsModalBtn"
+                class="ms-close-btn"
+                aria-label="Tutup popup"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    ><path d="M18 6 6 18"></path><path d="m6 6 12 12"
+                    ></path></svg
+                >
+            </button>
+        </div>
+
+        <div class="ms-modal-body">
+            <p class="ms-question">
+                Yakin anda sudah membaca detail layanan kami?
+            </p>
+
+            <div class="ms-links">
+                <a href="#why-choose" class="ms-link-item">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        ><polyline points="9 18 15 12 9 6"></polyline></svg
+                    >
+                    Alasan memilih portal online
+                </a>
+                <a href="#comparison" class="ms-link-item">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        ><polyline points="9 18 15 12 9 6"></polyline></svg
+                    >
+                    Perbandingan Portal online vs wordpress
+                </a>
+                <a href="#pricing" class="ms-link-item">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        ><polyline points="9 18 15 12 9 6"></polyline></svg
+                    >
+                    Harga Paket
+                </a>
+            </div>
+
+            <p class="ms-warning">
+                Jangan sampai anda membeli produk tapi tidak faham apa yang anda
+                beli.
+            </p>
+        </div>
+    </div>
+</div>
 
 <style>
     .navbar {
@@ -492,6 +583,121 @@ const navLinks = [
             transform: translateY(0);
         }
     }
+
+    /* Modal Styles */
+    .mulai-sekarang-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        padding: 1rem;
+    }
+    .mulai-sekarang-modal.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+    .ms-modal-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+    .ms-modal-content {
+        position: relative;
+        width: 100%;
+        max-width: 480px;
+        background: var(--color-surface);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1.5rem;
+        padding: 2rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        transform: translateY(20px);
+        transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        z-index: 10;
+    }
+    .mulai-sekarang-modal.active .ms-modal-content {
+        transform: translateY(0);
+    }
+    .ms-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.25rem;
+    }
+    .ms-modal-header h3 {
+        font-family: var(--font-display);
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0;
+        color: rgb(var(--color-primary));
+    }
+    .ms-close-btn {
+        background: none;
+        border: none;
+        color: var(--color-text-muted);
+        cursor: pointer;
+        padding: 0.25rem;
+        transition: color 0.2s ease;
+        display: flex;
+    }
+    .ms-close-btn:hover {
+        color: var(--color-text);
+    }
+    .ms-modal-body {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .ms-question {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--color-text);
+        margin: 0;
+    }
+    .ms-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    .ms-link-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.875rem 1rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 0.75rem;
+        color: var(--color-text);
+        font-size: 0.9375rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+    .ms-link-item:hover {
+        background: rgba(var(--color-primary), 0.1);
+        border-color: rgba(var(--color-primary), 0.2);
+        color: rgb(var(--color-primary));
+        transform: translateX(4px);
+    }
+    .ms-link-item svg {
+        color: rgb(var(--color-primary));
+        opacity: 0.8;
+    }
+    .ms-warning {
+        font-size: 0.875rem;
+        color: var(--color-text-muted);
+        margin: 0;
+        padding-top: 0.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: center;
+        font-style: italic;
+    }
 </style>
 
 <script is:inline>
@@ -577,7 +783,8 @@ const navLinks = [
             if (
                 mobileMenu?.classList.contains("open") &&
                 !mobileMenu.contains(e.target) &&
-                !mobileMenuBtn?.contains(e.target)
+                !mobileMenuBtn?.contains(e.target) &&
+                !e.target.closest(".ms-modal-content")
             ) {
                 mobileMenu.classList.remove("open");
                 if (menuIcon && closeIcon) {
@@ -585,6 +792,59 @@ const navLinks = [
                     closeIcon.style.display = "none";
                 }
             }
+        });
+
+        // Setup Mulai Sekarang Modal
+        const msModal = document.getElementById("mulaiSekarangModal");
+        const msModalBtns = document.querySelectorAll(
+            ".btn-mulai-sekarang-trigger",
+        );
+        const msCloseOverlay = document.getElementById("closeMsModalOverlay");
+        const msCloseBtn = document.getElementById("closeMsModalBtn");
+
+        function toggleMsModal() {
+            msModal?.classList.toggle("active");
+            if (msModal?.classList.contains("active")) {
+                document.body.style.overflow = "hidden";
+            } else {
+                document.body.style.overflow = "";
+            }
+            // Add close mobile menu logic when we open modal
+            mobileMenu?.classList.remove("open");
+            if (menuIcon && closeIcon) {
+                menuIcon.style.display = "block";
+                closeIcon.style.display = "none";
+            }
+        }
+
+        msModalBtns.forEach((btn) => {
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode?.replaceChild(newBtn, btn);
+            newBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                toggleMsModal();
+            });
+        });
+
+        if (msCloseOverlay) {
+            const newOverlay = msCloseOverlay.cloneNode(true);
+            msCloseOverlay.parentNode?.replaceChild(newOverlay, msCloseOverlay);
+            newOverlay.addEventListener("click", toggleMsModal);
+        }
+
+        if (msCloseBtn) {
+            const newCloseBtn = msCloseBtn.cloneNode(true);
+            msCloseBtn.parentNode?.replaceChild(newCloseBtn, msCloseBtn);
+            newCloseBtn.addEventListener("click", toggleMsModal);
+        }
+
+        // Close modal when clicking links inside it
+        const msLinks = msModal?.querySelectorAll(".ms-link-item");
+        msLinks?.forEach((link) => {
+            link.addEventListener("click", () => {
+                msModal?.classList.remove("active");
+                document.body.style.overflow = "";
+            });
         });
     }
 

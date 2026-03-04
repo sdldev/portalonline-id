@@ -1,0 +1,517 @@
+---
+import Icon from "./Icon.astro";
+
+const items = [
+    {
+        label: "Stack Teknologi",
+        portal: "Bun + Elysia + Astro + Tailwind + Postgres",
+        wp: "PHP Monolith + MySQL",
+        icon: "zap",
+    },
+    {
+        label: "Server & Hosting",
+        portal: "VPS Dedicated + CDN Global",
+        wp: "Shared Hosting, dipakai rame2",
+        icon: "server",
+    },
+    {
+        label: "Tema / Desain",
+        portal: "Custom eksklusif custom",
+        wp: "Template massal, ribuan sama, harus beli",
+        icon: "palette",
+    },
+    {
+        label: "Plugin",
+        portal: "Semua fitur built-in",
+        wp: "Butuh 5-15 plugin + berbayar",
+        icon: "blocks",
+    },
+    {
+        label: "SEO",
+        portal: "Full bawaan, Lighthouse 95+",
+        wp: "Manual + plugin berbayar",
+        icon: "search",
+    },
+    {
+        label: "Dashboard",
+        portal: "Modern & intuitif",
+        wp: "Kompleks, UI ribet",
+        icon: "layout-dashboard",
+    },
+    {
+        label: "Kecepatan",
+        portal: "Loading 1 - 3 detik",
+        wp: "2-5 detik rata-rata, tergantung hosting",
+        icon: "rocket",
+    },
+    {
+        label: "Keamanan",
+        portal: "Multi-layer + auto backup",
+        wp: "rentan jika tidak pernah update",
+        icon: "shield",
+    },
+    {
+        label: "Support",
+        portal: "Langsung ke developer",
+        wp: "Forum / freelancer",
+        icon: "message",
+    },
+    {
+        label: "Maintanance",
+        portal: "Rutin Oleh Developer",
+        wp: "Anda urus sendiri",
+        icon: "wrench",
+    },
+    {
+        label: "Biaya Total",
+        portal: "All-in-one, transparan",
+        wp: "Tersembunyi, bisa jutaan/bln",
+        icon: "coins",
+    },
+];
+---
+
+<section class="section comparison-section" id="comparison">
+    <div class="container">
+        <div class="comp-header">
+            <span class="badge">Perbandingan</span>
+            <h2 class="section-title">
+                Portal Online Bukan <span class="text-gradient">WordPress</span>?
+            </h2>
+            <p class="section-subtitle">
+               Sebelum mengambil keputusan memilih portal berita terbaik untuk anda, berikut tabel perbandingan antara portal online dan wordpress
+            </p>
+        </div>
+
+        <div class="comp-card">
+            <!-- Decorative corners -->
+            <div class="comp-corner comp-corner-tl"></div>
+            <div class="comp-corner comp-corner-br"></div>
+            <div class="comp-inner-glow"></div>
+
+            <!-- Table -->
+            <div class="comp-table-wrap">
+                <table class="comp-table">
+                    <thead>
+                        <tr>
+                            <th class="comp-th-feature">Fitur</th>
+                            <th class="comp-th-portal">
+                                <div class="comp-th-brand">
+                                    <img
+                                        src="/portalonline-sm.webp"
+                                        alt="Portal Online"
+                                        width="22"
+                                        height="22"
+                                        loading="lazy"
+                                        class="comp-th-logo"
+                                    />
+                                    <span>Portal Online</span>
+                                </div>
+                            </th>
+                            <th class="comp-th-wp">
+                                <div class="comp-th-brand">
+                                    <!-- WordPress Logo SVG -->
+                                    <svg
+                                        class="comp-wp-logo"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="22"
+                                        height="22"
+                                        viewBox="0 0 122.5 122.5"
+                                    >
+                                        <g fill="#64748b">
+                                            <path
+                                                d="M8.7 61.3c0 20.2 11.7 37.7 28.8 46L13.2 42.2c-2.9 5.9-4.5 12.5-4.5 19.1zM96.7 58.6c0-6.3-2.3-10.7-4.2-14.1-2.6-4.2-5-7.7-5-11.9 0-4.7 3.5-9 8.5-9h.6c-9-8.2-20.9-13.2-34-13.2-17.6 0-33 9-42 22.7h3.2c5.3 0 13.4-.6 13.4-.6 2.7-.2 3 3.8.3 4.1 0 0-2.7.3-5.7.5l18.2 54.2 10.9-32.8-7.8-21.4c-2.7-.2-5.3-.5-5.3-.5-2.7-.2-2.4-4.3.3-4.1 0 0 8.3.6 13.2.6 5.3 0 13.4-.6 13.4-.6 2.7-.2 3 3.8.3 4.1 0 0-2.7.3-5.7.5l18.1 53.8 5-16.7c2.2-6.9 3.8-11.9 3.8-16.2z"
+                                            ></path>
+                                            <path
+                                                d="M62.2 65.9l-15 43.6c4.5 1.3 9.2 2 14.2 2 5.8 0 11.4-1 16.6-2.9-.1-.2-.3-.5-.4-.7L62.2 65.9zM107.4 36.8c.4 3.4.7 7.1.7 11.1 0 10.9-2 23.2-8.2 38.6l-22 63.5c21.4-12.5 35.8-35.9 35.8-62.7 0-18.3-6.8-34.9-18-47.6l1.7-2.9z"
+                                            ></path>
+                                            <path
+                                                d="M61.3 0C27.4 0 0 27.4 0 61.3c0 33.8 27.4 61.3 61.3 61.3 33.8 0 61.3-27.4 61.3-61.3C122.5 27.4 95.1 0 61.3 0zM61.3 119.7c-32.2 0-58.4-26.2-58.4-58.4S29.1 2.9 61.3 2.9s58.4 26.2 58.4 58.4-26.2 58.4-58.4 58.4z"
+                                            ></path>
+                                        </g>
+                                    </svg>
+                                    <span>WordPress</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            items.map((item, i) => (
+                                <tr class="comp-tr" style={`--i:${i}`}>
+                                    <td class="comp-td-feature">
+                                        <span class="comp-icon-wrapper">
+                                            <Icon name={item.icon} size={20} />
+                                        </span>
+                                        <span class="comp-label">
+                                            {item.label}
+                                        </span>
+                                    </td>
+                                    <td class="comp-td-portal">
+                                        <span>{item.portal}</span>
+                                    </td>
+                                    <td class="comp-td-wp">
+                                        <span>{item.wp}</span>
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .comparison-section {
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Header */
+    .comp-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    .comp-header .badge {
+        margin-bottom: 1rem;
+    }
+    .comp-header .section-subtitle {
+        margin: 1rem auto 0;
+        max-width: 480px;
+    }
+
+    /* ===== CARD ===== */
+    .comp-card {
+        position: relative;
+        border-radius: 1.75rem;
+        background: linear-gradient(
+            168deg,
+            rgba(15, 23, 42, 0.92) 0%,
+            rgba(8, 12, 28, 0.96) 100%
+        );
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        overflow: hidden;
+        box-shadow:
+            0 40px 80px -20px rgba(0, 0, 0, 0.5),
+            0 0 80px -20px rgba(var(--color-primary), 0.08);
+    }
+
+    /* Corner Accents */
+    .comp-corner {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        pointer-events: none;
+        z-index: 0;
+    }
+    .comp-corner-tl {
+        top: -1px;
+        left: -1px;
+        border-top: 2px solid rgba(var(--color-primary), 0.35);
+        border-left: 2px solid rgba(var(--color-primary), 0.35);
+        border-radius: 1.75rem 0 0 0;
+    }
+    .comp-corner-br {
+        bottom: -1px;
+        right: -1px;
+        border-bottom: 2px solid rgba(var(--color-accent), 0.25);
+        border-right: 2px solid rgba(var(--color-accent), 0.25);
+        border-radius: 0 0 1.75rem 0;
+    }
+    .comp-inner-glow {
+        position: absolute;
+        top: -60px;
+        right: -30px;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        background: radial-gradient(
+            circle,
+            rgba(var(--color-primary), 0.07),
+            transparent 70%
+        );
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    /* ===== TABLE ===== */
+    .comp-table-wrap {
+        position: relative;
+        z-index: 1;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .comp-table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        min-width: 520px;
+    }
+
+    /* THEAD */
+    .comp-table thead {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .comp-table th {
+        padding: 1.25rem 1.25rem;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 0.8125rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--color-text-subtle);
+        text-align: left;
+        background: rgba(255, 255, 255, 0.02);
+        white-space: nowrap;
+    }
+    .comp-th-feature {
+        width: 30%;
+    }
+    .comp-th-portal {
+        width: 35%;
+        color: rgb(var(--color-primary)) !important;
+    }
+    .comp-th-wp {
+        width: 35%;
+    }
+
+    /* Brand in header */
+    .comp-th-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .comp-th-logo {
+        border-radius: 4px;
+    }
+
+    /* WordPress SVG logo */
+    .comp-wp-logo {
+        flex-shrink: 0;
+    }
+
+    /* TBODY */
+    .comp-tr {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.035);
+        transition: background 0.2s ease;
+        opacity: 0;
+        transform: translateY(10px);
+        animation: comp-row-in 0.35s ease forwards;
+        animation-play-state: paused;
+        animation-delay: calc(var(--i) * 50ms);
+    }
+    .comp-tr.comp-visible {
+        animation-play-state: running;
+    }
+    .comp-tr:last-child {
+        border-bottom: none;
+    }
+    .comp-tr:hover {
+        background: rgba(var(--color-primary), 0.025);
+    }
+
+    @keyframes comp-row-in {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .comp-table td {
+        padding: 0.8125rem 1.25rem;
+        font-size: 0.8125rem;
+        line-height: 1.5;
+        color: var(--color-text-muted);
+        vertical-align: middle;
+    }
+
+    /* Feature column */
+    .comp-td-feature {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--font-display);
+        font-weight: 600;
+        color: var(--color-text) !important;
+    }
+    .comp-icon-wrapper {
+        display: flex;
+        font-size: 1rem;
+        line-height: 1;
+        flex-shrink: 0;
+        color: rgb(var(--color-primary));
+        align-items: center;
+        justify-content: center;
+    }
+    .comp-label {
+        white-space: nowrap;
+    }
+
+    /* Portal column */
+    .comp-td-portal {
+        background: rgba(var(--color-primary), 0.02);
+    }
+    .comp-td-portal span {
+        color: rgba(var(--color-primary), 0.9);
+    }
+
+    /* WP column */
+    .comp-td-wp {
+        background: rgba(0, 0, 0, 0.1);
+    }
+    .comp-td-wp span {
+        color: #94a3b8;
+    }
+
+    /* Icons inline in cells */
+    .comp-icon-check,
+    .comp-icon-cross {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 0.375rem;
+        flex-shrink: 0;
+    }
+    .comp-icon-check {
+        color: rgb(var(--color-primary));
+        filter: drop-shadow(0 0 3px rgba(var(--color-primary), 0.4));
+    }
+    .comp-icon-cross {
+        color: #ef4444;
+        opacity: 0.6;
+    }
+
+    /* ===== FOOTER ===== */
+    .comp-footer {
+        position: relative;
+        z-index: 1;
+        padding: 1.5rem 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        background: rgba(255, 255, 255, 0.015);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+    }
+    .comp-score {
+        flex: 1;
+        max-width: 380px;
+    }
+    .comp-score-track {
+        height: 5px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        overflow: hidden;
+        margin-bottom: 0.4rem;
+    }
+    .comp-score-fill {
+        height: 100%;
+        width: 0%;
+        border-radius: 999px;
+        background: linear-gradient(
+            90deg,
+            rgb(var(--color-primary)),
+            rgb(var(--color-accent)),
+            rgb(var(--color-pink))
+        );
+        transition: width 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .comp-card.comp-visible .comp-score-fill {
+        width: 100%;
+    }
+    .comp-score-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.6875rem;
+        color: var(--color-text-subtle);
+    }
+    .comp-score-l strong {
+        color: rgb(var(--color-primary));
+        font-weight: 800;
+    }
+    .comp-score-r strong {
+        color: #ef4444;
+        font-weight: 800;
+    }
+    .comp-cta {
+        flex-shrink: 0;
+        padding: 0.75rem 1.5rem;
+        font-size: 0.875rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+        .comp-card {
+            border-radius: 1.25rem;
+        }
+        .comp-corner {
+            width: 50px;
+            height: 50px;
+        }
+        .comp-table th {
+            padding: 1rem 0.75rem;
+            font-size: 0.6875rem;
+        }
+        .comp-table td {
+            padding: 0.625rem 0.75rem;
+            font-size: 0.75rem;
+        }
+        .comp-th-logo,
+        .comp-wp-logo {
+            width: 18px !important;
+            height: 18px !important;
+        }
+        .comp-icon-wrapper svg {
+            width: 18px;
+            height: 18px;
+        }
+        .comp-footer {
+            flex-direction: column;
+            padding: 1.25rem 1rem;
+            gap: 1rem;
+        }
+        .comp-score {
+            max-width: none;
+            width: 100%;
+        }
+        .comp-cta {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+<script>
+    function initComparison() {
+        const card = document.querySelector<HTMLElement>(".comp-card");
+        const rows = document.querySelectorAll<HTMLElement>(".comp-tr");
+        if (!card || rows.length === 0) return;
+
+        if ((window as any).__compObs) {
+            (window as any).__compObs.disconnect();
+        }
+
+        const obs = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((e) => {
+                    if (e.isIntersecting) {
+                        card.classList.add("comp-visible");
+                        rows.forEach((r) => r.classList.add("comp-visible"));
+                        obs.unobserve(e.target);
+                    }
+                });
+            },
+            { threshold: 0.1 },
+        );
+
+        (window as any).__compObs = obs;
+        card.classList.remove("comp-visible");
+        rows.forEach((r) => r.classList.remove("comp-visible"));
+        obs.observe(card);
+    }
+
+    document.addEventListener("DOMContentLoaded", initComparison);
+    document.addEventListener("astro:page-load", initComparison);
+</script>

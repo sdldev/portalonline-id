@@ -1,0 +1,710 @@
+---
+import Icon from "./Icon.astro";
+
+const plans = [
+    {
+        name: "Basic",
+        price: "Rp 1.750k",
+        buttonText: "Get Started",
+        highlighted: false,
+    },
+    {
+        name: "Pro",
+        price: "Rp 3.500k",
+        buttonText: "Get Started",
+        highlighted: true,
+    },
+    {
+        name: "Enterprise",
+        price: "start Rp 7.500k",
+        buttonText: "Get Started",
+        highlighted: false,
+    },
+];
+
+const features = [
+    {
+        name: "Manage Server",
+        basic: true,
+        pro: true,
+        enterprise: "Dedicated",
+    },
+    {
+        name: "Free Domain",
+        basic: ".com, .id",
+        pro: ".com, .id",
+        enterprise: ".com, .id, .co, .co.id",
+    },
+    {
+        name: "Security",
+        basic: "SSL, WAF, Anti DDoS",
+        pro: "SSL, WAF, Anti DDoS",
+        enterprise: "SSL, WAF Premium, Anti DDoS",
+    },
+    {
+        name: "SEO ON PAGE",
+        basic: true,
+        pro: true,
+        enterprise: true,
+    },
+    {
+        name: "S3 Storage",
+        basic: "Unlimited",
+        pro: "Unlimited",
+        enterprise: "Unlimited",
+    },
+    {
+        name: "Tema Premium",
+        basic: "Standard",
+        pro: "Custom",
+        enterprise: "Custom by Request",
+    },
+    {
+        name: "Update",
+        basic: "Regular",
+        pro: "Custom",
+        enterprise: "By request",
+    },
+    {
+        name: "Cominicated with Dev",
+        basic: false,
+        pro: "regular",
+        enterprise: "by request",
+    },
+];
+---
+
+<section class="section pricing-section" id="pricing">
+    <div class="container">
+        <div class="pricing-header-top reveal">
+            <span class="badge">Paket Harga</span>
+            <h2 class="section-title">
+                Harga <span class="text-gradient">Paket</span> Portal Online Yang
+                Kami Tawarkan
+            </h2>
+            <p
+                class="section-subtitle"
+                style="margin: 1rem auto 3rem; text-align: center;"
+            >
+                Transparan, tanpa biaya tersembunyi. Sesuaikan kemampuan anda
+                dengan paket portal online yang kami tawarkan
+            </p>
+        </div>
+
+        <div class="pricing-table-wrapper reveal reveal-delay-2">
+            <div class="pricing-grid">
+                <!-- Top Row: Plan Names and Buttons -->
+                <div class="p-cell empty-top"></div>
+
+                {
+                    plans.map((plan) => (
+                        <div
+                            class={`p-cell plan-header ${plan.highlighted ? "highlighted" : ""}`}
+                        >
+                            <div class="plan-name">{plan.name}</div>
+                            <div class="plan-price">{plan.price}</div>
+                            <button
+                                class={`btn-plan btn-open-modal ${plan.highlighted ? "btn-purple" : "btn-dark"}`}
+                                data-plan={plan.name}
+                            >
+                                {plan.buttonText}
+                            </button>
+                        </div>
+                    ))
+                }
+
+                <!-- Divider / Features heading -->
+                <div class="p-cell feature-group" style="grid-column: 1 / -1;">
+                    Features
+                </div>
+
+                <!-- Features Rows -->
+                {
+                    features.map((feat) => (
+                        <>
+                            <div class="p-cell feature-name">{feat.name}</div>
+
+                            <div class="p-cell feature-val">
+                                {typeof feat.basic === "boolean" ? (
+                                    feat.basic ? (
+                                        <Icon
+                                            name="check"
+                                            class="check-icon"
+                                            size={20}
+                                        />
+                                    ) : (
+                                        <Icon
+                                            name="cross"
+                                            class="minus-icon"
+                                            size={20}
+                                        />
+                                    )
+                                ) : (
+                                    <span>{feat.basic}</span>
+                                )}
+                            </div>
+
+                            <div class="p-cell feature-val highlighted-col">
+                                {typeof feat.pro === "boolean" ? (
+                                    feat.pro ? (
+                                        <Icon
+                                            name="check"
+                                            class="check-icon"
+                                            size={20}
+                                        />
+                                    ) : (
+                                        <Icon
+                                            name="cross"
+                                            class="minus-icon"
+                                            size={20}
+                                        />
+                                    )
+                                ) : (
+                                    <span>{feat.pro}</span>
+                                )}
+                            </div>
+
+                            <div class="p-cell feature-val">
+                                {typeof feat.enterprise === "boolean" ? (
+                                    feat.enterprise ? (
+                                        <Icon
+                                            name="check"
+                                            class="check-icon"
+                                            size={20}
+                                        />
+                                    ) : (
+                                        <Icon
+                                            name="cross"
+                                            class="minus-icon"
+                                            size={20}
+                                        />
+                                    )
+                                ) : (
+                                    <span>{feat.enterprise}</span>
+                                )}
+                            </div>
+                        </>
+                    ))
+                }
+
+                <!-- Bottom border closure for highlighted column -->
+                <div
+                    class="p-cell"
+                    style="grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,0.05); height: 1.5rem;"
+                >
+                </div>
+            </div>
+
+            <!-- Highlight Box Background overlay (purely visual for the Starter column) -->
+            <div class="highlight-bg"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Modal -->
+<div id="pricingModal" class="pricing-modal">
+    <div class="modal-overlay" id="closeModalOverlay"></div>
+    <div class="modal-content glass">
+        <div class="modal-header">
+            <h3>
+                Pesan Paket <span id="modalPlanName" class="text-gradient"
+                ></span>
+            </h3>
+            <button
+                id="closeModalBtn"
+                class="close-btn"
+                aria-label="Tutup form"
+            >
+                <Icon name="cross" size={24} />
+            </button>
+        </div>
+        <form id="pricingForm" class="modal-form">
+            <input type="hidden" id="inputPaket" name="paket" value="" />
+
+            <div class="form-group">
+                <label for="inputName">Nama Lengkap</label>
+                <input
+                    type="text"
+                    id="inputName"
+                    name="nama"
+                    required
+                    placeholder="Masukkan nama Anda"
+                />
+            </div>
+
+            <div class="form-group">
+                <label for="inputAddress">Alamat</label>
+                <input
+                    type="text"
+                    id="inputAddress"
+                    name="alamat"
+                    required
+                    placeholder="Kota atau Instansi"
+                />
+            </div>
+
+            <div class="form-group">
+                <label for="inputMessage">Isi Pesan (Opsional)</label>
+                <textarea
+                    id="inputMessage"
+                    name="pesan"
+                    rows="3"
+                    placeholder="Pesan atau pertanyaan tambahan..."></textarea>
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn-gradient btn-submit-wa"
+                style="width: 100%; margin-top: 1rem;"
+            >
+                <Icon name="whatsapp" size={20} />
+                <span>Kirim Pesan</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .pricing-section {
+        position: relative;
+        z-index: 1;
+    }
+    .pricing-header-top {
+        text-align: center;
+    }
+
+    /* Modal Styles */
+    .pricing-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        padding: 1rem;
+    }
+    .pricing-modal.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+    .modal-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+    .modal-content {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+        background: var(--color-surface);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1.5rem;
+        padding: 2rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        transform: translateY(20px);
+        transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .pricing-modal.active .modal-content {
+        transform: translateY(0);
+    }
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+    .modal-header h3 {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0;
+    }
+    .close-btn {
+        background: none;
+        border: none;
+        color: var(--color-text-muted);
+        cursor: pointer;
+        padding: 0.25rem;
+        transition: color 0.2s ease;
+        display: flex;
+    }
+    .close-btn:hover {
+        color: var(--color-text);
+    }
+    .modal-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .form-group label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--color-text-muted);
+    }
+    .form-group input,
+    .form-group textarea {
+        background: rgba(15, 23, 42, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0.5rem;
+        padding: 0.75rem 1rem;
+        color: var(--color-text);
+        font-family: inherit;
+        font-size: 0.9375rem;
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: rgba(var(--color-primary), 0.5);
+        box-shadow: 0 0 0 2px rgba(var(--color-primary), 0.2);
+    }
+    .btn-submit-wa {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 0.875rem;
+        border-radius: 0.5rem;
+        border: none;
+        cursor: pointer;
+    }
+
+    .pricing-table-wrapper {
+        position: relative;
+        width: 100%;
+        margin: 0 auto;
+        border-radius: 1rem;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        overflow: hidden;
+    }
+
+    .pricing-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        position: relative;
+        z-index: 2;
+    }
+
+    .p-cell {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .empty-top {
+        border-bottom: none;
+    }
+
+    .plan-header {
+        align-items: center;
+        text-align: center;
+        border-bottom: none;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    .plan-name {
+        font-family: var(--font-display);
+        font-size: 1.125rem;
+        font-weight: 500;
+        color: var(--color-text);
+        margin-bottom: 0.5rem;
+    }
+
+    .plan-price {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--color-text);
+        margin-bottom: 1.25rem;
+    }
+
+    .btn-plan {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 160px;
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: all var(--transition-base);
+    }
+
+    .btn-dark {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--color-text);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .btn-dark:hover {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-purple {
+        background: rgb(var(--color-primary));
+        background: linear-gradient(
+            135deg,
+            rgb(var(--color-primary)),
+            rgb(var(--color-accent))
+        );
+        color: white;
+        box-shadow: 0 4px 20px rgba(var(--color-primary), 0.4);
+    }
+    .btn-purple:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px rgba(var(--color-primary), 0.5);
+    }
+
+    .plan-header.highlighted {
+        border-top: 1px solid rgb(var(--color-primary));
+        border-left: 1px solid rgba(var(--color-primary), 0.5);
+        border-right: 1px solid rgba(var(--color-primary), 0.5);
+        background: rgba(var(--color-primary), 0.05);
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+        position: relative;
+    }
+
+    /* Keep the left and right border going down for highlighted column */
+    .highlighted-col {
+        border-left: 1px solid rgba(var(--color-primary), 0.5);
+        border-right: 1px solid rgba(var(--color-primary), 0.5);
+        background: rgba(var(--color-primary), 0.05);
+    }
+
+    .feature-group {
+        font-family: var(--font-display);
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--color-text);
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .feature-name {
+        font-size: 0.9375rem;
+        color: var(--color-text-muted);
+        font-weight: 500;
+    }
+
+    .feature-val {
+        align-items: center;
+        text-align: center;
+        font-size: 0.9375rem;
+        font-weight: 500;
+        color: var(--color-text);
+    }
+
+    .check-icon {
+        color: rgb(var(--color-primary));
+    }
+    .minus-icon {
+        color: rgba(255, 255, 255, 0.2);
+    }
+
+    @media (max-width: 768px) {
+        .pricing-table-wrapper {
+            border-radius: 0.75rem;
+            /* Allow the inner grid to scroll */
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 0.5rem;
+        }
+
+        .pricing-grid {
+            /* 
+               We force specific widths so that the table overflows the view 
+               and becomes scrollable, rather than compressing into overlap.
+               Col 1 (Feature Name): min 140px
+               Col 2, 3, 4 (Plans): min 130px each
+            */
+            display: grid;
+            grid-template-columns: minmax(130px, 1.5fr) repeat(
+                    3,
+                    minmax(120px, 1fr)
+                );
+            min-width: 600px; /* force scrolling */
+            position: relative;
+            z-index: 2;
+        }
+
+        .empty-top,
+        .feature-group,
+        .feature-name {
+            display: flex;
+        }
+
+        .p-cell {
+            padding: 1rem 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.8125rem; /* slightly smaller text to fit */
+        }
+
+        .plan-header {
+            padding: 1.5rem 0.5rem;
+        }
+
+        .plan-name {
+            font-size: 1rem;
+        }
+
+        .plan-price {
+            font-size: 1.125rem;
+        }
+
+        .feature-name {
+            font-size: 0.8125rem;
+            padding-left: 1rem;
+        }
+
+        .btn-plan {
+            padding: 0.5rem 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        .plan-header.highlighted {
+            border-radius: 0;
+            border-top: 2px solid rgb(var(--color-primary));
+        }
+    }
+</style>
+
+<script>
+    function setupPricingModal() {
+        const modal = document.getElementById("pricingModal");
+        const buttons = document.querySelectorAll(".btn-open-modal");
+        const modalPlanName = document.getElementById("modalPlanName");
+        const inputPaket = document.getElementById(
+            "inputPaket",
+        ) as HTMLInputElement;
+        const closeOverlay = document.getElementById("closeModalOverlay");
+        const closeBtn = document.getElementById("closeModalBtn");
+        const form = document.getElementById("pricingForm") as HTMLFormElement;
+
+        // Make sure everything exists before adding listeners
+        if (!modal || buttons.length === 0) return;
+
+        function toggleModal() {
+            modal?.classList.toggle("active");
+            if (modal?.classList.contains("active")) {
+                document.body.style.overflow = "hidden"; // Prevent background scrolling
+            } else {
+                document.body.style.overflow = "";
+            }
+        }
+
+        // Open Modal
+        buttons.forEach((btn) => {
+            // Remove existing listener (if any) to prevent duplicates on Hot Module Reload or ViewTransitions
+            const newBtn = btn.cloneNode(true) as HTMLElement;
+            btn.parentNode?.replaceChild(newBtn, btn);
+
+            newBtn.addEventListener("click", () => {
+                const plan = newBtn.getAttribute("data-plan") || "Unknown";
+                if (modalPlanName) modalPlanName.textContent = plan;
+                if (inputPaket) inputPaket.value = plan;
+                toggleModal();
+            });
+        });
+
+        // Close Modal events
+        if (closeOverlay) {
+            const newOverlay = closeOverlay.cloneNode(true);
+            closeOverlay.parentNode?.replaceChild(newOverlay, closeOverlay);
+            newOverlay.addEventListener("click", toggleModal);
+        }
+
+        if (closeBtn) {
+            const newCloseBtn = closeBtn.cloneNode(true);
+            closeBtn.parentNode?.replaceChild(newCloseBtn, closeBtn);
+            newCloseBtn.addEventListener("click", toggleModal);
+        }
+
+        // Form Submit
+        if (form) {
+            const newForm = form.cloneNode(true) as HTMLFormElement;
+            form.parentNode?.replaceChild(newForm, form);
+
+            newForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const formData = new FormData(newForm);
+                const nama = formData.get("nama");
+                const alamat = formData.get("alamat");
+                const paket = formData.get("paket");
+                const pesan = formData.get("pesan");
+
+                const text = `Halo, saya tertarik dengan layanan Portal Online.
+*Nama:* ${nama}
+*Alamat/Instansi:* ${alamat}
+*Paket Pilihan:* ${paket}
+*Pesan:* ${pesan ? pesan : "-"}`;
+
+                const phone = "6285783024799";
+                const encodedText = encodeURIComponent(text);
+                const waUrl = `https://wa.me/${phone}?text=${encodedText}`;
+
+                // Create a temporary link to open WhatsApp with rel="nofollow"
+                const link = document.createElement("a");
+                link.href = waUrl;
+                link.target = "_blank";
+                link.rel = "nofollow noopener noreferrer";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                toggleModal();
+                newForm.reset();
+            });
+        }
+    }
+
+    // Initialize on load and on Astro navigation
+    document.addEventListener("DOMContentLoaded", setupPricingModal);
+    document.addEventListener("astro:page-load", setupPricingModal);
+</script>
+
+<script>
+    function initPricingReveal() {
+        const reveals = document.querySelectorAll(".pricing-section .reveal");
+        if (reveals.length === 0) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("reveal-visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
+        );
+
+        reveals.forEach((el) => {
+            el.classList.remove("reveal-visible");
+            observer.observe(el);
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", initPricingReveal);
+    document.addEventListener("astro:page-load", initPricingReveal);
+</script>
