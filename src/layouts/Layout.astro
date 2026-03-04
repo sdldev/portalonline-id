@@ -43,6 +43,7 @@ export interface Props {
         site?: string;
         creator?: string;
     };
+    schema?: object; // Injected as JSON-LD Schema.org in <head>
 }
 
 let canonicalUrlStr = Astro.props.canonical || Astro.url.href;
@@ -65,6 +66,7 @@ const {
     noindex = false,
     openGraph,
     twitter,
+    schema, // New prop
 } = Astro.props;
 ---
 
@@ -152,6 +154,16 @@ const {
                 ],
             }}
         />
+
+        {/* Inject JSON-LD Schema if provided */}
+        {
+            schema && (
+                <script
+                    type="application/ld+json"
+                    set:html={JSON.stringify(schema)}
+                />
+            )
+        }
 
         <!-- View Transitions -->
         <ClientRouter />
