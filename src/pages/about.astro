@@ -3,56 +3,68 @@ import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 
-const team = [
+const values = [
     {
-        name: "Ahmad Rizki",
-        role: "Founder & CEO",
-        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face",
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
+        title: "Teknologi Modern",
+        desc: "Kami membangun setiap portal menggunakan teknologi terkini — Bun, Elysia.js, Astro, dan Cloudflare — agar website Anda selalu cepat, aman, dan relevan.",
     },
     {
-        name: "Siti Nurhaliza",
-        role: "Editor in Chief",
-        image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop&crop=face",
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>`,
+        title: "Keamanan Prioritas",
+        desc: "SSL, firewall, DDoS protection, dan backup otomatis aktif sejak hari pertama. Data Anda terlindungi dengan standar enterprise.",
     },
     {
-        name: "Budi Santoso",
-        role: "Head of Technology",
-        image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face",
-    },
-    {
-        name: "Maya Dewi",
-        role: "Marketing Director",
-        image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop&crop=face",
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+        title: "Partner, Bukan Vendor",
+        desc: "Kami tidak hanya membuat website — kami memahami bisnis Anda. Diskusi langsung dengan developer tanpa perantara.",
     },
 ];
 
-const milestones = [
+const services = [
     {
-        year: "2020",
-        title: "Didirikan",
-        desc: "Portal Online didirikan dengan visi menyajikan berita berkualitas",
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>`,
+        title: "Portal Berita Online",
+        desc: "CMS lengkap untuk media berita dengan SEO on-page, multi-author, dan performa tinggi.",
     },
     {
-        year: "2021",
-        title: "100K Pembaca",
-        desc: "Mencapai milestone 100.000 pembaca aktif bulanan",
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
+        title: "Portal Website Sekolah",
+        desc: "Website resmi sekolah dengan PPDB online, profil guru, berita sekolah, dan galeri kegiatan.",
     },
     {
-        year: "2023",
-        title: "Ekspansi",
-        desc: "Memperluas cakupan ke seluruh Indonesia dengan 50+ jurnalis",
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3H3z"/></svg>`,
+        title: "Portal Pondok Pesantren",
+        desc: "Website pesantren modern dengan profil santri, jadwal kajian, pendaftaran online, dan informasi terkini.",
     },
     {
-        year: "2024",
-        title: "Penghargaan",
-        desc: "Meraih penghargaan Media Digital Terbaik Indonesia",
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>`,
+        title: "Portal Perusahaan",
+        desc: "Company profile profesional dengan CMS untuk berita perusahaan, katalog layanan, dan halaman karir.",
     },
+    {
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>`,
+        title: "Server Khusus Media/Company",
+        desc: "Dedicated server yang dioptimalkan untuk portal media dan perusahaan dengan traffic tinggi dan keamanan berlapis.",
+    },
+    {
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>`,
+        title: "Server Khusus CBT",
+        desc: "Server Computer Based Test untuk ujian online sekolah dan instansi dengan kapasitas besar dan stabilitas tinggi.",
+    },
+];
+
+const stats = [
+    { value: "95+", label: "Lighthouse Score" },
+    { value: "1-3s", label: "Loading Time" },
+    { value: "24/7", label: "Support" },
+    { value: "100%", label: "Custom Design" },
 ];
 ---
 
 <Layout
     title="Tentang Kami | Portal Online"
-    description="Kenali lebih dekat Portal Online, tim di balik platform CMS inovatif yang membantu media, sekolah, dan perusahaan membangun kehadiran digital profesional."
+    description="Kenali lebih dekat Portal Online, penyedia layanan CMS modern dan pembuatan website profesional untuk media, sekolah, perusahaan, dan organisasi di Indonesia."
 >
     <Navbar />
 
@@ -62,114 +74,29 @@ const milestones = [
             <div class="container">
                 <span class="badge">Tentang Kami</span>
                 <h1 class="page-title font-display">
-                    Menyajikan Kebenaran,<br />
-                    <span class="text-gradient">Membangun Kepercayaan</span>
+                    Membangun Portal Digital<br />
+                    <span class="text-gradient">Yang Anda Banggakan</span>
                 </h1>
                 <p class="page-subtitle">
-                    Portal Online adalah platform berita digital yang
-                    berkomitmen menyajikan informasi akurat, berimbang, dan
-                    terpercaya untuk masyarakat Indonesia.
+                    Portal Online adalah penyedia layanan pembuatan website dan
+                    CMS modern untuk media, sekolah, perusahaan, dan organisasi.
+                    Kami membangun dari nol dengan teknologi terkini — bukan
+                    template pasaran.
                 </p>
             </div>
         </section>
 
-        <!-- Mission Section -->
-        <section class="section">
+        <!-- Stats Section -->
+        <section class="section stats-section">
             <div class="container">
-                <div class="mission-grid">
-                    <div class="mission-card glass">
-                        <div class="mission-icon">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="32"
-                                height="32"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            >
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <path d="m9 12 2 2 4-4"></path>
-                            </svg>
-                        </div>
-                        <h3>Visi</h3>
-                        <p>
-                            Menjadi sumber berita digital terdepan dan
-                            terpercaya di Indonesia yang mendorong masyarakat
-                            informasi.
-                        </p>
-                    </div>
-                    <div class="mission-card glass">
-                        <div class="mission-icon">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="32"
-                                height="32"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            >
-                                <path
-                                    d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"
-                                ></path>
-                            </svg>
-                        </div>
-                        <h3>Misi</h3>
-                        <p>
-                            Menyajikan berita yang akurat, cepat, dan berimbang
-                            dengan menjunjung tinggi etika jurnalistik.
-                        </p>
-                    </div>
-                    <div class="mission-card glass">
-                        <div class="mission-icon">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="32"
-                                height="32"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            >
-                                <path
-                                    d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"
-                                ></path>
-                                <circle cx="9" cy="7" r="4"></circle>
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                            </svg>
-                        </div>
-                        <h3>Nilai</h3>
-                        <p>
-                            Integritas, profesionalisme, dan dedikasi tinggi
-                            dalam setiap pemberitaan yang kami sajikan.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Timeline Section -->
-        <section class="section">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        Perjalanan <span class="text-gradient">Kami</span>
-                    </h2>
-                </div>
-                <div class="timeline">
+                <div class="stats-grid">
                     {
-                        milestones.map((item, index) => (
-                            <div
-                                class="timeline-item"
-                                style={`animation-delay: ${index * 150}ms`}
-                            >
-                                <div class="timeline-year">{item.year}</div>
-                                <div class="timeline-content glass">
-                                    <h4>{item.title}</h4>
-                                    <p>{item.desc}</p>
-                                </div>
+                        stats.map((stat) => (
+                            <div class="stat-card reveal">
+                                <span class="stat-value text-gradient font-display">
+                                    {stat.value}
+                                </span>
+                                <span class="stat-label">{stat.label}</span>
                             </div>
                         ))
                     }
@@ -177,36 +104,112 @@ const milestones = [
             </div>
         </section>
 
-        <!-- Team Section -->
+        <!-- Values Section -->
         <section class="section">
             <div class="container">
-                <div class="section-header">
+                <div class="section-header reveal">
                     <h2 class="section-title">
-                        Tim <span class="text-gradient">Kami</span>
+                        Mengapa <span class="text-gradient">Kami Berbeda</span>
                     </h2>
                     <p class="section-subtitle">
-                        Para profesional di balik Portal Online
+                        Kami bukan sekadar jasa pembuatan website — kami partner
+                        digital Anda.
                     </p>
                 </div>
-                <div class="team-grid">
+                <div class="mission-grid">
                     {
-                        team.map((member, index) => (
+                        values.map((item, index) => (
                             <div
-                                class="team-card"
-                                style={`animation-delay: ${index * 100}ms`}
+                                class={`mission-card glass reveal reveal-delay-${Math.min(index + 1, 4)}`}
                             >
-                                <div class="team-image">
-                                    <img
-                                        src={member.image}
-                                        alt={member.name}
-                                        loading="lazy"
-                                    />
-                                </div>
-                                <h4 class="team-name">{member.name}</h4>
-                                <p class="team-role">{member.role}</p>
+                                <div
+                                    class="mission-icon"
+                                    set:html={item.icon}
+                                />
+                                <h3>{item.title}</h3>
+                                <p>{item.desc}</p>
                             </div>
                         ))
                     }
+                </div>
+            </div>
+        </section>
+
+        <!-- Services & Products -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2 class="section-title">
+                        Layanan & Produk <span class="text-gradient">Kami</span>
+                    </h2>
+                    <p class="section-subtitle">
+                        Solusi lengkap dari website hingga infrastruktur server
+                    </p>
+                </div>
+                <div class="services-grid">
+                    {
+                        services.map((item, index) => (
+                            <div
+                                class={`service-card glass reveal reveal-delay-${Math.min(index + 1, 4)}`}
+                            >
+                                <div
+                                    class="service-icon"
+                                    set:html={item.icon}
+                                />
+                                <h4 class="service-title">{item.title}</h4>
+                                <p class="service-desc">{item.desc}</p>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- Approach Section -->
+        <section class="section">
+            <div class="container">
+                <div class="approach-card glass reveal">
+                    <div class="approach-inner">
+                        <h2 class="section-title font-display">
+                            Pendekatan <span class="text-gradient">Kami</span>
+                        </h2>
+                        <p class="approach-text">
+                            Setiap proyek dimulai dari memahami bisnis Anda.
+                            Kami tidak langsung bicara soal fitur atau harga —
+                            kami menggali dulu: website ini mau dipakai untuk
+                            apa, target marketnya siapa, dan hasil apa yang
+                            ingin dicapai.
+                        </p>
+                        <p class="approach-text">
+                            Dari situ kami merancang portal yang bukan sekadar
+                            tampilan, melainkan <strong
+                                >alat untuk mencapai hasil</strong
+                            >. Dengan arsitektur API terpisah, dashboard admin
+                            intuitif, dan frontend yang dioptimalkan untuk SEO —
+                            Anda mendapatkan sistem kelas enterprise dengan
+                            biaya yang terjangkau.
+                        </p>
+                        <a
+                            href="/contact/"
+                            class="btn btn-gradient"
+                            style="margin-top: 1rem;"
+                        >
+                            Diskusi Gratis
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                ><path d="M5 12h14"></path><path
+                                    d="m12 5 7 7-7 7"></path></svg
+                            >
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -253,7 +256,49 @@ const milestones = [
         margin: 1rem auto 0;
     }
 
-    /* Mission */
+    /* Stats */
+    .stats-section {
+        padding-top: 0;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    @media (min-width: 640px) {
+        .stats-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    .stat-card {
+        text-align: center;
+        padding: 1.5rem 1rem;
+        background: rgba(15, 23, 42, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 1rem;
+    }
+
+    .stat-value {
+        display: block;
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+        font-size: 0.8125rem;
+        color: var(--color-text-muted);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    /* Mission / Values */
     .mission-grid {
         display: grid;
         grid-template-columns: 1fr;
@@ -299,96 +344,127 @@ const milestones = [
     .mission-card p {
         color: var(--color-text-muted);
         font-size: 0.9375rem;
-        line-height: 1.6;
+        line-height: 1.7;
     }
 
-    /* Timeline */
-    .timeline {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        max-width: 700px;
-        margin: 0 auto;
-    }
-
-    .timeline-item {
-        display: flex;
-        gap: 1.5rem;
-        align-items: flex-start;
-    }
-
-    .timeline-year {
-        flex-shrink: 0;
-        width: 70px;
-        font-family: var(--font-display);
-        font-size: 1.125rem;
-        font-weight: 700;
-        color: rgb(var(--color-primary));
-    }
-
-    .timeline-content {
-        flex: 1;
-        padding: 1.5rem;
-        border-radius: 1rem;
-    }
-
-    .timeline-content h4 {
-        font-family: var(--font-display);
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-    }
-
-    .timeline-content p {
-        color: var(--color-text-muted);
-        font-size: 0.9375rem;
-    }
-
-    /* Team */
-    .team-grid {
+    /* Services Grid */
+    .services-grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
         gap: 1.5rem;
     }
 
-    @media (min-width: 768px) {
-        .team-grid {
-            grid-template-columns: repeat(4, 1fr);
+    @media (min-width: 640px) {
+        .services-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .services-grid {
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
         }
     }
 
-    .team-card {
-        text-align: center;
+    .service-card {
+        padding: 2rem;
+        border-radius: 1.25rem;
+        transition:
+            transform 0.3s ease,
+            border-color 0.3s ease;
     }
 
-    .team-image {
-        width: 120px;
-        height: 120px;
-        margin: 0 auto 1rem;
-        border-radius: 50%;
-        overflow: hidden;
-        border: 3px solid var(--color-border);
-        transition: border-color var(--transition-base);
+    .service-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(var(--color-primary), 0.3);
     }
 
-    .team-card:hover .team-image {
-        border-color: rgb(var(--color-primary));
+    .service-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 3.5rem;
+        height: 3.5rem;
+        margin-bottom: 1.25rem;
+        background: linear-gradient(
+            135deg,
+            rgba(var(--color-primary), 0.15),
+            rgba(var(--color-accent), 0.1)
+        );
+        border-radius: 0.875rem;
+        color: rgb(var(--color-primary));
     }
 
-    .team-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .team-name {
+    .service-title {
         font-family: var(--font-display);
+        font-size: 1.0625rem;
         font-weight: 700;
-        margin-bottom: 0.25rem;
+        margin-bottom: 0.5rem;
     }
 
-    .team-role {
+    .service-desc {
         color: var(--color-text-muted);
-        font-size: 0.875rem;
+        font-size: 0.9375rem;
+        line-height: 1.6;
+    }
+
+    /* Approach */
+    .approach-card {
+        padding: 3rem 2rem;
+        border-radius: 1.5rem;
+        text-align: center;
+        max-width: 750px;
+        margin: 0 auto;
+    }
+
+    .approach-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .approach-text {
+        color: var(--color-text-muted);
+        font-size: 1rem;
+        line-height: 1.8;
+        max-width: 600px;
+        margin: 0;
+    }
+
+    @media (min-width: 768px) {
+        .approach-card {
+            padding: 4rem 3rem;
+        }
     }
 </style>
+
+<script>
+    function initAboutReveal() {
+        const reveals = document.querySelectorAll<HTMLElement>(
+            ".page-content .reveal",
+        );
+        if (reveals.length === 0) return;
+
+        const obs = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("reveal-visible");
+                        obs.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.1, rootMargin: "0px 0px -30px 0px" },
+        );
+
+        reveals.forEach((el) => {
+            el.classList.remove("reveal-visible");
+            obs.observe(el);
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", initAboutReveal);
+    document.addEventListener("astro:page-load", initAboutReveal);
+</script>
