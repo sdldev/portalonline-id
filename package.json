@@ -15,7 +15,8 @@
     "@playform/compress": "^0.2.1",
     "astro": "5.18.0",
     "astro-robots-txt": "^1.0.0",
-    "astro-seo": "^1.1.0"
+    "astro-seo": "^1.1.0",
+    "isomorphic-dompurify": "^3.0.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
