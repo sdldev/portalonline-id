@@ -73,13 +73,13 @@ const {
 <!doctype html>
 <html lang="id">
     <head>
-        <!-- Google Analytics (must be first in head for verification) -->
+        <!-- Google Analytics (runs via Partytown Web Worker) -->
         <script
-            is:inline
+            type="text/partytown"
             async
             src="https://www.googletagmanager.com/gtag/js?id=G-7D8XPV35XR"
         ></script>
-        <script is:inline>
+        <script type="text/partytown">
             window.dataLayer = window.dataLayer || [];
             function gtag() {
                 dataLayer.push(arguments);

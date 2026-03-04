@@ -13,6 +13,7 @@
     "dependencies": {
         "@astrojs/cloudflare": "^12.6.12",
         "@astrojs/mdx": "^4.3.13",
+        "@astrojs/partytown": "^2.1.4",
         "@astrojs/sitemap": "^3.7.0",
         "astro": "5.18.0",
         "astro-robots-txt": "^1.0.0",
