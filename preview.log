@@ -2,9 +2,9 @@
 > portalonline-id@1.0.0 preview
 > astro preview
 
-00:45:44 [@astrojs/cloudflare] Enabling sessions with Cloudflare KV with the "SESSION" KV binding.
-00:45:44 [@astrojs/cloudflare] If you see the error "Invalid binding `SESSION`" in your build output, you need to add the binding to your wrangler config file.
-00:45:44 [WARN] [adapter] Cloudflare does not support sharp at runtime. However, you can configure `imageService: "compile"` to optimize images with sharp on prerendered pages during build time.
+01:15:14 [@astrojs/cloudflare] Enabling sessions with Cloudflare KV with the "SESSION" KV binding.
+01:15:14 [@astrojs/cloudflare] If you see the error "Invalid binding `SESSION`" in your build output, you need to add the binding to your wrangler config file.
+01:15:14 [WARN] [adapter] Cloudflare does not support sharp at runtime. However, you can configure `imageService: "compile"` to optimize images with sharp on prerendered pages during build time.
 [preview] The @astrojs/cloudflare adapter does not support the preview command.
   Location:
     /home/indatech/Documents/PORTALONLINE/portalonline/portalonline-id/node_modules/astro/dist/core/preview/index.js:44:11
