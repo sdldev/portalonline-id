@@ -7,8 +7,6 @@ import mdx from "@astrojs/mdx";
 
 import cloudflare from "@astrojs/cloudflare";
 
-import playformCompress from "@playform/compress";
-
 // https://astro.build/config
 export default defineConfig({
     site: "https://portalonline.id",
@@ -44,18 +42,6 @@ export default defineConfig({
             },
         }),
         mdx(),
-        playformCompress({
-            CSS: true,
-            HTML: {
-                "html-minifier-terser": {
-                    removeAttributeQuotes: false,
-                },
-            },
-            JavaScript: true,
-            SVG: true,
-            Exclude: ["\\.webp$", "\\.avif$", "\\.woff2$", "\\.woff$"],
-            Logger: 1,
-        }),
     ],
     adapter: cloudflare({
         platformProxy: {

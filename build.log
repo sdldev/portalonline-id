@@ -1,0 +1,58 @@
+
+> portalonline-id@1.0.0 build
+> astro build
+
+00:45:20 [@astrojs/cloudflare] Enabling sessions with Cloudflare KV with the "SESSION" KV binding.
+00:45:20 [@astrojs/cloudflare] If you see the error "Invalid binding `SESSION`" in your build output, you need to add the binding to your wrangler config file.
+00:45:20 [WARN] [adapter] Cloudflare does not support sharp at runtime. However, you can configure `imageService: "compile"` to optimize images with sharp on prerendered pages during build time.
+00:45:21 [content] Syncing content
+00:45:21 [content] Synced content
+00:45:21 [types] Generated 394ms
+00:45:21 [build] output: "server"
+00:45:21 [build] mode: "server"
+00:45:21 [build] directory: /home/indatech/Documents/PORTALONLINE/portalonline/portalonline-id/dist/
+00:45:21 [build] adapter: @astrojs/cloudflare
+00:45:21 [build] Collecting build info...
+00:45:21 [build] ✓ Completed in 419ms.
+00:45:21 [build] Building server entrypoints...
+00:45:22 [vite] ✓ built in 1.87s
+00:45:22 [build] ✓ Completed in 1.90s.
+
+ building client (vite) 
+00:45:22 [vite] transforming...
+00:45:23 [vite] ✓ 23 modules transformed.
+00:45:23 [vite] rendering chunks...
+00:45:23 [vite] computing gzip size...
+00:45:23 [vite] dist/_astro/lorem-ipsum.astro_astro_type_script_index_0_lang.DysFWnC3.js    4.27 kB │ gzip: 1.90 kB
+00:45:23 [vite] dist/_astro/Testimonials.astro_astro_type_script_index_0_lang.BRozpbNx.js   4.78 kB │ gzip: 1.36 kB
+00:45:23 [vite] dist/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CDGfc0hd.js  15.36 kB │ gzip: 5.28 kB
+00:45:23 [vite] ✓ built in 114ms
+
+ prerendering static routes 
+00:45:23 ▶ src/pages/author/[author].astro
+00:45:23   └─ /author/tim-developer/index.html (+15ms) 
+00:45:23 ▶ src/pages/tags/[tag].astro
+00:45:23   ├─ /tags/portal-berita-online/index.html (+3ms) 
+00:45:23   ├─ /tags/sso/index.html (+2ms) 
+00:45:23   ├─ /tags/portal-online-sekolah/index.html (+3ms) 
+00:45:23   ├─ /tags/portal-berita/index.html (+2ms) 
+00:45:23   └─ /tags/cms-portal-berita-online/index.html (+3ms) 
+00:45:23 ▶ src/pages/[category]/index.astro
+00:45:23   ├─ /article/index.html (+3ms) 
+00:45:23   ├─ /tips/index.html (+3ms) 
+00:45:23   ├─ /tutorial/index.html (+3ms) 
+00:45:23   └─ /update/index.html (+3ms) 
+00:45:23 ▶ src/pages/[category]/[...slug].astro
+00:45:23   ├─ /article/apakah-portal-online/index.html (+9ms) 
+00:45:23   ├─ /article/cms-portal-berita-online-baru/index.html (+4ms) 
+00:45:23   └─ /tips/tips-nama-domain-berita-online/index.html (+5ms) 
+00:45:23 ✓ Completed in 87ms.
+
+00:45:23 [build] Rearranging server assets...
+00:45:23 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
+✓ Successfully compressed a total of 5 CSS files for 178 Bytes.
+✓ Successfully compressed a total of 13 HTML files for 94.14 KB.
+✓ Successfully compressed a total of 43 JavaScript files for 280.51 KB.
+✓ Successfully compressed a total of 1 JSON file for 144 Bytes.
+00:45:25 [build] Server built in 5.06s
+00:45:25 [build] Complete!
