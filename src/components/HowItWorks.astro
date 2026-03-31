@@ -1,0 +1,91 @@
+---
+const steps = [
+    {
+        number: "01",
+        title: "Kami petakan kebutuhan dan positioning Anda",
+        text: "Bukan langsung bicara fitur. Kami mulai dari tujuan website, target audiens, dan kesan yang harus muncul ketika user pertama kali datang.",
+    },
+    {
+        number: "02",
+        title: "Desain, struktur, dan sistem disiapkan dengan rapi",
+        text: "Kami susun tampilan, alur konten, keamanan, dan fondasi teknis supaya website tidak hanya menarik, tetapi juga nyaman dipakai tim Anda setiap hari.",
+    },
+    {
+        number: "03",
+        title: "Website live dengan support yang tetap bisa diakses",
+        text: "Sesudah go-live, Anda tetap punya jalur komunikasi yang jelas ke developer untuk update, penyempurnaan, dan kebutuhan berikutnya.",
+    },
+];
+---
+
+<section class="section process" id="how-it-works">
+    <div class="container process__wrap">
+        <div class="process__intro">
+            <span class="badge">Cara kerja</span>
+            <h2 class="section-title">
+                Alurnya dibuat <span class="text-gradient">jelas</span>, supaya Anda tidak merasa membeli sesuatu yang samar
+            </h2>
+        </div>
+
+        <div class="process__grid">
+            {steps.map((step) => (
+                <article class="process__card">
+                    <div class="process__number font-display">{step.number}</div>
+                    <h3 class="process__title">{step.title}</h3>
+                    <p class="process__text">{step.text}</p>
+                </article>
+            ))}
+        </div>
+    </div>
+</section>
+
+<style>
+    .process__wrap {
+        display: grid;
+        gap: 1.75rem;
+    }
+
+    .process__intro {
+        display: grid;
+        gap: 1rem;
+        max-width: 44rem;
+    }
+
+    .process__grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+    }
+
+    .process__card {
+        padding: 1.4rem;
+        border-radius: 1.6rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        display: grid;
+        gap: 0.9rem;
+    }
+
+    .process__number {
+        font-size: clamp(2rem, 4vw, 2.6rem);
+        line-height: 1;
+        color: rgba(var(--color-primary), 0.9);
+        letter-spacing: -0.06em;
+    }
+
+    .process__title {
+        font-size: 1.15rem;
+        line-height: 1.45;
+    }
+
+    .process__text {
+        color: var(--color-text-muted);
+        line-height: 1.75;
+    }
+
+    @media (max-width: 1023px) {
+        .process__grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

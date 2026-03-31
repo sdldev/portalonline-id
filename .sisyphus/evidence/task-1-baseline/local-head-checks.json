@@ -1,0 +1,326 @@
+[
+  {
+    "route": "/",
+    "url": "http://127.0.0.1:4173/",
+    "status": 200,
+    "statusText": "OK",
+    "titleCount": 1,
+    "titles": [
+      "Portal Online | Custom CMS SaaS Terbaik untuk Portal Berita"
+    ],
+    "metaDescriptionCount": 1,
+    "metaDescriptions": [
+      "Portal Online adalah platform SaaS CMS terbaik di Indonesia untuk membuat website portal berita, sekolah, perusahaan, dan organisasi dengan cepat tanpa coding."
+    ],
+    "canonicalCount": 1,
+    "canonicalLinks": [
+      "http://127.0.0.1:4173/"
+    ]
+  },
+  {
+    "route": "/about/",
+    "url": "http://127.0.0.1:4173/about/",
+    "status": 200,
+    "statusText": "OK",
+    "titleCount": 1,
+    "titles": [
+      "Tentang Kami | Portal Online"
+    ],
+    "metaDescriptionCount": 1,
+    "metaDescriptions": [
+      "Kenali lebih dekat Portal Online, penyedia layanan CMS modern dan pembuatan website profesional untuk media, sekolah, perusahaan, dan organisasi di Indonesia."
+    ],
+    "canonicalCount": 1,
+    "canonicalLinks": [
+      "http://127.0.0.1:4173/about/"
+    ]
+  },
+  {
+    "route": "/contact/",
+    "url": "http://127.0.0.1:4173/contact/",
+    "status": 200,
+    "statusText": "OK",
+    "titleCount": 1,
+    "titles": [
+      "Hubungi Kami | Portal Online"
+    ],
+    "metaDescriptionCount": 1,
+    "metaDescriptions": [
+      "Hubungi tim support Portal Online untuk pertanyaan bisnis, kerjasama, atau bantuan teknis terkait layanan CMS dan pembuatan portal berita."
+    ],
+    "canonicalCount": 1,
+    "canonicalLinks": [
+      "http://127.0.0.1:4173/contact/"
+    ]
+  },
+  {
+    "route": "/privacy/",
+    "url": "http://127.0.0.1:4173/privacy/",
+    "status": 200,
+    "statusText": "OK",
+    "titleCount": 1,
+    "titles": [
+      "Kebijakan Privasi | Portal Online"
+    ],
+    "metaDescriptionCount": 1,
+    "metaDescriptions": [
+      "Kebijakan Privasi Portal Online mencakup penjelasan pengumpulan data, penggunaan informasi, dan bagaimana kami melindungi privasi Anda sebagai pengguna layanan kami."
+    ],
+    "canonicalCount": 1,
+    "canonicalLinks": [
+      "http://127.0.0.1:4173/privacy/"
+    ]
+  },
+  {
+    "route": "/terms/",
+    "url": "http://127.0.0.1:4173/terms/",
+    "status": 200,
+    "statusText": "OK",
+    "titleCount": 1,
+    "titles": [
+      "Syarat & Ketentuan | Portal Online"
+    ],
+    "metaDescriptionCount": 1,
+    "metaDescriptions": [
+      "Syarat dan Ketentuan layanan Portal Online. Pahami hak dan kewajiban Anda sebelum menggunakan platform CMS kami untuk media atau perusahaan Anda."
+    ],
+    "canonicalCount": 1,
+    "canonicalLinks": [
+      "http://127.0.0.1:4173/terms/"
+    ]
+  },
+  {
+    "route": "/sitemap/",
+    "url": "http://127.0.0.1:4173/sitemap/",
+    "status": 200,
+    "statusText": "OK",
+    "titleCount": 1,
+    "titles": [
+      "Peta Situs | Portal Online"
+    ],
+    "metaDescriptionCount": 1,
+    "metaDescriptions": [
+      "Peta situs (sitemap) Portal Online. Temukan semua halaman, artikel, tutorial, dan sumber daya penting untuk navigasi yang lebih mudah."
+    ],
+    "canonicalCount": 1,
+    "canonicalLinks": [
+      "http://127.0.0.1:4173/sitemap/"
+    ]
+  },
+  {
+    "route": "/article/",
+    "url": "http://127.0.0.1:4173/article/",
+    "status": 200,
+    "statusText": "OK",
+    "titleCount": 1,
+    "titles": [
+      "Artikel & Opini | Portal Online"
+    ],
+    "metaDescriptionCount": 1,
+    "metaDescriptions": [
+      "Berbagai sudut pandang dan ulasan mendalam mengenai industri digital dan teknologi jurnalisme."
+    ],
+    "canonicalCount": 1,
+    "canonicalLinks": [
+      "http://127.0.0.1:4173/article/"
+    ]
+  },
+  {
+    "route": "/tips/",
+    "url": "http://127.0.0.1:4173/tips/",
+    "status": 200,
+    "statusText": "OK",
+    "titleCount": 1,
+    "titles": [
+      "Tips & Trik | Portal Online"
+    ],
+    "metaDescriptionCount": 1,
+    "metaDescriptions": [
+      "Panduan singkat dan trik cerdas untuk memaksimalkan performa portal berita Anda."
+    ],
+    "canonicalCount": 1,
+    "canonicalLinks": [
+      "http://127.0.0.1:4173/tips/"
+    ]
+  },
+  {
+    "route": "/tutorial/",
+    "url": "http://127.0.0.1:4173/tutorial/",
+    "status": 200,
+    "statusText": "OK",
+    "titleCount": 1,
+    "titles": [
+      "Tutorial & Dokumentasi | Portal Online"
+    ],
+    "metaDescriptionCount": 1,
+    "metaDescriptions": [
+      "Panduan lengkap memulai dan memaksimalkan penggunaan Portal Online."
+    ],
+    "canonicalCount": 1,
+    "canonicalLinks": [
+      "http://127.0.0.1:4173/tutorial/"
+    ]
+  },
+  {
+    "route": "/update/",
+    "url": "http://127.0.0.1:4173/update/",
+    "status": 200,
+    "statusText": "OK",
+    "titleCount": 1,
+    "titles": [
+      "Berita & Pengumuman | Portal Online"
+    ],
+    "metaDescriptionCount": 1,
+    "metaDescriptions": [
+      "Update terkini, peluncuran fitur baru, dan kabar penting dari tim Portal Online."
+    ],
+    "canonicalCount": 1,
+    "canonicalLinks": [
+      "http://127.0.0.1:4173/update/"
+    ]
+  },
+  {
+    "route": "/author/",
+    "url": "http://127.0.0.1:4173/author/",
+    "status": 200,
+    "statusText": "OK",
+    "titleCount": 1,
+    "titles": [
+      "Penulis | Portal Online"
+    ],
+    "metaDescriptionCount": 1,
+    "metaDescriptions": [
+      "Daftar penulis dan kontributor konten di Portal Online."
+    ],
+    "canonicalCount": 1,
+    "canonicalLinks": [
+      "http://127.0.0.1:4173/author/"
+    ]
+  },
+  {
+    "route": "/tags/",
+    "url": "http://127.0.0.1:4173/tags/",
+    "status": 200,
+    "statusText": "OK",
+    "titleCount": 1,
+    "titles": [
+      "Kumpulan Tag | Portal Online"
+    ],
+    "metaDescriptionCount": 1,
+    "metaDescriptions": [
+      "Temukan semua artikel, tutorial, dan tips berdasarkan topik di Portal Online."
+    ],
+    "canonicalCount": 1,
+    "canonicalLinks": [
+      "http://127.0.0.1:4173/tags/"
+    ]
+  },
+  {
+    "route": "/seo/google-submit/",
+    "url": "http://127.0.0.1:4173/seo/google-submit/",
+    "status": 200,
+    "statusText": "OK",
+    "titleCount": 1,
+    "titles": [
+      "Google SEO Submit Tool | Portal Online"
+    ],
+    "metaDescriptionCount": 1,
+    "metaDescriptions": [
+      "Platform CMS modern dengan dashboard canggih &#38; tema eksklusif untuk portal berita, website sekolah, perusahaan &#38; organisasi — kelola konten tanpa coding, siap dalam menit."
+    ],
+    "canonicalCount": 1,
+    "canonicalLinks": [
+      "http://127.0.0.1:4173/seo/google-submit/"
+    ]
+  },
+  {
+    "route": "/text/lorem-ipsum/",
+    "url": "http://127.0.0.1:4173/text/lorem-ipsum/",
+    "status": 200,
+    "statusText": "OK",
+    "titleCount": 1,
+    "titles": [
+      "Lorem Ipsum Generator | Portal Online"
+    ],
+    "metaDescriptionCount": 1,
+    "metaDescriptions": [
+      "Platform CMS modern dengan dashboard canggih &#38; tema eksklusif untuk portal berita, website sekolah, perusahaan &#38; organisasi — kelola konten tanpa coding, siap dalam menit."
+    ],
+    "canonicalCount": 1,
+    "canonicalLinks": [
+      "http://127.0.0.1:4173/text/lorem-ipsum/"
+    ]
+  },
+  {
+    "route": "/article/cms-portal-berita-online-baru",
+    "url": "http://127.0.0.1:4173/article/cms-portal-berita-online-baru",
+    "status": 200,
+    "statusText": "OK",
+    "titleCount": 1,
+    "titles": [
+      "Alasan Anda Butuh CMS Portal Berita Khusus | Portal Online"
+    ],
+    "metaDescriptionCount": 1,
+    "metaDescriptions": [
+      "Pernah server down saat breaking news? Cari tahu kenapa media skala nasional wajib pakai CMS portal berita online khusus, bukan sekadar platform blog biasa."
+    ],
+    "canonicalCount": 1,
+    "canonicalLinks": [
+      "http://127.0.0.1:4173/article/cms-portal-berita-online-baru"
+    ]
+  },
+  {
+    "route": "/author/tim-developer",
+    "url": "http://127.0.0.1:4173/author/tim-developer",
+    "status": 200,
+    "statusText": "OK",
+    "titleCount": 1,
+    "titles": [
+      "Tim Developer | Portal Online"
+    ],
+    "metaDescriptionCount": 1,
+    "metaDescriptions": [
+      "Profil dan daftar tulisan dari Tim Developer di Portal Online."
+    ],
+    "canonicalCount": 1,
+    "canonicalLinks": [
+      "http://127.0.0.1:4173/author/tim-developer/"
+    ]
+  },
+  {
+    "route": "/tags/cms-portal-berita-online",
+    "url": "http://127.0.0.1:4173/tags/cms-portal-berita-online",
+    "status": 200,
+    "statusText": "OK",
+    "titleCount": 1,
+    "titles": [
+      "#cms portal berita online | Portal Online"
+    ],
+    "metaDescriptionCount": 1,
+    "metaDescriptions": [
+      "Semua artikel dengan tag cms portal berita online di Portal Online."
+    ],
+    "canonicalCount": 1,
+    "canonicalLinks": [
+      "http://127.0.0.1:4173/tags/cms-portal-berita-online/"
+    ]
+  },
+  {
+    "route": "/non-existent-page/",
+    "url": "http://127.0.0.1:4173/non-existent-page/",
+    "status": 404,
+    "statusText": "Not Found",
+    "titleCount": 1,
+    "titles": [
+      "404 - Halaman Tidak Ditemukan | Portal Online"
+    ],
+    "metaDescriptionCount": 1,
+    "metaDescriptions": [
+      "Platform CMS modern dengan dashboard canggih &#38; tema eksklusif untuk portal berita, website sekolah, perusahaan &#38; organisasi — kelola konten tanpa coding, siap dalam menit."
+    ],
+    "canonicalCount": 1,
+    "canonicalLinks": [
+      "http://127.0.0.1:4173/non-existent-page/"
+    ]
+  }
+]

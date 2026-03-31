@@ -1,0 +1,50 @@
+HTTP/2 403 
+date: Sun, 29 Mar 2026 11:21:44 GMT
+content-type: text/html; charset=UTF-8
+accept-ch: Sec-CH-UA-Bitness, Sec-CH-UA-Arch, Sec-CH-UA-Full-Version, Sec-CH-UA-Mobile, Sec-CH-UA-Model, Sec-CH-UA-Platform-Version, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Platform, Sec-CH-UA, UA-Bitness, UA-Arch, UA-Full-Version, UA-Mobile, UA-Model, UA-Platform-Version, UA-Platform, UA
+cf-mitigated: challenge
+critical-ch: Sec-CH-UA-Bitness, Sec-CH-UA-Arch, Sec-CH-UA-Full-Version, Sec-CH-UA-Mobile, Sec-CH-UA-Model, Sec-CH-UA-Platform-Version, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Platform, Sec-CH-UA, UA-Bitness, UA-Arch, UA-Full-Version, UA-Mobile, UA-Model, UA-Platform-Version, UA-Platform, UA
+cross-origin-embedder-policy: require-corp
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+origin-agent-cluster: ?1
+permissions-policy: accelerometer=(),browsing-topics=(),camera=(),clipboard-read=(),clipboard-write=(),geolocation=(),gyroscope=(),hid=(),interest-cohort=(),magnetometer=(),microphone=(),payment=(),publickey-credentials-get=(),screen-wake-lock=(),serial=(),sync-xhr=(),usb=()
+referrer-policy: same-origin
+server-timing: chlray;desc="9e3e7e244e3d91f7"
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+strict-transport-security: max-age=15552000; includeSubDomains; preload
+speculation-rules: "/cdn-cgi/speculation"
+report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=6CciSu%2Bwud7pSY%2Ff56qX6PJ6FzYZVJkYXV2%2B1n4S977ut7awrzZr904FPJX43FawqCip3i%2FSZxaiNKkVAumf08vPxQEAgXVZgQ1ESQCk6s8k0cfj5MFLiG1NHE%2F5srfcnHM%3D"}]}
+nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+expect-ct: max-age=86400, enforce
+x-xss-protection: 1; mode=block
+server: cloudflare
+cf-ray: 9e3e7e244e3d91f7-MRS
+alt-svc: h3=":443"; ma=86400
+
+HTTP/2 403 
+date: Sun, 29 Mar 2026 11:21:51 GMT
+content-type: text/html; charset=UTF-8
+accept-ch: Sec-CH-UA-Bitness, Sec-CH-UA-Arch, Sec-CH-UA-Full-Version, Sec-CH-UA-Mobile, Sec-CH-UA-Model, Sec-CH-UA-Platform-Version, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Platform, Sec-CH-UA, UA-Bitness, UA-Arch, UA-Full-Version, UA-Mobile, UA-Model, UA-Platform-Version, UA-Platform, UA
+cf-mitigated: challenge
+critical-ch: Sec-CH-UA-Bitness, Sec-CH-UA-Arch, Sec-CH-UA-Full-Version, Sec-CH-UA-Mobile, Sec-CH-UA-Model, Sec-CH-UA-Platform-Version, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Platform, Sec-CH-UA, UA-Bitness, UA-Arch, UA-Full-Version, UA-Mobile, UA-Model, UA-Platform-Version, UA-Platform, UA
+cross-origin-embedder-policy: require-corp
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+origin-agent-cluster: ?1
+permissions-policy: accelerometer=(),browsing-topics=(),camera=(),clipboard-read=(),clipboard-write=(),geolocation=(),gyroscope=(),hid=(),interest-cohort=(),magnetometer=(),microphone=(),payment=(),publickey-credentials-get=(),screen-wake-lock=(),serial=(),sync-xhr=(),usb=()
+referrer-policy: same-origin
+server-timing: chlray;desc="9e3e7e511ddae224"
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+strict-transport-security: max-age=15552000; includeSubDomains; preload
+speculation-rules: "/cdn-cgi/speculation"
+report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=%2FXRPC01VzLfOLUlm89HrFfg09t0awJj58OUHVbdqX0%2FAXX9PmVa31ekVRMeax1JL0i2FXRCepkZ0WMmthcr5kFmIK4xszeRurR9cT%2BInvCx6q03Oa2wMKiRC%2FRSJqXinK3c%3D"}]}
+nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+expect-ct: max-age=86400, enforce
+x-xss-protection: 1; mode=block
+server: cloudflare
+cf-ray: 9e3e7e511ddae224-MRS
+alt-svc: h3=":443"; ma=86400
+

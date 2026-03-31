@@ -290,16 +290,20 @@ const navLinks = [
 <style>
     .navbar {
         position: fixed;
+        background: rgba(2, 6, 23, 0.85);
         top: 0;
         left: 0;
         right: 0;
         z-index: 100;
         padding: 1rem;
-        transition: padding var(--transition-base);
+        transition: padding var(--transition-base), background var(--transition-base);
     }
 
     .navbar.scrolled {
         padding: 0.75rem 1rem;
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
     }
 
     .navbar-container {
@@ -490,10 +494,14 @@ const navLinks = [
 
     .mobile-menu {
         display: none;
-        position: absolute;
-        top: 100%;
+        position: fixed;
+        top: auto;
         left: 1rem;
         right: 1rem;
+        bottom: 1rem;
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
+        z-index: 99;
         padding-top: 0.5rem;
     }
 
@@ -507,6 +515,11 @@ const navLinks = [
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
+        background: rgba(15, 23, 42, 0.98);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(245, 158, 11, 0.15);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
     }
 
     .mobile-nav-link {
@@ -743,6 +756,12 @@ const navLinks = [
             newBtn.addEventListener("click", (e) => {
                 e.stopPropagation(); // Prevent document click from closing immediately
                 const isOpen = mobileMenu?.classList.toggle("open");
+                // Lock scroll when menu is open
+                if (isOpen) {
+                    document.body.style.overflow = "hidden";
+                } else {
+                    document.body.style.overflow = "";
+                }
                 if (isOpen !== undefined) {
                     (newBtn as Element).setAttribute(
                         "aria-expanded",
@@ -790,6 +809,7 @@ const navLinks = [
             .forEach((link) => {
                 link.addEventListener("click", () => {
                     mobileMenu.classList.remove("open");
+                    document.body.style.overflow = "";
                     if (menuIcon && closeIcon) {
                         menuIcon.style.display = "block";
                         closeIcon.style.display = "none";
@@ -808,6 +828,7 @@ const navLinks = [
                 !target.closest(".ms-modal-content")
             ) {
                 mobileMenu.classList.remove("open");
+                document.body.style.overflow = "";
                 if (menuIcon && closeIcon) {
                     menuIcon.style.display = "block";
                     closeIcon.style.display = "none";
