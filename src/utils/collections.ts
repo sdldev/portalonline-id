@@ -42,3 +42,36 @@ export async function getCollection<C extends CollectionKey>(
         console.warn = originalWarn;
     }
 }
+
+type FeaturedCapableData = {
+    date: Date | string;
+    strategic?: boolean;
+    featured?: boolean;
+};
+
+type FeaturedCapableEntry = {
+    id: string;
+    data: FeaturedCapableData;
+};
+
+const toTimestamp = (value: Date | string): number => {
+    if (value instanceof Date) return value.getTime();
+    return new Date(value).getTime();
+};
+
+const isStrategic = (entry: FeaturedCapableEntry): boolean => {
+    return Boolean(entry.data.strategic || entry.data.featured);
+};
+
+export function selectFeaturedEntry<T extends FeaturedCapableEntry>(
+    entries: readonly T[],
+): T | undefined {
+    if (entries.length === 0) return undefined;
+
+    const sortedByDate = [...entries].sort(
+        (a, b) => toTimestamp(b.data.date) - toTimestamp(a.data.date),
+    );
+
+    const strategicEntry = sortedByDate.find((entry) => isStrategic(entry));
+    return strategicEntry ?? sortedByDate[0];
+}

@@ -56,7 +56,9 @@ try {
         urlObj.pathname += "/";
         canonicalUrlStr = urlObj.href;
     }
-} catch (e) {}
+} catch {
+    canonicalUrlStr = Astro.props.canonical || Astro.url.href;
+}
 
 const {
     title = "Portal Online | Custom CMS SaaS Terbaik untuk Portal Berita",
@@ -81,8 +83,8 @@ const {
         ></script>
         <script type="text/partytown">
             window.dataLayer = window.dataLayer || [];
-            function gtag() {
-                dataLayer.push(arguments);
+            function gtag(...args) {
+                dataLayer.push(args);
             }
             gtag("js", new Date());
             gtag("config", "G-7D8XPV35XR");
@@ -95,14 +97,6 @@ const {
         <meta
             http-equiv="Content-Security-Policy"
             content="upgrade-insecure-requests"
-        />
-
-        <!-- Preload navbar logo for FCP/LCP -->
-        <link
-            rel="preload"
-            href="/portalonline-sm.webp"
-            as="image"
-            type="image/webp"
         />
 
         <!-- astro-seo: handles title, description, canonical, OG, Twitter -->
@@ -148,13 +142,6 @@ const {
                     { rel: "manifest", href: "/site.webmanifest" },
                     {
                         rel: "preload",
-                        href: "/fonts/plus-jakarta-sans-latin.woff2",
-                        as: "font",
-                        type: "font/woff2",
-                        crossorigin: "",
-                    },
-                    {
-                        rel: "preload",
                         href: "/fonts/space-grotesk-latin.woff2",
                         as: "font",
                         type: "font/woff2",
@@ -187,9 +174,6 @@ const {
         <!-- Skip to main content - Accessibility -->
         <a href="#main-content" class="skip-link">Skip to main content</a>
 
-        <!-- Scanline Transition Overlay -->
-        <div class="transition-scanline" id="transition-scanline"></div>
-
         <slot />
 
         <!-- WhatsApp Chat Widget -->
@@ -212,74 +196,36 @@ const {
                 overflow: hidden;
             }
 
-            /* Scanline Transition Overlay */
-            .transition-scanline {
-                position: fixed;
-                left: 0;
-                right: 0;
-                top: -100%;
-                height: 150px;
-                z-index: 9999;
-                pointer-events: none;
-                background: linear-gradient(
-                    to bottom,
-                    transparent,
-                    rgba(245, 158, 11, 0.3),
-                    transparent
-                );
-                backdrop-filter: brightness(1.5);
-                -webkit-backdrop-filter: brightness(1.5);
-            }
-
-            .transition-scanline.active {
-                animation: scanline-sweep 0.8s ease-in-out forwards;
-            }
-
-            @keyframes scanline-sweep {
-                0% {
-                    top: -100%;
-                }
-                100% {
-                    top: 100%;
-                }
-            }
-
-            /* View Transitions - Custom Animations */
-            /* Old page animation (exit) */
+            /* View transitions: subtle editorial fade/slide */
             ::view-transition-old(root) {
-                animation: page-exit 0.4s cubic-bezier(0.22, 1, 0.36, 1)
+                animation: page-exit 0.2s cubic-bezier(0.22, 1, 0.36, 1)
                     forwards;
             }
 
-            /* New page animation (enter) */
             ::view-transition-new(root) {
-                animation: page-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1)
+                animation: page-enter 0.24s cubic-bezier(0.22, 1, 0.36, 1)
                     forwards;
             }
 
             @keyframes page-exit {
                 0% {
                     opacity: 1;
-                    transform: scale(1);
-                    filter: blur(0px);
+                    transform: translateY(0);
                 }
                 100% {
                     opacity: 0;
-                    transform: scale(1.05);
-                    filter: blur(15px);
+                    transform: translateY(6px);
                 }
             }
 
             @keyframes page-enter {
                 0% {
                     opacity: 0;
-                    transform: scale(0.96);
-                    filter: blur(15px);
+                    transform: translateY(6px);
                 }
                 100% {
                     opacity: 1;
-                    transform: scale(1);
-                    filter: blur(0px);
+                    transform: translateY(0);
                 }
             }
 
@@ -289,44 +235,70 @@ const {
             }
 
             ::view-transition-old(main-content) {
-                animation: page-exit 0.4s cubic-bezier(0.22, 1, 0.36, 1)
+                animation: page-exit 0.24s cubic-bezier(0.22, 1, 0.36, 1)
                     forwards;
             }
 
             ::view-transition-new(main-content) {
-                animation: page-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1)
+                animation: page-enter 0.28s cubic-bezier(0.22, 1, 0.36, 1)
                     forwards;
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                ::view-transition-old(root),
+                ::view-transition-new(root),
+                ::view-transition-old(main-content),
+                ::view-transition-new(main-content) {
+                    animation: none;
+                }
             }
         </style>
 
         <script>
-            // Trigger scanline effect on page navigation
-            document.addEventListener("astro:before-swap", () => {
-                const scanline = document.getElementById("transition-scanline");
-                if (scanline) {
-                    scanline.classList.remove("active");
-                    // Use requestAnimationFrame to avoid forced reflow
-                    requestAnimationFrame(() => {
-                        requestAnimationFrame(() => {
-                            scanline.classList.add("active");
-                        });
+            const revealSelector = ".reveal";
+
+            const initReveal = () => {
+                const elements = Array.from(
+                    document.querySelectorAll<HTMLElement>(revealSelector),
+                );
+
+                if (elements.length === 0) return;
+
+                const prefersReducedMotion = window.matchMedia(
+                    "(prefers-reduced-motion: reduce)",
+                ).matches;
+
+                if (prefersReducedMotion) {
+                    elements.forEach((element) => {
+                        element.classList.add("reveal-visible");
                     });
+                    return;
                 }
-            });
+
+                const observer = new IntersectionObserver(
+                    (entries, obs) => {
+                        entries.forEach((entry) => {
+                            if (!entry.isIntersecting) return;
+                            entry.target.classList.add("reveal-visible");
+                            obs.unobserve(entry.target);
+                        });
+                    },
+                    { threshold: 0.14, rootMargin: "0px 0px -10% 0px" },
+                );
+
+                elements.forEach((element) => {
+                    if (element.classList.contains("reveal-visible")) return;
+                    observer.observe(element);
+                });
+            };
+
+            document.addEventListener("DOMContentLoaded", initReveal);
+            document.addEventListener("astro:page-load", initReveal);
 
             // Scroll to top on navigation
             document.addEventListener("astro:after-swap", () => {
                 window.scrollTo({ top: 0, behavior: "instant" });
-            });
-
-            // Clean up scanline after animation
-            document.addEventListener("astro:page-load", () => {
-                const scanline = document.getElementById("transition-scanline");
-                if (scanline) {
-                    setTimeout(() => {
-                        scanline.classList.remove("active");
-                    }, 800);
-                }
+                initReveal();
             });
         </script>
     </body>

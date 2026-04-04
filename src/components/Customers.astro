@@ -1,52 +1,25 @@
 ---
-import { Image } from "astro:assets";
-
 const customers = [
-    {
-        src: "/images/customer/portal-berita-bilah-news.avif",
-        alt: "Portal Berita Bilah News",
-    },
-    {
-        src: "/images/customer/portal-berita-indikator-media.avif",
-        alt: "Portal Berita Indikator Media",
-    },
-    {
-        src: "/images/customer/portal-berita-kabar-siang.avif",
-        alt: "Portal Berita Kabar Siang",
-    },
-    {
-        src: "/images/customer/portal-berita-online-rasionalis.avif",
-        alt: "Portal Berita Online Rasionalis",
-    },
-    {
-        src: "/images/customer/portal-berita-swararakjatmerdeka.avif",
-        alt: "Portal Berita Swara Rakyat Merdeka",
-    },
-    {
-        src: "/images/customer/website -perusahaan-jasaku.avif",
-        alt: "Website Perusahaan Jasaku",
-    },
+    { src: "/images/customer/portal-berita-bilah-news.avif", alt: "Logo Bilah News" },
+    { src: "/images/customer/portal-berita-indikator-media.avif", alt: "Logo Indikator Media" },
+    { src: "/images/customer/portal-berita-kabar-siang.avif", alt: "Logo Kabar Siang" },
+    { src: "/images/customer/portal-berita-online-rasionalis.avif", alt: "Logo Rasionalis" },
+    { src: "/images/customer/portal-berita-swararakjatmerdeka.avif", alt: "Logo Swara Rakyat Merdeka" },
+    { src: "/images/customer/website -perusahaan-jasaku.avif", alt: "Logo Jasaku" },
 ];
 ---
 
-<section class="customers-section">
+<section class="section proof-strip" aria-labelledby="proof-title">
     <div class="container">
-        <p class="customers-label">Mereka percaya kami</p>
-    </div>
+        <p class="proof-kicker eyebrow reveal" id="proof-title">
+            Dipercaya portal berita dan brand digital di berbagai kota
+        </p>
 
-    <div class="marquee-wrapper">
-        <div class="marquee-track">
+        <div class="proof-grid reveal reveal-delay-1" aria-label="Portofolio klien Portal Online">
             {
-                [...customers, ...customers].map((c) => (
-                    <div class="marquee-item">
-                        <Image
-                            src={c.src}
-                            alt={c.alt}
-                            width={140}
-                            height={52}
-                            loading="lazy"
-                            format="webp"
-                        />
+                customers.map((customer) => (
+                    <div class="proof-logo-item">
+                        <img src={customer.src} alt={customer.alt} loading="lazy" class="proof-logo" />
                     </div>
                 ))
             }
@@ -54,102 +27,52 @@ const customers = [
     </div>
 </section>
 
-<style is:global>
-    /* ===== CUSTOMERS MARQUEE ===== */
-    .customers-section {
-        padding: 3rem 0;
-        position: relative;
-        overflow: hidden;
+<style>
+    .proof-strip {
+        padding-top: 1.5rem;
+        padding-bottom: 3.4rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .customers-label {
-        text-align: center;
-        font-size: 0.8125rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        color: var(--color-text-subtle);
+    .proof-kicker {
+        text-align: left;
         margin-bottom: 2rem;
     }
 
-    /* Fade edges */
-    .marquee-wrapper {
-        position: relative;
-        overflow: hidden;
-    }
-
-    .marquee-wrapper::before,
-    .marquee-wrapper::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 120px;
-        z-index: 2;
-        pointer-events: none;
-    }
-
-    .marquee-wrapper::before {
-        left: 0;
-        background: linear-gradient(
-            to right,
-            var(--color-bg, #080e1a),
-            transparent
-        );
-    }
-
-    .marquee-wrapper::after {
-        right: 0;
-        background: linear-gradient(
-            to left,
-            var(--color-bg, #080e1a),
-            transparent
-        );
-    }
-
-    .marquee-track {
+    .proof-grid {
         display: flex;
-        gap: 3rem;
-        width: max-content;
-        animation: marquee-scroll 28s linear infinite;
-    }
-
-    .marquee-track:hover {
-        animation-play-state: paused;
-    }
-
-    @keyframes marquee-scroll {
-        0% {
-            transform: translateX(0);
-        }
-        100% {
-            transform: translateX(-50%);
-        }
-    }
-
-    .marquee-item {
-        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
         align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        height: 52px;
-        padding: 0 1rem;
-        filter: grayscale(1) brightness(0.7);
-        opacity: 0.6;
-        transition:
-            filter 0.3s ease,
-            opacity 0.3s ease;
+        gap: 1.5rem 2.5rem;
+        max-width: 74rem;
     }
 
-    .marquee-item:hover {
-        filter: grayscale(0) brightness(1);
-        opacity: 1;
+    .proof-logo-item {
+        opacity: 0.74;
+        filter: saturate(0.5) grayscale(0.6);
+        transition: opacity var(--transition-fast), filter var(--transition-fast);
     }
 
-    .marquee-item img {
-        height: 100%;
+    .proof-logo-item:hover {
+        opacity: 0.82;
+        filter: saturate(0.58) grayscale(0.45);
+    }
+
+    .proof-logo {
+        height: 48px;
         width: auto;
-        max-width: 140px;
         object-fit: contain;
+        border-radius: 0.45rem;
+    }
+
+    @media (min-width: 768px) {
+        .proof-grid {
+            gap: 1.9rem 3.1rem;
+        }
+
+        .proof-logo {
+            height: 56px;
+        }
     }
 </style>

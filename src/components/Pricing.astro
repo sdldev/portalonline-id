@@ -1,710 +1,359 @@
 ---
-import Icon from "./Icon.astro";
-
 const plans = [
     {
-        name: "Basic",
-        price: "Rp 1.750k",
-        buttonText: "Get Started",
-        highlighted: false,
+        id: "starter",
+        name: "Starter",
+        priceIdr: "250K",
+        period: "/bulan",
+        description: "Ideal untuk organisasi kecil atau portal regional yang baru tumbuh.",
+        features: [
+            "Penerbitan artikel tidak terbatas",
+            "Kategori dan tag terstruktur",
+            "Manajemen user hingga 3 akun",
+            "Optimasi performa berbasis edge",
+        ],
+        cta: "Mulai Starter",
+        popular: false,
     },
     {
+        id: "pro",
         name: "Pro",
-        price: "Rp 3.500k",
-        buttonText: "Get Started",
-        highlighted: true,
+        priceIdr: "750K",
+        period: "/bulan",
+        description: "Dirancang untuk media berkembang dengan trafik harian yang terus naik.",
+        features: [
+            "User redaksi tidak terbatas",
+            "Optimasi SEO dan analitik",
+            "Prioritas support via WhatsApp",
+            "Pendampingan strategi konten",
+        ],
+        cta: "Mulai Pro",
+        popular: true,
     },
     {
+        id: "enterprise",
         name: "Enterprise",
-        price: "start Rp 7.500k",
-        buttonText: "Get Started",
-        highlighted: false,
+        priceIdr: "Custom",
+        period: "",
+        description: "Untuk kebutuhan migrasi besar, integrasi sistem, dan infrastruktur khusus.",
+        features: [
+            "SLA uptime 99.9%",
+            "Integrasi API eksternal",
+            "Migrasi data CMS lama",
+            "Account manager khusus",
+        ],
+        cta: "Diskusikan Kebutuhan",
+        popular: false,
     },
 ];
 
-const features = [
+const faqs = [
     {
-        name: "Manage Server",
-        basic: true,
-        pro: true,
-        enterprise: "Dedicated",
+        q: "Apakah paket bisa diupgrade kapan saja?",
+        a: "Bisa. Upgrade dapat dilakukan kapan saja dan kami bantu transisi tanpa mengganggu alur kerja redaksi.",
     },
     {
-        name: "Free Domain",
-        basic: ".com, .id",
-        pro: ".com, .id",
-        enterprise: ".com, .id, .co, .co.id",
+        q: "Apakah tersedia migrasi dari WordPress?",
+        a: "Tersedia. Untuk data dalam jumlah besar, proses migrasi dilakukan bertahap agar aman dan tetap cepat.",
     },
     {
-        name: "Security",
-        basic: "SSL, WAF, Anti DDoS",
-        pro: "SSL, WAF, Anti DDoS",
-        enterprise: "SSL, WAF Premium, Anti DDoS",
-    },
-    {
-        name: "SEO ON PAGE",
-        basic: true,
-        pro: true,
-        enterprise: true,
-    },
-    {
-        name: "S3 Storage",
-        basic: "Unlimited",
-        pro: "Unlimited",
-        enterprise: "Unlimited",
-    },
-    {
-        name: "Tema Premium",
-        basic: "Standard",
-        pro: "Custom",
-        enterprise: "Custom by Request",
-    },
-    {
-        name: "Update",
-        basic: "Regular",
-        pro: "Custom",
-        enterprise: "By request",
-    },
-    {
-        name: "Cominicated with Dev",
-        basic: false,
-        pro: "regular",
-        enterprise: "by request",
+        q: "Apakah ada kontrak minimal?",
+        a: "Tidak ada kontrak panjang untuk paket bulanan standar. Detail kerja sama ditentukan transparan di awal.",
     },
 ];
 ---
 
-<section class="section pricing-section" id="pricing">
-    <div class="container">
-        <div class="pricing-header-top reveal">
-            <span class="badge">Paket Harga</span>
-            <h2 class="section-title">
-                Harga <span class="text-gradient">Paket</span> Portal Online Yang
-                Kami Tawarkan
-            </h2>
-            <p
-                class="section-subtitle"
-                style="margin: 1rem auto 3rem; text-align: center;"
-            >
-                Transparan, tanpa biaya tersembunyi. Sesuaikan kemampuan anda
-                dengan paket portal online yang kami tawarkan
+<section class="section pricing-section" id="pricing" aria-labelledby="pricing-title">
+    <div class="container pricing-shell">
+        <div class="pricing-header reveal">
+            <p class="eyebrow">Paket Layanan</p>
+            <h2 class="pricing-main-title font-display" id="pricing-title">Harga jelas, tanpa biaya tersembunyi.</h2>
+            <p class="pricing-subtitle">
+                Pilih skala layanan sesuai kebutuhan tim Anda. Semua paket dibangun di atas fondasi teknis yang sama kuat.
             </p>
         </div>
 
-        <div class="pricing-table-wrapper reveal reveal-delay-2">
-            <div class="pricing-grid">
-                <!-- Top Row: Plan Names and Buttons -->
-                <div class="p-cell empty-top"></div>
-
-                {
-                    plans.map((plan) => (
-                        <div
-                            class={`p-cell plan-header ${plan.highlighted ? "highlighted" : ""}`}
-                        >
-                            <div class="plan-name">{plan.name}</div>
-                            <div class="plan-price">{plan.price}</div>
-                            <button
-                                class={`btn-plan btn-open-modal ${plan.highlighted ? "btn-purple" : "btn-dark"}`}
-                                data-plan={plan.name}
-                            >
-                                {plan.buttonText}
-                            </button>
+        <div class="pricing-cards reveal reveal-delay-1">
+            {
+                plans.map((plan) => (
+                    <article class={`pricing-card ${plan.popular ? "pricing-card-popular" : ""}`}>
+                        {plan.popular && <span class="badge-popular">Pilihan Utama</span>}
+                        <h3 class="plan-name font-display">{plan.name}</h3>
+                        <p class="plan-desc">{plan.description}</p>
+                        <div class="plan-price-wrap">
+                            <span class="plan-price font-display">{plan.priceIdr}</span>
+                            <span class="plan-period">{plan.period}</span>
                         </div>
-                    ))
-                }
+                        <ul class="plan-features">
+                            {plan.features.map((feature) => <li>{feature}</li>)}
+                        </ul>
+                        <a
+                            href={`https://wa.me/6285783024799?text=${encodeURIComponent(`Halo, saya tertarik dengan paket ${plan.name} Portal Online.`)}`}
+                            target="_blank"
+                            rel="nofollow noopener noreferrer"
+                            class={`btn ${plan.popular ? "btn-primary" : "btn-secondary"}`}
+                        >
+                            {plan.cta}
+                        </a>
+                    </article>
+                ))
+            }
+        </div>
 
-                <!-- Divider / Features heading -->
-                <div class="p-cell feature-group" style="grid-column: 1 / -1;">
-                    Features
-                </div>
-
-                <!-- Features Rows -->
+        <div class="pricing-faq reveal reveal-delay-2">
+            <h3 class="faq-header font-display">Pertanyaan Umum</h3>
+            <div class="faq-grid">
                 {
-                    features.map((feat) => (
-                        <>
-                            <div class="p-cell feature-name">{feat.name}</div>
-
-                            <div class="p-cell feature-val">
-                                {typeof feat.basic === "boolean" ? (
-                                    feat.basic ? (
-                                        <Icon
-                                            name="check"
-                                            class="check-icon"
-                                            size={20}
-                                        />
-                                    ) : (
-                                        <Icon
-                                            name="cross"
-                                            class="minus-icon"
-                                            size={20}
-                                        />
-                                    )
-                                ) : (
-                                    <span>{feat.basic}</span>
-                                )}
-                            </div>
-
-                            <div class="p-cell feature-val highlighted-col">
-                                {typeof feat.pro === "boolean" ? (
-                                    feat.pro ? (
-                                        <Icon
-                                            name="check"
-                                            class="check-icon"
-                                            size={20}
-                                        />
-                                    ) : (
-                                        <Icon
-                                            name="cross"
-                                            class="minus-icon"
-                                            size={20}
-                                        />
-                                    )
-                                ) : (
-                                    <span>{feat.pro}</span>
-                                )}
-                            </div>
-
-                            <div class="p-cell feature-val">
-                                {typeof feat.enterprise === "boolean" ? (
-                                    feat.enterprise ? (
-                                        <Icon
-                                            name="check"
-                                            class="check-icon"
-                                            size={20}
-                                        />
-                                    ) : (
-                                        <Icon
-                                            name="cross"
-                                            class="minus-icon"
-                                            size={20}
-                                        />
-                                    )
-                                ) : (
-                                    <span>{feat.enterprise}</span>
-                                )}
-                            </div>
-                        </>
+                    faqs.map((faq) => (
+                        <article class="faq-item">
+                            <h4 class="faq-q">{faq.q}</h4>
+                            <p class="faq-a">{faq.a}</p>
+                        </article>
                     ))
                 }
-
-                <!-- Bottom border closure for highlighted column -->
-                <div
-                    class="p-cell"
-                    style="grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,0.05); height: 1.5rem;"
-                >
-                </div>
             </div>
-
-            <!-- Highlight Box Background overlay (purely visual for the Starter column) -->
-            <div class="highlight-bg"></div>
         </div>
     </div>
 </section>
 
-<!-- Pricing Modal -->
-<div id="pricingModal" class="pricing-modal">
-    <div class="modal-overlay" id="closeModalOverlay"></div>
-    <div class="modal-content glass">
-        <div class="modal-header">
-            <h3>
-                Pesan Paket <span id="modalPlanName" class="text-gradient"
-                ></span>
-            </h3>
-            <button
-                id="closeModalBtn"
-                class="close-btn"
-                aria-label="Tutup form"
-            >
-                <Icon name="cross" size={24} />
-            </button>
-        </div>
-        <form id="pricingForm" class="modal-form">
-            <input type="hidden" id="inputPaket" name="paket" value="" />
-
-            <div class="form-group">
-                <label for="inputName">Nama Lengkap</label>
-                <input
-                    type="text"
-                    id="inputName"
-                    name="nama"
-                    required
-                    placeholder="Masukkan nama Anda"
-                />
-            </div>
-
-            <div class="form-group">
-                <label for="inputAddress">Alamat</label>
-                <input
-                    type="text"
-                    id="inputAddress"
-                    name="alamat"
-                    required
-                    placeholder="Kota atau Instansi"
-                />
-            </div>
-
-            <div class="form-group">
-                <label for="inputMessage">Isi Pesan (Opsional)</label>
-                <textarea
-                    id="inputMessage"
-                    name="pesan"
-                    rows="3"
-                    placeholder="Pesan atau pertanyaan tambahan..."></textarea>
-            </div>
-
-            <button
-                type="submit"
-                class="btn btn-gradient btn-submit-wa"
-                style="width: 100%; margin-top: 1rem;"
-            >
-                <Icon name="whatsapp" size={20} />
-                <span>Kirim Pesan</span>
-            </button>
-        </form>
-    </div>
-</div>
-
 <style>
     .pricing-section {
-        position: relative;
-        z-index: 1;
-    }
-    .pricing-header-top {
-        text-align: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    /* Modal Styles */
-    .pricing-modal {
-        position: fixed;
-        inset: 0;
-        z-index: 1000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s ease;
-        padding: 1rem;
+    .pricing-shell {
+        display: grid;
+        gap: 2.4rem;
     }
-    .pricing-modal.active {
-        opacity: 1;
-        pointer-events: auto;
+
+    .pricing-header {
+        max-width: 58rem;
     }
-    .modal-overlay {
-        position: absolute;
-        inset: 0;
-        background: rgba(15, 23, 42, 0.85);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
+
+    .pricing-main-title {
+        margin-top: 0.8rem;
+        font-size: clamp(2.2rem, 4.5vw, 3.9rem);
+        line-height: 1.08;
     }
-    .modal-content {
-        position: relative;
-        width: 100%;
-        max-width: 500px;
-        background: var(--color-surface);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 1.5rem;
-        padding: 2rem;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        transform: translateY(20px);
-        transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    }
-    .pricing-modal.active .modal-content {
-        transform: translateY(0);
-    }
-    .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1.5rem;
-    }
-    .modal-header h3 {
-        font-family: var(--font-display);
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin: 0;
-    }
-    .close-btn {
-        background: none;
-        border: none;
+
+    .pricing-subtitle {
+        margin-top: 1rem;
         color: var(--color-text-muted);
-        cursor: pointer;
-        padding: 0.25rem;
-        transition: color 0.2s ease;
-        display: flex;
+        line-height: 1.75;
+        max-width: 64ch;
     }
-    .close-btn:hover {
-        color: var(--color-text);
-    }
-    .modal-form {
-        display: flex;
-        flex-direction: column;
+
+    .pricing-cards {
+        display: grid;
+        grid-template-columns: 1fr;
         gap: 1rem;
     }
-    .form-group {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    .form-group label {
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: var(--color-text-muted);
-    }
-    .form-group input,
-    .form-group textarea {
-        background: rgba(15, 23, 42, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 0.5rem;
-        padding: 0.75rem 1rem;
-        color: var(--color-text);
-        font-family: inherit;
-        font-size: 0.9375rem;
-        transition:
-            border-color 0.2s ease,
-            box-shadow 0.2s ease;
-    }
-    .form-group input:focus,
-    .form-group textarea:focus {
-        outline: none;
-        border-color: rgba(var(--color-primary), 0.5);
-        box-shadow: 0 0 0 2px rgba(var(--color-primary), 0.2);
-    }
-    .btn-submit-wa {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        font-size: 1rem;
-        font-weight: 600;
-        padding: 0.875rem;
-        border-radius: 0.5rem;
-        border: none;
-        cursor: pointer;
-    }
 
-    .pricing-table-wrapper {
-        position: relative;
-        width: 100%;
-        margin: 0 auto;
+    .pricing-card {
+        border: 1px solid rgba(255, 255, 255, 0.13);
         border-radius: 1rem;
-        background: var(--color-surface);
-        border: 1px solid var(--color-border);
-        overflow: hidden;
-    }
-
-    .pricing-grid {
-        display: grid;
-        grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        padding: 1.35rem;
+        background: rgba(255, 255, 255, 0.01);
         position: relative;
-        z-index: 2;
+        overflow: hidden;
+        transition:
+            border-color var(--transition-fast),
+            transform var(--transition-fast),
+            box-shadow var(--transition-fast);
     }
 
-    .p-cell {
-        padding: 1.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    .pricing-card::before,
+    .pricing-card::after {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity var(--transition-fast), transform var(--transition-fast);
     }
 
-    .empty-top {
-        border-bottom: none;
+    .pricing-card::before {
+        width: 180px;
+        height: 180px;
+        top: -78px;
+        right: -72px;
+        border-radius: 999px;
+        background: radial-gradient(circle, rgba(var(--color-primary), 0.25) 0%, rgba(var(--color-primary), 0) 72%);
+        transform: translate3d(8px, -8px, 0);
     }
 
-    .plan-header {
-        align-items: center;
-        text-align: center;
-        border-bottom: none;
-        padding-top: 2rem;
-        padding-bottom: 2rem;
+    .pricing-card::after {
+        width: 120px;
+        height: 120px;
+        left: -46px;
+        bottom: -54px;
+        border-radius: 999px;
+        background: radial-gradient(circle, rgba(120, 204, 179, 0.2) 0%, rgba(120, 204, 179, 0) 70%);
+        transform: translate3d(-8px, 8px, 0);
+    }
+
+    .pricing-card-popular {
+        border-color: rgba(var(--color-primary), 0.34);
+        background: rgba(var(--color-primary), 0.03);
+    }
+
+    .pricing-card:hover,
+    .pricing-card:focus-within {
+        border-color: rgba(255, 255, 255, 0.24);
+        transform: translateY(-2px);
+        box-shadow: 0 16px 28px rgba(3, 10, 20, 0.28);
+    }
+
+    .pricing-card:hover::before,
+    .pricing-card:hover::after,
+    .pricing-card:focus-within::before,
+    .pricing-card:focus-within::after {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+
+    .pricing-card-popular:hover,
+    .pricing-card-popular:focus-within {
+        border-color: rgba(var(--color-primary), 0.52);
+        box-shadow:
+            inset 0 0 0 1px rgba(var(--color-primary), 0.14),
+            0 18px 30px rgba(var(--color-primary), 0.16);
+    }
+
+    .badge-popular {
+        display: inline-flex;
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: rgb(var(--color-primary));
     }
 
     .plan-name {
-        font-family: var(--font-display);
-        font-size: 1.125rem;
-        font-weight: 500;
-        color: var(--color-text);
-        margin-bottom: 0.5rem;
+        margin-top: 0.45rem;
+        font-size: 2.05rem;
+        line-height: 1.05;
+    }
+
+    .plan-desc {
+        margin-top: 0.4rem;
+        color: var(--color-text-muted);
+        line-height: 1.65;
+        min-height: 2.8rem;
+    }
+
+    .plan-price-wrap {
+        margin-top: 0.95rem;
+        display: flex;
+        align-items: baseline;
+        gap: 0.45rem;
     }
 
     .plan-price {
-        font-family: var(--font-display);
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--color-text);
-        margin-bottom: 1.25rem;
+        font-size: 2.4rem;
+        line-height: 1;
     }
 
-    .btn-plan {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        max-width: 160px;
-        padding: 0.75rem 1rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        border-radius: 0.5rem;
-        transition: all var(--transition-base);
+    .plan-period {
+        color: var(--color-text-soft);
+        font-size: 0.9rem;
     }
 
-    .btn-dark {
-        background: rgba(255, 255, 255, 0.1);
-        color: var(--color-text);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    .btn-dark:hover {
-        background: rgba(255, 255, 255, 0.15);
+    .plan-features {
+        margin-top: 1rem;
+        list-style: none;
+        display: grid;
+        gap: 0.5rem;
     }
 
-    .btn-purple {
-        background: rgb(var(--color-primary));
-        background: linear-gradient(
-            135deg,
-            rgb(var(--color-primary)),
-            rgb(var(--color-accent))
-        );
-        color: white;
-        box-shadow: 0 4px 20px rgba(var(--color-primary), 0.4);
-    }
-    .btn-purple:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 25px rgba(var(--color-primary), 0.5);
-    }
-
-    .plan-header.highlighted {
-        border-top: 1px solid rgb(var(--color-primary));
-        border-left: 1px solid rgba(var(--color-primary), 0.5);
-        border-right: 1px solid rgba(var(--color-primary), 0.5);
-        background: rgba(var(--color-primary), 0.05);
-        border-top-left-radius: 0.5rem;
-        border-top-right-radius: 0.5rem;
+    .plan-features li {
+        color: var(--color-text-soft);
+        font-size: 0.92rem;
+        line-height: 1.6;
         position: relative;
+        padding-left: 1rem;
     }
 
-    /* Keep the left and right border going down for highlighted column */
-    .highlighted-col {
-        border-left: 1px solid rgba(var(--color-primary), 0.5);
-        border-right: 1px solid rgba(var(--color-primary), 0.5);
-        background: rgba(var(--color-primary), 0.05);
+    .plan-features li::before {
+        content: "";
+        width: 0.35rem;
+        height: 0.35rem;
+        border-radius: 999px;
+        background: rgba(var(--color-primary), 0.9);
+        position: absolute;
+        left: 0;
+        top: 0.52rem;
     }
 
-    .feature-group {
-        font-family: var(--font-display);
-        font-size: 1.25rem;
-        font-weight: 600;
+    .pricing-card .btn {
+        margin-top: 1.15rem;
+        width: 100%;
+    }
+
+    .pricing-faq {
+        margin-top: 0.8rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding-top: 1.55rem;
+    }
+
+    .faq-header {
+        font-size: 1.7rem;
+        margin-bottom: 1rem;
+    }
+
+    .faq-grid {
+        display: grid;
+        gap: 0.85rem;
+    }
+
+    .faq-item {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0.85rem;
+        padding: 0.95rem;
+        background: rgba(255, 255, 255, 0.01);
+    }
+
+    .faq-q {
+        font-size: 0.97rem;
         color: var(--color-text);
-        padding-top: 1.5rem;
-        padding-bottom: 1.5rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .feature-name {
-        font-size: 0.9375rem;
-        color: var(--color-text-muted);
-        font-weight: 500;
+    .faq-a {
+        margin-top: 0.45rem;
+        color: var(--color-text-soft);
+        line-height: 1.65;
+        font-size: 0.9rem;
     }
 
-    .feature-val {
-        align-items: center;
-        text-align: center;
-        font-size: 0.9375rem;
-        font-weight: 500;
-        color: var(--color-text);
+    @media (min-width: 980px) {
+        .pricing-cards {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .faq-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
     }
 
-    .check-icon {
-        color: rgb(var(--color-primary));
+    @media (max-width: 767px) {
+        .pricing-card {
+            padding: 1.2rem;
+        }
+
+        .plan-desc {
+            min-height: 0;
+        }
     }
-    .minus-icon {
-        color: rgba(255, 255, 255, 0.2);
-    }
 
-    @media (max-width: 768px) {
-        .pricing-table-wrapper {
-            border-radius: 0.75rem;
-            /* Allow the inner grid to scroll */
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            padding-bottom: 0.5rem;
+    @media (prefers-reduced-motion: reduce) {
+        .pricing-card,
+        .pricing-card::before,
+        .pricing-card::after {
+            transition: none;
         }
 
-        .pricing-grid {
-            /* 
-               We force specific widths so that the table overflows the view 
-               and becomes scrollable, rather than compressing into overlap.
-               Col 1 (Feature Name): min 140px
-               Col 2, 3, 4 (Plans): min 130px each
-            */
-            display: grid;
-            grid-template-columns: minmax(130px, 1.5fr) repeat(
-                    3,
-                    minmax(120px, 1fr)
-                );
-            min-width: 600px; /* force scrolling */
-            position: relative;
-            z-index: 2;
-        }
-
-        .empty-top,
-        .feature-group,
-        .feature-name {
-            display: flex;
-        }
-
-        .p-cell {
-            padding: 1rem 0.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.8125rem; /* slightly smaller text to fit */
-        }
-
-        .plan-header {
-            padding: 1.5rem 0.5rem;
-        }
-
-        .plan-name {
-            font-size: 1rem;
-        }
-
-        .plan-price {
-            font-size: 1.125rem;
-        }
-
-        .feature-name {
-            font-size: 0.8125rem;
-            padding-left: 1rem;
-        }
-
-        .btn-plan {
-            padding: 0.5rem 0.5rem;
-            font-size: 0.75rem;
-        }
-
-        .plan-header.highlighted {
-            border-radius: 0;
-            border-top: 2px solid rgb(var(--color-primary));
+        .pricing-card:hover,
+        .pricing-card:focus-within {
+            transform: none;
         }
     }
 </style>
-
-<script>
-    function setupPricingModal() {
-        const modal = document.getElementById("pricingModal");
-        const buttons = document.querySelectorAll(".btn-open-modal");
-        const modalPlanName = document.getElementById("modalPlanName");
-        const inputPaket = document.getElementById(
-            "inputPaket",
-        ) as HTMLInputElement;
-        const closeOverlay = document.getElementById("closeModalOverlay");
-        const closeBtn = document.getElementById("closeModalBtn");
-        const form = document.getElementById("pricingForm") as HTMLFormElement;
-
-        // Make sure everything exists before adding listeners
-        if (!modal || buttons.length === 0) return;
-
-        function toggleModal() {
-            modal?.classList.toggle("active");
-            if (modal?.classList.contains("active")) {
-                document.body.style.overflow = "hidden"; // Prevent background scrolling
-            } else {
-                document.body.style.overflow = "";
-            }
-        }
-
-        // Open Modal
-        buttons.forEach((btn) => {
-            // Remove existing listener (if any) to prevent duplicates on Hot Module Reload or ViewTransitions
-            const newBtn = btn.cloneNode(true) as HTMLElement;
-            btn.parentNode?.replaceChild(newBtn, btn);
-
-            newBtn.addEventListener("click", () => {
-                const plan = newBtn.getAttribute("data-plan") || "Unknown";
-                if (modalPlanName) modalPlanName.textContent = plan;
-                if (inputPaket) inputPaket.value = plan;
-                toggleModal();
-            });
-        });
-
-        // Close Modal events
-        if (closeOverlay) {
-            const newOverlay = closeOverlay.cloneNode(true);
-            closeOverlay.parentNode?.replaceChild(newOverlay, closeOverlay);
-            newOverlay.addEventListener("click", toggleModal);
-        }
-
-        if (closeBtn) {
-            const newCloseBtn = closeBtn.cloneNode(true);
-            closeBtn.parentNode?.replaceChild(newCloseBtn, closeBtn);
-            newCloseBtn.addEventListener("click", toggleModal);
-        }
-
-        // Form Submit
-        if (form) {
-            const newForm = form.cloneNode(true) as HTMLFormElement;
-            form.parentNode?.replaceChild(newForm, form);
-
-            newForm.addEventListener("submit", (e) => {
-                e.preventDefault();
-                const formData = new FormData(newForm);
-                const nama = formData.get("nama");
-                const alamat = formData.get("alamat");
-                const paket = formData.get("paket");
-                const pesan = formData.get("pesan");
-
-                const text = `Halo, saya tertarik dengan layanan Portal Online.
-*Nama:* ${nama}
-*Alamat/Instansi:* ${alamat}
-*Paket Pilihan:* ${paket}
-*Pesan:* ${pesan ? pesan : "-"}`;
-
-                const phone = "6285783024799";
-                const encodedText = encodeURIComponent(text);
-                const waUrl = `https://wa.me/${phone}?text=${encodedText}`;
-
-                // Create a temporary link to open WhatsApp with rel="nofollow"
-                const link = document.createElement("a");
-                link.href = waUrl;
-                link.target = "_blank";
-                link.rel = "nofollow noopener noreferrer";
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-                toggleModal();
-                newForm.reset();
-            });
-        }
-    }
-
-    // Initialize on load and on Astro navigation
-    document.addEventListener("DOMContentLoaded", setupPricingModal);
-    document.addEventListener("astro:page-load", setupPricingModal);
-</script>
-
-<script>
-    function initPricingReveal() {
-        const reveals = document.querySelectorAll(".pricing-section .reveal");
-        if (reveals.length === 0) return;
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("reveal-visible");
-                        observer.unobserve(entry.target);
-                    }
-                });
-            },
-            { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
-        );
-
-        reveals.forEach((el) => {
-            el.classList.remove("reveal-visible");
-            observer.observe(el);
-        });
-    }
-
-    document.addEventListener("DOMContentLoaded", initPricingReveal);
-    document.addEventListener("astro:page-load", initPricingReveal);
-</script>

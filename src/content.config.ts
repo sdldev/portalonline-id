@@ -1,21 +1,20 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
-import type { Loader } from "astro/loaders";
+import type { Loader, LoaderContext } from "astro/loaders";
 
 function safeGlob(options: Parameters<typeof glob>[0]): Loader {
     const originalLoader = glob(options);
     return {
         ...originalLoader,
-        load: async (context: any) => {
+        load: async (context: LoaderContext) => {
             const originalWarn = context.logger.warn;
-            context.logger.warn = (msg: any, ...args: any[]) => {
+            context.logger.warn = (message: string) => {
                 if (
-                    typeof msg === "string" &&
-                    (msg.includes("does not exist or is empty") ||
-                        msg.includes("No files found matching"))
+                    message.includes("does not exist or is empty") ||
+                    message.includes("No files found matching")
                 )
                     return;
-                originalWarn.call(context.logger, msg, ...args);
+                originalWarn.call(context.logger, message);
             };
             try {
                 return await originalLoader.load(context);
@@ -53,6 +52,8 @@ const article = defineCollection({
     }),
     schema: baseSchema.extend({
         category: z.enum(["Artikel", "Opini", "Ulasan"]).default("Artikel"),
+        strategic: z.boolean().default(false),
+        featured: z.boolean().default(false),
     }),
 });
 

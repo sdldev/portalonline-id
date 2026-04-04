@@ -214,7 +214,7 @@ const faqs = [
             const reveals = document.querySelectorAll(".faq-section .reveal");
             if (reveals.length === 0) return;
 
-            var observer = new IntersectionObserver(
+            const observer = new IntersectionObserver(
                 function (entries) {
                     entries.forEach(function (entry) {
                         if (entry.isIntersecting) {

@@ -8,7 +8,7 @@ export default [
     ...tseslint.configs.recommended,
     ...eslintPluginAstro.configs.recommended,
     {
-        ignores: ["dist/**", ".astro/**", "node_modules/**"]
+        ignores: ["dist/**", ".astro/**", ".wrangler/**", "node_modules/**"]
     },
     {
         languageOptions: {

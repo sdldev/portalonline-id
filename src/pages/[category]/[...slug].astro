@@ -1,18 +1,22 @@
 ---
 import { render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 import { getCollection } from "../../utils/collections";
 import DocLayout from "../../layouts/DocLayout.astro";
 
 export const prerender = true;
 
-export async function getStaticPaths() {
-    const categories = ["article", "tips", "tutorial", "update"];
+export const categories = ["article", "tips", "tutorial", "update"] as const;
+type ContentCategory = (typeof categories)[number];
+type ContentEntry = CollectionEntry<ContentCategory>;
 
+export async function getStaticPaths() {
+    const categories = ["article", "tips", "tutorial", "update"] as const;
     // Create an array of paths by fetching all collections
     const paths = await Promise.all(
         categories.map(async (cat) => {
-            const items = await getCollection(cat as any);
-            return items.map((entry: any) => ({
+            const items = await getCollection(cat);
+            return items.map((entry) => ({
                 params: { category: cat, slug: entry.id },
                 props: { entry },
             }));
@@ -22,7 +26,7 @@ export async function getStaticPaths() {
     return paths.flat();
 }
 
-const { entry } = Astro.props;
+const { entry } = Astro.props as { entry: ContentEntry };
 const { Content, headings } = await render(entry);
 ---
 

@@ -24,7 +24,7 @@ export default defineConfig({
                     item.changefreq = "daily";
                     item.priority = 1.0;
                 } else if (
-                    item.url.match(/https:\/\/portalonline\.id\/[^\/]+\/[^\/]+/)
+                    item.url.match(/https:\/\/portalonline\.id\/[^/]+\/[^/]+/)
                 ) {
                     // Inner items (e.g. /article/something)
                     item.changefreq = "weekly";
