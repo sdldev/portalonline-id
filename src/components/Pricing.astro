@@ -5,14 +5,15 @@ const plans = [
     {
         id: "starter",
         name: "Starter",
-        priceIdr: "250K",
+        priceIdr: "150K",
         period: "/bulan",
-        description: "Ideal untuk organisasi kecil atau portal regional yang baru tumbuh.",
+        description: "Cocok untuk media baru/media daerah .",
         features: [
             "Penerbitan artikel tidak terbatas",
-            "Kategori dan tag terstruktur",
+            "Optimasi SEO",
             "Manajemen user hingga 3 akun",
-            "Optimasi performa berbasis edge",
+            "1 Theme premium",
+            "Free Domain .id, com jika berlangganan 1 tahun",
         ],
         cta: "Mulai Starter",
         popular: false,
@@ -20,14 +21,17 @@ const plans = [
     {
         id: "pro",
         name: "Pro",
-        priceIdr: "750K",
+        priceIdr: "300K",
         period: "/bulan",
-        description: "Dirancang untuk media berkembang dengan trafik harian yang terus naik.",
+        description: "Dirancang untuk media yang sudah berjalan dengan trafik tinggi.",
         features: [
-            "User redaksi tidak terbatas",
+            "Penerbitan artikel tidak terbatas",
             "Optimasi SEO dan analitik",
-            "Prioritas support via WhatsApp",
-            "Pendampingan strategi konten",
+            "Manajemen user hingga 10 akun",
+            "Free akses ke semua theme premium",
+            "Free Domain .id, com jika berlangganan 1 tahun",
+            "Prioritas dukungan teknis",
+            "Komunikasi langsung dengan tim developer untuk penyesuaian fitur dan troubleshooting",
         ],
         cta: "Mulai Pro",
         popular: true,
@@ -51,16 +55,32 @@ const plans = [
 
 const faqs = [
     {
-        q: "Apakah paket bisa diupgrade kapan saja?",
-        a: "Bisa. Upgrade dapat dilakukan kapan saja dan kami bantu transisi tanpa mengganggu alur kerja redaksi.",
+        q: "Aplikasi bisa langsung digunakan?",
+        a: "Ya. CMS Portal Online sudah siap digunakan. Setelah anda akun anda aktif, dan domain sudah di arahkan ke server kami, anda bisa langsung login dan mulai membuat konten. Kami juga menyediakan dokumentasi lengkap dan tutorial untuk membantu anda memulai dengan cepat.",
     },
     {
-        q: "Apakah tersedia migrasi dari WordPress?",
-        a: "Tersedia. Untuk data dalam jumlah besar, proses migrasi dilakukan bertahap agar aman dan tetap cepat.",
+        q: "Apakah fitur SEO sudah termasuk?",
+        a: "Ya, semua paket sudah termasuk fitur optimasi SEO dasar seperti meta tag otomatis, sitemap, dan struktur URL yang ramah SEO. Paket Pro juga dilengkapi dengan analitik SEO untuk membantu anda memantau performa konten dan mendapatkan rekomendasi optimasi lebih lanjut.",        
+    },
+    {
+        q: "Apakah ada biaya tambahan?",
+        a: "Tidak ada biaya tersembunyi. Semua layanan dan fitur yang termasuk dalam paket sudah dijelaskan secara transparan di awal. Biaya tambahan hanya berlaku untuk kebutuhan khusus di luar cakupan paket, yang akan didiskusikan terlebih dahulu.",
+    },
+    {
+        q: "Apakah bisa migrasi dari WordPress?",
+        a: "Migrasi dari WordPress hanya tersedia untuk paket Pro, karena memerlukan penyesuaian teknis dan sumber daya yang lebih besar. Untuk paket Starter, kami menyarankan untuk memulai dengan setup baru untuk memastikan performa optimal.",
     },
     {
         q: "Apakah ada kontrak minimal?",
         a: "Tidak ada kontrak panjang untuk paket bulanan standar. Detail kerja sama ditentukan transparan di awal.",
+    },
+    {
+        q: "Jika saya lupa bayar, apakah data hilang?",
+        a: "Tidak langsung hilang, tapi akses akan dibatasi sampai pembayaran dilakukan. Kami menyarankan untuk segera menghubungi tim support jika mengalami kendala pembayaran agar data tetap aman.",
+    },
+    {
+        q: "Bagaimana dengan Maintenance dan Backup?",
+        a: "Kami melakukan maintenance rutin untuk memastikan performa optimal dan keamanan data. Backup dilakukan secara berkala untuk melindungi data Anda, dan kami memiliki prosedur pemulihan data yang cepat jika terjadi masalah.",
     },
 ];
 ---
@@ -71,7 +91,7 @@ const faqs = [
             <p class="eyebrow">Paket Layanan</p>
             <h2 class="pricing-main-title font-display" id="pricing-title">Harga jelas, tanpa biaya tersembunyi.</h2>
             <p class="pricing-subtitle">
-                Pilih skala layanan sesuai kebutuhan tim Anda. Semua paket dibangun di atas fondasi teknis yang sama kuat.
+                Semua paket sudah termasuk server khusus portal, dukungan teknis, maintanance, dan update fitur. Anda tidak perlu lagi keluar biaya untuk theme, plugin, atau optimasi performa. Kami juga menyediakan opsi kustomisasi dan integrasi untuk kebutuhan khusus di luar cakupan paket standar.
             </p>
         </div>
 
