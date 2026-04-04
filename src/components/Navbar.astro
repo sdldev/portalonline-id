@@ -430,7 +430,7 @@ const navLinks = [
         const dropdownItems = Array.from(
             dropdownMenu?.querySelectorAll<HTMLElement>(".dropdown-item") ?? [],
         );
-        let dropdownCloseTimer: ReturnType<typeof setTimeout> | null = null;
+        let dropdownCloseTimer: number | null = null;
 
         const cleanups: Array<() => void> = [];
         const addListener = (
