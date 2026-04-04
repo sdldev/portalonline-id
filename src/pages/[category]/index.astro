@@ -4,6 +4,7 @@ import { getCollection, selectFeaturedEntry } from "../../utils/collections";
 import Layout from "../../layouts/Layout.astro";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
+import HoverLogoOverlay from "../../components/HoverLogoOverlay.astro";
 
 export const prerender = true;
 
@@ -99,30 +100,33 @@ const meta = categoryMeta[categoryName] || {
                         <>
                             {
                                 featuredItem && (
-                                    <a href={`/${categoryName}/${featuredItem.id}`} class="featured-post reveal">
-                                        <div class="featured-media">
-                                            {
-                                                featuredItem.data.image ? (
-                                                    <img src={featuredItem.data.image} alt={featuredItem.data.title} loading="lazy" />
-                                                ) : (
-                                                    <div class="featured-placeholder" aria-hidden="true"></div>
-                                                )
-                                            }
-                                        </div>
-                                        <div class="featured-content">
-                                            <p class="featured-kicker">Sorotan</p>
-                                            <h2 class="featured-title font-display">{featuredItem.data.title}</h2>
-                                            {featuredItem.data.description && <p class="featured-desc">{featuredItem.data.description}</p>}
-                                            <div class="featured-meta">
-                                                <time>
-                                                    {new Date(featuredItem.data.date).toLocaleDateString("id-ID", {
-                                                        year: "numeric",
-                                                        month: "short",
-                                                        day: "numeric",
-                                                    })}
-                                                </time>
-                                                <span>·</span>
-                                                <span>{featuredItem.data.author}</span>
+                                    <a href={`/${categoryName}/${featuredItem.id}`} class="featured-post hover-logo-overlay-target reveal">
+                                        <HoverLogoOverlay preset="interactive" logoTop="calc(var(--hlo-logo-size) * -0.14)" logoSize="6rem" hoverOpacity={0.2} />
+                                        <div class="hover-logo-overlay-content">
+                                            <div class="featured-media">
+                                                {
+                                                    featuredItem.data.image ? (
+                                                        <img src={featuredItem.data.image} alt={featuredItem.data.title} loading="lazy" />
+                                                    ) : (
+                                                        <div class="featured-placeholder" aria-hidden="true"></div>
+                                                    )
+                                                }
+                                            </div>
+                                            <div class="featured-content">
+                                                <p class="featured-kicker">Sorotan</p>
+                                                <h2 class="featured-title font-display">{featuredItem.data.title}</h2>
+                                                {featuredItem.data.description && <p class="featured-desc">{featuredItem.data.description}</p>}
+                                                <div class="featured-meta">
+                                                    <time>
+                                                        {new Date(featuredItem.data.date).toLocaleDateString("id-ID", {
+                                                            year: "numeric",
+                                                            month: "short",
+                                                            day: "numeric",
+                                                        })}
+                                                    </time>
+                                                    <span>·</span>
+                                                    <span>{featuredItem.data.author}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </a>
@@ -132,36 +136,39 @@ const meta = categoryMeta[categoryName] || {
                             <ul class="article-list">
                                 {restItems.map((item, index) => (
                                     <li class={`article-item reveal reveal-delay-${Math.min(index + 1, 4)}`}>
-                                        <a href={`/${categoryName}/${item.id}`} class="article-link">
-                                            <div class="article-main">
-                                                <div class="article-meta">
-                                                    <span class="article-cat">{item.data.category}</span>
-                                                    <span>·</span>
-                                                    <time>
-                                                        {new Date(item.data.date).toLocaleDateString("id-ID", {
-                                                            year: "numeric",
-                                                            month: "short",
-                                                            day: "numeric",
-                                                        })}
-                                                    </time>
-                                                    <span>·</span>
-                                                    <span>{item.data.author}</span>
-                                                </div>
-                                                <h3 class="article-title">{item.data.title}</h3>
-                                                {item.data.description && <p class="article-desc">{item.data.description}</p>}
-                                                {item.data.tags && item.data.tags.length > 0 && (
-                                                    <div class="article-tags">
-                                                        {item.data.tags.slice(0, 3).map((tag) => (
-                                                            <span class="article-tag">#{tag}</span>
-                                                        ))}
+                                        <a href={`/${categoryName}/${item.id}`} class="article-link hover-logo-overlay-target">
+                                            <HoverLogoOverlay preset="informational" logoTop="calc(var(--hlo-logo-size) * -0.14)" logoSize="4.9rem" hoverOpacity={0.16} />
+                                            <div class="hover-logo-overlay-content">
+                                                <div class="article-main">
+                                                    <div class="article-meta">
+                                                        <span class="article-cat">{item.data.category}</span>
+                                                        <span>·</span>
+                                                        <time>
+                                                            {new Date(item.data.date).toLocaleDateString("id-ID", {
+                                                                year: "numeric",
+                                                                month: "short",
+                                                                day: "numeric",
+                                                            })}
+                                                        </time>
+                                                        <span>·</span>
+                                                        <span>{item.data.author}</span>
                                                     </div>
-                                                )}
+                                                    <h3 class="article-title">{item.data.title}</h3>
+                                                    {item.data.description && <p class="article-desc">{item.data.description}</p>}
+                                                    {item.data.tags && item.data.tags.length > 0 && (
+                                                        <div class="article-tags">
+                                                            {item.data.tags.slice(0, 3).map((tag) => (
+                                                                <span class="article-tag">#{tag}</span>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                {
+                                                    item.data.image && (
+                                                        <img src={item.data.image} alt={item.data.title} loading="lazy" class="article-thumb" />
+                                                    )
+                                                }
                                             </div>
-                                            {
-                                                item.data.image && (
-                                                    <img src={item.data.image} alt={item.data.title} loading="lazy" class="article-thumb" />
-                                                )
-                                            }
                                         </a>
                                     </li>
                                 ))}

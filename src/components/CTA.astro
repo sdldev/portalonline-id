@@ -1,26 +1,30 @@
 ---
+import HoverLogoOverlay from "./HoverLogoOverlay.astro";
 ---
 
 <section class="section cta-section" aria-labelledby="cta-title">
     <div class="container cta-shell">
-        <div class="cta-card reveal reveal-delay-1">
-            <p class="eyebrow">Konsultasi Gratis</p>
-            <h2 class="cta-title font-display" id="cta-title">
-                Siap meluncurkan portal yang lebih rapi dikelola dan lebih meyakinkan di mata audiens?
-            </h2>
-            <p class="cta-desc">
-                Ceritakan kebutuhan redaksi atau bisnis Anda. Kami bantu memetakan struktur, desain, dan langkah implementasi yang realistis.
-            </p>
+        <div class="cta-card hover-logo-overlay-target reveal reveal-delay-1">
+            <HoverLogoOverlay preset="interactive" logoTop="calc(var(--hlo-logo-size) * -0.14)" logoSize="6rem" hoverOpacity={0.2} />
+            <div class="hover-logo-overlay-content">
+                <p class="eyebrow">Konsultasi Gratis</p>
+                <h2 class="cta-title font-display" id="cta-title">
+                    Siap meluncurkan portal yang lebih rapi dikelola dan lebih meyakinkan di mata audiens?
+                </h2>
+                <p class="cta-desc">
+                    Ceritakan kebutuhan redaksi atau bisnis Anda. Kami bantu memetakan struktur, desain, dan langkah implementasi yang realistis.
+                </p>
 
-            <a
-                href="https://wa.me/6285783024799?text=Halo%2C%20saya%20ingin%20konsultasi%20gratis%20tentang%20Portal%20Online."
-                target="_blank"
-                rel="nofollow noopener noreferrer"
-                class="btn btn-primary"
-            >
-                Mulai Diskusi via WhatsApp
-            </a>
-            <p class="cta-note">Respons awal pada jam kerja biasanya kurang dari 1 jam.</p>
+                <a
+                    href="https://wa.me/6285783024799?text=Halo%2C%20saya%20ingin%20konsultasi%20gratis%20tentang%20Portal%20Online."
+                    target="_blank"
+                    rel="nofollow noopener noreferrer"
+                    class="btn btn-primary"
+                >
+                    Mulai Diskusi via WhatsApp
+                </a>
+                <p class="cta-note">Respons awal pada jam kerja biasanya kurang dari 1 jam.</p>
+            </div>
         </div>
     </div>
 </section>

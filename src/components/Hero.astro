@@ -1,24 +1,49 @@
 ---
+import HoverLogoOverlay from "./HoverLogoOverlay.astro";
+
 const statItems = [
-    { value: "95+", label: "Lighthouse score rata-rata" },
-    { value: "< 24 jam", label: "Mulai implementasi" },
-    { value: "Langsung", label: "Komunikasi dengan developer" },
+    { value: "95+", label: "Lighthouse score rata-rata", icon: "score" },
+    { value: "Secure", label: "Aman dan terpercaya", icon: "shield" },
+    { value: "Update", label: "Selalu Update", icon: "refresh" },
 ];
 ---
 
 <section class="hero" id="hero">
+    <div class="hero-logo-orb" aria-hidden="true">
+        <div class="hero-logo-orb-ring"></div>
+        <img
+            src="/portalonline-logo.avif"
+            alt=""
+            loading="lazy"
+            decoding="async"
+            fetchpriority="low"
+        />
+    </div>
     <div class="container hero-shell">
-        <p class="eyebrow reveal">Mitra web untuk redaksi, brand, dan organisasi</p>
+        <div class="hero-brand-chip reveal">
+            <img
+                src="/portalonline-logo.avif"
+                alt="Logo Portal Online"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+                width="24"
+                height="24"
+            />
+            <span>Portal Online CMS</span>
+        </div>
+        <p class="eyebrow reveal">Custom CMS sesuai kebutuhan Anda</p>
 
         <h1 class="hero-title font-display reveal reveal-delay-1">
-            Portal yang siap terbit, siap tumbuh, dan tetap ringan dikelola setiap hari.
+            Portal Online
         </h1>
 
         <p class="hero-lead editorial-lead reveal reveal-delay-2">
-            Portal Online membangun website berita, company profile, dan kanal publikasi dengan fondasi teknis rapi,
-            performa cepat, serta alur editorial yang efisien. Semua dikerjakan langsung bersama developer.
+            Custom CMS yang dirancang khusus sesuai dengan kebutuhan Anda. Tampilan dashboard simple dan modern, mudah dioperasikan, anti ribet, sehingga Anda bisa fokus penuh pada konten tanpa terdistraksi urusan teknis.
         </p>
-
+        <p class="hero-lead editorial-lead reveal reveal-delay-2">
+            Portal Online menangani kerumitan teknis untuk portal berita, sekolah, perusahaan, dan organisasi, agar website profesional Anda berjalan tanpa ribet.
+        </p>
         <div class="hero-actions reveal reveal-delay-3">
             <a
                 href="https://wa.me/6285783024799?text=Halo%2C%20saya%20ingin%20konsultasi%20gratis%20tentang%20Portal%20Online."
@@ -34,9 +59,36 @@ const statItems = [
         <div class="hero-stats reveal reveal-delay-4" aria-label="Ringkasan kualitas layanan">
             {
                 statItems.map((item) => (
-                    <div class="hero-stat">
-                        <span class="hero-stat-value">{item.value}</span>
-                        <span class="hero-stat-label">{item.label}</span>
+                    <div class="hero-stat hover-logo-overlay-target">
+                        <HoverLogoOverlay preset="interactive" />
+                        <div class="hover-logo-overlay-content">
+                            <div class="hero-stat-head">
+                                <span class="hero-stat-icon" aria-hidden="true">
+                                    {item.icon === "score" && (
+                                        <svg viewBox="0 0 24 24" fill="none">
+                                            <path d="M12 4.5a7.5 7.5 0 1 0 7.5 7.5" />
+                                            <path d="M12 12 17 7" />
+                                        </svg>
+                                    )}
+                                    {item.icon === "shield" && (
+                                        <svg viewBox="0 0 24 24" fill="none">
+                                            <path d="m12 3 7 3.5V12c0 4.2-2.8 7.4-7 9-4.2-1.6-7-4.8-7-9V6.5L12 3Z" />
+                                            <path d="m9.2 11.8 2 2 3.8-3.8" />
+                                        </svg>
+                                    )}
+                                    {item.icon === "refresh" && (
+                                        <svg viewBox="0 0 24 24" fill="none">
+                                            <path d="M20 7v5h-5" />
+                                            <path d="M4 17v-5h5" />
+                                            <path d="M6.8 9A7 7 0 0 1 19 12" />
+                                            <path d="M17.2 15A7 7 0 0 1 5 12" />
+                                        </svg>
+                                    )}
+                                </span>
+                                <span class="hero-stat-value">{item.value}</span>
+                            </div>
+                            <span class="hero-stat-label">{item.label}</span>
+                        </div>
                     </div>
                 ))
             }
@@ -52,6 +104,95 @@ const statItems = [
         display: flex;
         align-items: center;
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        overflow: clip;
+    }
+
+    .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: transparent;
+        pointer-events: none;
+        z-index: -2;
+    }
+
+    .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: none;
+        mask: none;
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    .hero-logo-orb {
+        position: absolute;
+        right: clamp(-7rem, -3vw, -2rem);
+        top: clamp(4.8rem, 12vw, 7.8rem);
+        width: clamp(16rem, 36vw, 29rem);
+        aspect-ratio: 1 / 1;
+        pointer-events: none;
+        isolation: isolate;
+        opacity: 0.56;
+        z-index: 4;
+        border-radius: 999px;
+        overflow: hidden;
+        background:
+            radial-gradient(circle at 36% 22%, rgba(80, 96, 122, 0.16), transparent 46%),
+            #080c14;
+    }
+
+    .hero-logo-orb::before {
+        content: "";
+        position: absolute;
+        inset: 9%;
+        border-radius: 999px;
+        background: radial-gradient(circle, rgba(246, 152, 16, 0.28), rgba(28, 44, 82, 0.02) 72%);
+        filter: blur(28px);
+        z-index: -1;
+    }
+
+    .hero-logo-orb-ring {
+        position: absolute;
+        inset: 4%;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        mask: radial-gradient(circle at center, transparent 62%, black 63%);
+    }
+
+    .hero-logo-orb img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0 24px 36px rgba(0, 0, 0, 0.55));
+        animation: logoFloat 6s ease-in-out infinite;
+    }
+
+    .hero-brand-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.42rem 0.72rem 0.42rem 0.42rem;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.03);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    .hero-brand-chip img {
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 999px;
+        object-fit: cover;
+        border: 1px solid rgba(255, 255, 255, 0.32);
+    }
+
+    .hero-brand-chip span {
+        font-size: 0.78rem;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: rgba(241, 245, 255, 0.94);
     }
 
     .hero-shell {
@@ -60,6 +201,8 @@ const statItems = [
         align-items: flex-start;
         gap: 1.15rem;
         max-width: 74rem;
+        position: relative;
+        z-index: 2;
     }
 
     .hero-title {
@@ -69,7 +212,7 @@ const statItems = [
     }
 
     .hero-lead {
-        max-width: 66ch;
+        max-width: 62ch;
     }
 
     .hero-actions {
@@ -81,7 +224,7 @@ const statItems = [
 
     .hero-stats {
         width: 100%;
-        margin-top: 2rem;
+        margin-top: 2.15rem;
         display: grid;
         grid-template-columns: 1fr;
         gap: 0;
@@ -90,11 +233,47 @@ const statItems = [
     }
 
     .hero-stat {
-        padding: 0.9rem 0;
+        padding: 0.95rem 0.1rem;
         display: flex;
         flex-direction: column;
-        gap: 0.2rem;
+        justify-content: center;
+        gap: 0.38rem;
+        min-height: 5.5rem;
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        transition: background-color 220ms ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-stat:hover {
+        background-color: rgba(255, 255, 255, 0.03);
+    }
+
+    .hero-stat-head {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+    }
+
+    .hero-stat-icon {
+        width: 1.65rem;
+        height: 1.65rem;
+        border-radius: 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(30, 57, 90, 0.65);
+        border: 1px solid rgba(154, 184, 221, 0.35);
+        flex-shrink: 0;
+    }
+
+    .hero-stat-icon svg {
+        width: 0.98rem;
+        height: 0.98rem;
+        stroke: rgba(235, 244, 255, 0.95);
+        stroke-width: 1.75;
+        stroke-linecap: round;
+        stroke-linejoin: round;
     }
 
     .hero-stat:last-child {
@@ -105,11 +284,13 @@ const statItems = [
         font-size: 1.5rem;
         line-height: 1;
         font-weight: 600;
+        letter-spacing: -0.01em;
     }
 
     .hero-stat-label {
-        color: var(--color-text-soft);
-        font-size: 0.86rem;
+        color: var(--color-text-muted);
+        font-size: 0.9rem;
+        line-height: 1.3;
     }
 
     @media (min-width: 820px) {
@@ -120,11 +301,38 @@ const statItems = [
         .hero-stat {
             border-bottom: none;
             border-right: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 1.15rem 1rem 1.05rem 0;
+            padding: 1.2rem 1.2rem 1.1rem;
         }
 
         .hero-stat:last-child {
             border-right: none;
+        }
+    }
+
+    @media (min-width: 1080px) {
+        .hero-shell {
+            max-width: 74rem;
+            padding-right: clamp(7rem, 13vw, 11rem);
+        }
+
+        .hero-logo-orb {
+            right: clamp(-3.6rem, -2.4vw, -1.6rem);
+            top: clamp(-0.8rem, 0.6vh, 1.2rem);
+            width: clamp(21rem, 33vw, 28rem);
+            opacity: 0.34;
+        }
+    }
+
+    @media (min-width: 1440px) {
+        .hero-shell {
+            padding-right: clamp(8rem, 14vw, 12rem);
+        }
+
+        .hero-logo-orb {
+            right: clamp(-4.2rem, -2.8vw, -2rem);
+            top: clamp(-0.6rem, 0.8vh, 1.4rem);
+            width: clamp(24rem, 31vw, 30rem);
+            opacity: 0.32;
         }
     }
 
@@ -133,6 +341,26 @@ const statItems = [
             padding-top: 7.15rem;
             padding-bottom: 3.4rem;
             min-height: auto;
+        }
+
+        .hero-shell {
+            margin-top: 2rem;
+        }
+
+        .hero-logo-orb {
+            right: -6.6rem;
+            top: 1rem;
+            width: min(78vw, 22rem);
+            opacity: 0.24;
+        }
+
+        .hero-brand-chip {
+            padding-right: 0.62rem;
+        }
+
+        .hero-brand-chip span {
+            font-size: 0.7rem;
+            letter-spacing: 0.075em;
         }
 
         .hero-title {
@@ -150,6 +378,22 @@ const statItems = [
 
         .hero-actions .btn {
             width: 100%;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .hero-logo-orb img {
+            animation: none;
+        }
+    }
+
+    @keyframes logoFloat {
+        0%,
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+        50% {
+            transform: translate3d(0, -8px, 0);
         }
     }
 </style>

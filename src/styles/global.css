@@ -350,28 +350,6 @@ h6 {
     --h6-size: var(--h6-size-editorial);
 }
 
-@media (min-width: 1240px) {
-    body::before,
-    body::after {
-        content: "";
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        width: 1px;
-        background: rgba(255, 255, 255, 0.06);
-        pointer-events: none;
-        z-index: 1;
-    }
-
-    body::before {
-        left: max(1rem, calc(50% - (var(--container-max) / 2)));
-    }
-
-    body::after {
-        right: max(1rem, calc(50% - (var(--container-max) / 2)));
-    }
-}
-
 img {
     max-width: 100%;
     height: auto;

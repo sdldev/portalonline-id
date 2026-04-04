@@ -4,6 +4,7 @@ import { getCollection } from "../../utils/collections";
 import Layout from "../../layouts/Layout.astro";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
+import HoverLogoOverlay from "../../components/HoverLogoOverlay.astro";
 
 export const prerender = true;
 
@@ -56,28 +57,31 @@ content.sort(
                 </nav>
 
                 <!-- Author Profile Card -->
-                <div class="author-card">
-                    <div class="author-avatar-ring">
-                        <img
-                            src={authorProfile.data.avatar ||
-                                `https://ui-avatars.com/api/?name=${encodeURIComponent(authorProfile.data.name)}&background=random`}
-                            alt={authorProfile.data.name}
-                            class="author-avatar-img"
-                            width="90"
-                            height="90"
-                        />
-                    </div>
-                    <div class="author-meta">
-                        <span class="badge">✍️ Penulis</span>
-                        <h1 class="author-name font-display">
-                            <span class="text-gradient"
-                                >{authorProfile.data.name}</span
-                            >
-                        </h1>
-                        <p class="author-count">
-                            {content.length} artikel dipublikasikan
-                        </p>
-                        <p class="author-bio"><Content /></p>
+                <div class="author-card hover-logo-overlay-target">
+                    <HoverLogoOverlay preset="interactive" logoTop="calc(var(--hlo-logo-size) * -0.14)" logoSize="6.1rem" hoverOpacity={0.2} />
+                    <div class="hover-logo-overlay-content">
+                        <div class="author-avatar-ring">
+                            <img
+                                src={authorProfile.data.avatar ||
+                                    `https://ui-avatars.com/api/?name=${encodeURIComponent(authorProfile.data.name)}&background=random`}
+                                alt={authorProfile.data.name}
+                                class="author-avatar-img"
+                                width="90"
+                                height="90"
+                            />
+                        </div>
+                        <div class="author-meta">
+                            <span class="badge">✍️ Penulis</span>
+                            <h1 class="author-name font-display">
+                                <span class="text-gradient"
+                                    >{authorProfile.data.name}</span
+                                >
+                            </h1>
+                            <p class="author-count">
+                                {content.length} artikel dipublikasikan
+                            </p>
+                            <p class="author-bio"><Content /></p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -97,41 +101,44 @@ content.sort(
                             {content.map((item) => (
                                 <a
                                     href={`/${item.collection}/${item.id}`}
-                                    class="art-item"
+                                    class="art-item hover-logo-overlay-target"
                                 >
-                                    <div class="art-meta">
-                                        <span class="art-cat">
-                                            {item.data.category}
-                                        </span>
-                                        <span class="art-dot">·</span>
-                                        <time class="art-date">
-                                            {new Date(
-                                                item.data.date,
-                                            ).toLocaleDateString("id-ID", {
-                                                year: "numeric",
-                                                month: "short",
-                                                day: "numeric",
-                                            })}
-                                        </time>
-                                    </div>
-                                    <h2 class="art-title">{item.data.title}</h2>
-                                    {item.data.description && (
-                                        <p class="art-desc">
-                                            {item.data.description}
-                                        </p>
-                                    )}
-                                    {item.data.tags &&
-                                        item.data.tags.length > 0 && (
-                                            <div class="art-tags">
-                                                {item.data.tags
-                                                    .slice(0, 5)
-                                                    .map((t: string) => (
-                                                        <span class="art-tag">
-                                                            #{t}
-                                                        </span>
-                                                    ))}
-                                            </div>
+                                    <HoverLogoOverlay preset="informational" logoTop="calc(var(--hlo-logo-size) * -0.14)" logoSize="4.7rem" hoverOpacity={0.15} />
+                                    <div class="hover-logo-overlay-content">
+                                        <div class="art-meta">
+                                            <span class="art-cat">
+                                                {item.data.category}
+                                            </span>
+                                            <span class="art-dot">·</span>
+                                            <time class="art-date">
+                                                {new Date(
+                                                    item.data.date,
+                                                ).toLocaleDateString("id-ID", {
+                                                    year: "numeric",
+                                                    month: "short",
+                                                    day: "numeric",
+                                                })}
+                                            </time>
+                                        </div>
+                                        <h2 class="art-title">{item.data.title}</h2>
+                                        {item.data.description && (
+                                            <p class="art-desc">
+                                                {item.data.description}
+                                            </p>
                                         )}
+                                        {item.data.tags &&
+                                            item.data.tags.length > 0 && (
+                                                <div class="art-tags">
+                                                    {item.data.tags
+                                                        .slice(0, 5)
+                                                        .map((t: string) => (
+                                                            <span class="art-tag">
+                                                                #{t}
+                                                            </span>
+                                                        ))}
+                                                </div>
+                                            )}
+                                    </div>
                                 </a>
                             ))}
                         </div>

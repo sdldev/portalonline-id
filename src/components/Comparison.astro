@@ -1,4 +1,5 @@
 ---
+import HoverLogoOverlay from "./HoverLogoOverlay.astro";
 import { getCollection, selectFeaturedEntry } from "../utils/collections";
 
 const articleCollection = await getCollection("article");
@@ -20,54 +21,60 @@ const featuredArticle = selectFeaturedEntry(articleCollection);
 
         {
             featuredArticle ? (
-                <a href={`/article/${featuredArticle.id}`} class="proof-card reveal reveal-delay-1">
-                    <div class="proof-card-media">
-                        {
-                            featuredArticle.data.image ? (
-                                <img
-                                    src={featuredArticle.data.image}
-                                    alt={featuredArticle.data.title}
-                                    loading="lazy"
-                                />
-                            ) : (
-                                <div class="proof-placeholder" aria-hidden="true"></div>
-                            )
-                        }
-                    </div>
-
-                    <div class="proof-card-content">
-                        <div class="proof-meta">
-                            <span class="proof-tag">Artikel Unggulan</span>
-                            <time class="proof-date">
-                                {new Date(featuredArticle.data.date).toLocaleDateString("id-ID", {
-                                    year: "numeric",
-                                    month: "short",
-                                    day: "numeric",
-                                })}
-                            </time>
+                <a href={`/article/${featuredArticle.id}`} class="proof-card hover-logo-overlay-target reveal reveal-delay-1">
+                    <HoverLogoOverlay preset="interactive" logoTop="calc(var(--hlo-logo-size) * -0.14)" logoSize="5.4rem" />
+                    <div class="hover-logo-overlay-content">
+                        <div class="proof-card-media">
+                            {
+                                featuredArticle.data.image ? (
+                                    <img
+                                        src={featuredArticle.data.image}
+                                        alt={featuredArticle.data.title}
+                                        loading="lazy"
+                                    />
+                                ) : (
+                                    <div class="proof-placeholder" aria-hidden="true"></div>
+                                )
+                            }
                         </div>
 
-                        <h3 class="proof-title font-display">{featuredArticle.data.title}</h3>
-                        {
-                            featuredArticle.data.description && (
-                                <p class="proof-desc">{featuredArticle.data.description}</p>
-                            )
-                        }
+                        <div class="proof-card-content">
+                            <div class="proof-meta">
+                                <span class="proof-tag">Artikel Unggulan</span>
+                                <time class="proof-date">
+                                    {new Date(featuredArticle.data.date).toLocaleDateString("id-ID", {
+                                        year: "numeric",
+                                        month: "short",
+                                        day: "numeric",
+                                    })}
+                                </time>
+                            </div>
 
-                        <div class="proof-topic-list">
-                            <span class="proof-topic">portal berita</span>
-                            <span class="proof-topic">seo</span>
-                            <span class="proof-topic">alur cms</span>
+                            <h3 class="proof-title font-display">{featuredArticle.data.title}</h3>
+                            {
+                                featuredArticle.data.description && (
+                                    <p class="proof-desc">{featuredArticle.data.description}</p>
+                                )
+                            }
+
+                            <div class="proof-topic-list">
+                                <span class="proof-topic">portal berita</span>
+                                <span class="proof-topic">seo</span>
+                                <span class="proof-topic">alur cms</span>
+                            </div>
                         </div>
                     </div>
                 </a>
             ) : (
-                <article class="proof-card proof-card-empty reveal reveal-delay-1">
-                    <div class="proof-card-content">
-                        <p class="proof-desc">
-                            Konten artikel unggulan belum tersedia. Tambahkan artikel baru pada koleksi `article`
-                            untuk menampilkan studi hasil kerja secara otomatis.
-                        </p>
+                <article class="proof-card proof-card-empty hover-logo-overlay-target reveal reveal-delay-1">
+                    <HoverLogoOverlay preset="informational" logoTop="calc(var(--hlo-logo-size) * -0.14)" logoSize="5rem" hoverOpacity={0.16} />
+                    <div class="hover-logo-overlay-content">
+                        <div class="proof-card-content">
+                            <p class="proof-desc">
+                                Konten artikel unggulan belum tersedia. Tambahkan artikel baru pada koleksi `article`
+                                untuk menampilkan studi hasil kerja secara otomatis.
+                            </p>
+                        </div>
                     </div>
                 </article>
             )
