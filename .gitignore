@@ -2,7 +2,9 @@
 dist/
 # generated types
 .astro/
-
+.sisyphus
+.playwright-mcp
+.playwright-cli
 # dependencies
 node_modules/
 
