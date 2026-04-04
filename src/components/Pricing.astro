@@ -1,4 +1,6 @@
 ---
+import HoverLogoOverlay from "./HoverLogoOverlay.astro";
+
 const plans = [
     {
         id: "starter",
@@ -76,25 +78,28 @@ const faqs = [
         <div class="pricing-cards reveal reveal-delay-1">
             {
                 plans.map((plan) => (
-                    <article class={`pricing-card ${plan.popular ? "pricing-card-popular" : ""}`}>
-                        {plan.popular && <span class="badge-popular">Pilihan Utama</span>}
-                        <h3 class="plan-name font-display">{plan.name}</h3>
-                        <p class="plan-desc">{plan.description}</p>
-                        <div class="plan-price-wrap">
-                            <span class="plan-price font-display">{plan.priceIdr}</span>
-                            <span class="plan-period">{plan.period}</span>
+                    <article class={`pricing-card hover-logo-overlay-target ${plan.popular ? "pricing-card-popular" : ""}`}>
+                        <HoverLogoOverlay preset="interactive" logoTop="calc(var(--hlo-logo-size) * -0.14)" />
+                        <div class="hover-logo-overlay-content">
+                            {plan.popular && <span class="badge-popular">Pilihan Utama</span>}
+                            <h3 class="plan-name font-display">{plan.name}</h3>
+                            <p class="plan-desc">{plan.description}</p>
+                            <div class="plan-price-wrap">
+                                <span class="plan-price font-display">{plan.priceIdr}</span>
+                                <span class="plan-period">{plan.period}</span>
+                            </div>
+                            <ul class="plan-features">
+                                {plan.features.map((feature) => <li>{feature}</li>)}
+                            </ul>
+                            <a
+                                href={`https://wa.me/6285783024799?text=${encodeURIComponent(`Halo, saya tertarik dengan paket ${plan.name} Portal Online.`)}`}
+                                target="_blank"
+                                rel="nofollow noopener noreferrer"
+                                class={`btn ${plan.popular ? "btn-primary" : "btn-secondary"}`}
+                            >
+                                {plan.cta}
+                            </a>
                         </div>
-                        <ul class="plan-features">
-                            {plan.features.map((feature) => <li>{feature}</li>)}
-                        </ul>
-                        <a
-                            href={`https://wa.me/6285783024799?text=${encodeURIComponent(`Halo, saya tertarik dengan paket ${plan.name} Portal Online.`)}`}
-                            target="_blank"
-                            rel="nofollow noopener noreferrer"
-                            class={`btn ${plan.popular ? "btn-primary" : "btn-secondary"}`}
-                        >
-                            {plan.cta}
-                        </a>
                     </article>
                 ))
             }
@@ -162,35 +167,6 @@ const faqs = [
             box-shadow var(--transition-fast);
     }
 
-    .pricing-card::before,
-    .pricing-card::after {
-        content: "";
-        position: absolute;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity var(--transition-fast), transform var(--transition-fast);
-    }
-
-    .pricing-card::before {
-        width: 180px;
-        height: 180px;
-        top: -78px;
-        right: -72px;
-        border-radius: 999px;
-        background: radial-gradient(circle, rgba(var(--color-primary), 0.25) 0%, rgba(var(--color-primary), 0) 72%);
-        transform: translate3d(8px, -8px, 0);
-    }
-
-    .pricing-card::after {
-        width: 120px;
-        height: 120px;
-        left: -46px;
-        bottom: -54px;
-        border-radius: 999px;
-        background: radial-gradient(circle, rgba(120, 204, 179, 0.2) 0%, rgba(120, 204, 179, 0) 70%);
-        transform: translate3d(-8px, 8px, 0);
-    }
-
     .pricing-card-popular {
         border-color: rgba(var(--color-primary), 0.34);
         background: rgba(var(--color-primary), 0.03);
@@ -201,14 +177,6 @@ const faqs = [
         border-color: rgba(255, 255, 255, 0.24);
         transform: translateY(-2px);
         box-shadow: 0 16px 28px rgba(3, 10, 20, 0.28);
-    }
-
-    .pricing-card:hover::before,
-    .pricing-card:hover::after,
-    .pricing-card:focus-within::before,
-    .pricing-card:focus-within::after {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
     }
 
     .pricing-card-popular:hover,
@@ -345,9 +313,7 @@ const faqs = [
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .pricing-card,
-        .pricing-card::before,
-        .pricing-card::after {
+        .pricing-card {
             transition: none;
         }
 

@@ -1,4 +1,6 @@
 ---
+import HoverLogoOverlay from "./HoverLogoOverlay.astro";
+
 const pillars = [
     {
         eyebrow: "Arsitektur dan performa",
@@ -64,9 +66,12 @@ const detailItems = [
             <div class="detail-grid">
                 {
                     detailItems.map((item) => (
-                        <article class="detail-card">
-                            <h3 class="detail-title">{item.title}</h3>
-                            <p class="detail-text">{item.text}</p>
+                        <article class="detail-card hover-logo-overlay-target">
+                            <HoverLogoOverlay preset="informational" logoTop="calc(var(--hlo-logo-size) * -0.14)" logoSize="4.4rem" hoverOpacity={0.16} />
+                            <div class="hover-logo-overlay-content">
+                                <h3 class="detail-title">{item.title}</h3>
+                                <p class="detail-text">{item.text}</p>
+                            </div>
                         </article>
                     ))
                 }

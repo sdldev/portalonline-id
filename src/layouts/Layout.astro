@@ -2,7 +2,8 @@
 import { SEO } from "astro-seo";
 import { ClientRouter } from "astro:transitions";
 import ChatWidget from "../components/ChatWidget.astro";
-import "../styles/global.css";
+import "../styles/core.css";
+import "../styles/motion.css";
 
 export interface Props {
     title?: string;
@@ -75,13 +76,12 @@ const {
 <!doctype html>
 <html lang="id">
     <head>
-        <!-- Google Analytics (runs via Partytown Web Worker) -->
+        <!-- Google Analytics -->
         <script
-            type="text/partytown"
             async
             src="https://www.googletagmanager.com/gtag/js?id=G-7D8XPV35XR"
         ></script>
-        <script type="text/partytown">
+        <script>
             window.dataLayer = window.dataLayer || [];
             function gtag(...args) {
                 dataLayer.push(args);

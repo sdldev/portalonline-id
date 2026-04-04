@@ -365,6 +365,8 @@
             ) as HTMLFormElement | null;
 
             if (!chatFab || !chatWidget || !chatForm) return;
+            const chatFabEl = chatFab;
+            const chatWidgetEl = chatWidget;
 
             // Get WhatsApp number from data attribute
             const whatsappNumber = chatForm.dataset.wa || "";
@@ -382,20 +384,20 @@
 
             function getFocusableElements(): HTMLElement[] {
                 return Array.from(
-                    chatWidget.querySelectorAll<HTMLElement>(focusableSelector),
+                    chatWidgetEl.querySelectorAll<HTMLElement>(focusableSelector),
                 ).filter((el) => !el.hasAttribute("disabled"));
             }
 
             function applyWidgetState(isOpen: boolean) {
-                chatWidget.classList.toggle("open", isOpen);
-                chatFab.classList.toggle("active", isOpen);
-                chatFab.setAttribute("aria-expanded", String(isOpen));
-                chatWidget.setAttribute("aria-hidden", String(!isOpen));
+                chatWidgetEl.classList.toggle("open", isOpen);
+                chatFabEl.classList.toggle("active", isOpen);
+                chatFabEl.setAttribute("aria-expanded", String(isOpen));
+                chatWidgetEl.setAttribute("aria-hidden", String(!isOpen));
 
                 if (isOpen) {
-                    chatWidget.removeAttribute("hidden");
+                    chatWidgetEl.removeAttribute("hidden");
                 } else {
-                    chatWidget.setAttribute("hidden", "");
+                    chatWidgetEl.setAttribute("hidden", "");
                 }
 
                 if (chatIcon && closeIcon) {
@@ -414,7 +416,7 @@
 
                 requestAnimationFrame(() => {
                     const [firstFocusable] = getFocusableElements();
-                    const focusTarget = firstFocusable ?? chatWidget;
+                    const focusTarget = firstFocusable ?? chatWidgetEl;
 
                     setTimeout(() => {
                         focusTarget.focus();
@@ -428,7 +430,7 @@
                 applyWidgetState(false);
 
                 if (restoreFocus) {
-                    (lastFocusedElement ?? chatFab).focus();
+                    (lastFocusedElement ?? chatFabEl).focus();
                 }
 
                 lastFocusedElement = null;
@@ -437,7 +439,7 @@
             function toggleWidget(forceClose = false) {
                 const shouldOpen = forceClose
                     ? false
-                    : !chatWidget!.classList.contains("open");
+                    : !chatWidgetEl.classList.contains("open");
 
                 if (shouldOpen) {
                     openWidget();
@@ -449,13 +451,13 @@
             applyWidgetState(false);
 
             // FAB click handler
-            chatFab.onclick = function (e: Event) {
+            chatFabEl.onclick = function (e: Event) {
                 e.stopPropagation();
                 toggleWidget();
             };
 
             // Prevent clicks inside widget from closing it
-            chatWidget.onclick = function (e: Event) {
+            chatWidgetEl.onclick = function (e: Event) {
                 e.stopPropagation();
             };
 
@@ -488,12 +490,12 @@
                     );
 
                     // Reset and close
-                    chatForm!.reset();
+                    chatForm.reset();
                     closeWidget({ restoreFocus: false });
                 }
             };
 
-            chatWidget.onkeydown = function (e: KeyboardEvent) {
+            chatWidgetEl.onkeydown = function (e: KeyboardEvent) {
                 if (e.key === "Escape") {
                     e.preventDefault();
                     closeWidget();
@@ -505,7 +507,7 @@
                 const focusables = getFocusableElements();
                 if (focusables.length === 0) {
                     e.preventDefault();
-                    chatWidget.focus();
+                    chatWidgetEl.focus();
                     return;
                 }
 
@@ -517,7 +519,7 @@
                         : null;
 
                 if (e.shiftKey) {
-                    if (activeElement === first || activeElement === chatWidget) {
+                    if (activeElement === first || activeElement === chatWidgetEl) {
                         e.preventDefault();
                         last.focus();
                     }
@@ -546,7 +548,7 @@
                 if (
                     !isClickInsideWidget &&
                     !isClickOnFab &&
-                    chatWidget!.classList.contains("open")
+                    chatWidgetEl.classList.contains("open")
                 ) {
                     closeWidget({ restoreFocus: false });
                 }
@@ -564,7 +566,7 @@
 
             const handleEscape = function (e: KeyboardEvent) {
                 if (e.key !== "Escape") return;
-                if (!chatWidget.classList.contains("open")) return;
+                if (!chatWidgetEl.classList.contains("open")) return;
 
                 e.preventDefault();
                 closeWidget();

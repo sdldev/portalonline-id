@@ -19,7 +19,7 @@ const navLinks = [
 
 <nav class="navbar" id="navbar">
     <div class="container navbar-shell">
-        <a href="/" class="navbar-logo" aria-label="Portal Online">
+        <a href="/" class="navbar-logo">
             <Image
                 src={navLogo}
                 alt="Logo Portal Online"
@@ -430,7 +430,7 @@ const navLinks = [
         const dropdownItems = Array.from(
             dropdownMenu?.querySelectorAll<HTMLElement>(".dropdown-item") ?? [],
         );
-        let dropdownCloseTimer: ReturnType<typeof setTimeout> | null = null;
+        let dropdownCloseTimer: number | null = null;
 
         const cleanups: Array<() => void> = [];
         const addListener = (

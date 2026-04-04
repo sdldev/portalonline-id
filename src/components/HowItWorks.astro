@@ -1,4 +1,6 @@
 ---
+import HoverLogoOverlay from "./HoverLogoOverlay.astro";
+
 const steps = [
     {
         number: "01",
@@ -29,10 +31,13 @@ const steps = [
 
         <div class="process__grid">
             {steps.map((step) => (
-                <article class="process__card">
-                    <div class="process__number font-display">{step.number}</div>
-                    <h3 class="process__title">{step.title}</h3>
-                    <p class="process__text">{step.text}</p>
+                <article class="process__card hover-logo-overlay-target">
+                    <HoverLogoOverlay preset="informational" logoTop="calc(var(--hlo-logo-size) * -0.14)" logoSize="4.8rem" hoverOpacity={0.18} />
+                    <div class="hover-logo-overlay-content">
+                        <div class="process__number font-display">{step.number}</div>
+                        <h3 class="process__title">{step.title}</h3>
+                        <p class="process__text">{step.text}</p>
+                    </div>
                 </article>
             ))}
         </div>

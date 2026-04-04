@@ -1,4 +1,6 @@
 ---
+import HoverLogoOverlay from "./HoverLogoOverlay.astro";
+
 const testimonials = [
     {
         name: "Zainal Asikin",
@@ -39,18 +41,27 @@ const testimonials = [
         <div class="testi-grid">
             {
                 testimonials.map((item, index) => (
-                    <article class={`testi-card reveal reveal-delay-${index + 1} ${item.featured ? "testi-card-featured" : "testi-card-standard"}`}>
-                        <div class="testi-content-wrapper">
-                            <p class="testi-text">&ldquo;{item.content}&rdquo;</p>
-                        </div>
-
-                        <div class="testi-author">
-                            <div class="testi-avatar">
-                                <img src={item.avatar} alt={`Foto ${item.name}`} width="56" height="56" loading="lazy" />
+                    <article class={`testi-card hover-logo-overlay-target reveal reveal-delay-${index + 1} ${item.featured ? "testi-card-featured" : "testi-card-standard"}`}>
+                        <HoverLogoOverlay
+                            preset={item.featured ? "interactive" : "informational"}
+                            logoTop="calc(var(--hlo-logo-size) * -0.14)"
+                            logoRight="calc(var(--hlo-logo-size) * -0.14)"
+                            logoSize={item.featured ? "6rem" : "4.8rem"}
+                            hoverOpacity={item.featured ? 0.24 : 0.18}
+                        />
+                        <div class="hover-logo-overlay-content">
+                            <div class="testi-content-wrapper">
+                                <p class="testi-text">&ldquo;{item.content}&rdquo;</p>
                             </div>
-                            <div class="testi-author-info">
-                                <p class="testi-name">{item.name}</p>
-                                <p class="testi-role">{item.role}</p>
+
+                            <div class="testi-author">
+                                <div class="testi-avatar">
+                                    <img src={item.avatar} alt={`Foto ${item.name}`} width="56" height="56" loading="lazy" />
+                                </div>
+                                <div class="testi-author-info">
+                                    <p class="testi-name">{item.name}</p>
+                                    <p class="testi-role">{item.role}</p>
+                                </div>
                             </div>
                         </div>
                     </article>

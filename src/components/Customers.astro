@@ -19,7 +19,15 @@ const customers = [
             {
                 customers.map((customer) => (
                     <div class="proof-logo-item">
-                        <img src={customer.src} alt={customer.alt} loading="lazy" class="proof-logo" />
+                        <img
+                            src={customer.src}
+                            alt={customer.alt}
+                            loading="lazy"
+                            decoding="async"
+                            width="140"
+                            height="52"
+                            class="proof-logo"
+                        />
                     </div>
                 ))
             }

@@ -7,8 +7,6 @@ import mdx from "@astrojs/mdx";
 
 import cloudflare from "@astrojs/cloudflare";
 
-import partytown from "@astrojs/partytown";
-
 // https://astro.build/config
 export default defineConfig({
     site: "https://portalonline.id",
@@ -47,15 +45,6 @@ export default defineConfig({
             },
         }),
         mdx(),
-        partytown({
-            config: {
-                forward: ["dataLayer.push"],
-            },
-        }),
     ],
-    adapter: cloudflare({
-        platformProxy: {
-            enabled: true,
-        },
-    }),
+    adapter: cloudflare(),
 });

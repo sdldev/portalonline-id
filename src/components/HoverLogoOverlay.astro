@@ -1,0 +1,109 @@
+---
+interface Props {
+    className?: string;
+    preset?: "interactive" | "informational";
+    logoSrc?: string;
+    logoTop?: string;
+    logoRight?: string;
+    logoSize?: string;
+    hoverOpacity?: number;
+    baseOpacity?: number;
+    initialScale?: number;
+    hoverScale?: number;
+}
+
+const {
+    className = "",
+    preset = "informational",
+    logoSrc = "/portalonline-logo.avif",
+    logoTop,
+    logoRight,
+    logoSize,
+    hoverOpacity,
+    baseOpacity,
+    initialScale,
+    hoverScale,
+} = Astro.props;
+
+const presetDefaults = {
+    informational: {
+        logoTop: "calc(var(--hlo-logo-size) * -0.14)",
+        logoRight: "calc(var(--hlo-logo-size) * -0.14)",
+        logoSize: "4.7rem",
+        hoverOpacity: 0.2,
+        baseOpacity: 0,
+        initialScale: 0.92,
+        hoverScale: 1,
+    },
+    interactive: {
+        logoTop: "calc(var(--hlo-logo-size) * -0.14)",
+        logoRight: "calc(var(--hlo-logo-size) * -0.14)",
+        logoSize: "5.1rem",
+        hoverOpacity: 0.26,
+        baseOpacity: 0,
+        initialScale: 0.92,
+        hoverScale: 1,
+    },
+} as const;
+
+const defaults = presetDefaults[preset];
+
+const styleVars = [
+    `--hlo-logo-image: url('${logoSrc}')`,
+    `--hlo-logo-top: ${logoTop ?? defaults.logoTop}`,
+    `--hlo-logo-right: ${logoRight ?? defaults.logoRight}`,
+    `--hlo-logo-size: ${logoSize ?? defaults.logoSize}`,
+    `--hlo-hover-opacity: ${hoverOpacity ?? defaults.hoverOpacity}`,
+    `--hlo-base-opacity: ${baseOpacity ?? defaults.baseOpacity}`,
+    `--hlo-initial-scale: ${initialScale ?? defaults.initialScale}`,
+    `--hlo-hover-scale: ${hoverScale ?? defaults.hoverScale}`,
+].join("; ");
+---
+
+<span class={`hover-logo-overlay-layer ${className}`.trim()} style={styleVars} aria-hidden="true"></span>
+
+<style>
+    :global(.hover-logo-overlay-target) {
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+    }
+
+    :global(.hover-logo-overlay-target > .hover-logo-overlay-layer) {
+        z-index: 0;
+    }
+
+    :global(.hover-logo-overlay-content) {
+        position: relative;
+        z-index: 1;
+    }
+
+    :global(.hover-logo-overlay-layer) {
+        position: absolute;
+        right: var(--hlo-logo-right);
+        top: var(--hlo-logo-top);
+        width: var(--hlo-logo-size);
+        height: var(--hlo-logo-size);
+        transform: scale(var(--hlo-initial-scale));
+        transform-origin: top right;
+        border-radius: 999px;
+        background: var(--hlo-logo-image) center / contain no-repeat;
+        opacity: var(--hlo-base-opacity);
+        transition: opacity 260ms ease, transform 260ms ease;
+        pointer-events: none;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        :global(.hover-logo-overlay-target:hover > .hover-logo-overlay-layer),
+        :global(.hover-logo-overlay-target:focus-within > .hover-logo-overlay-layer) {
+            opacity: var(--hlo-hover-opacity);
+            transform: scale(var(--hlo-hover-scale));
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :global(.hover-logo-overlay-layer) {
+            transition: none;
+        }
+    }
+</style>
