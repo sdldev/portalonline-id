@@ -13,7 +13,6 @@ const plans = [
             "Optimasi SEO",
             "Manajemen user hingga 3 akun",
             "1 Theme premium",
-            "Free Domain .id, com jika berlangganan 1 tahun",
         ],
         cta: "Mulai Starter",
         popular: false,
@@ -29,7 +28,6 @@ const plans = [
             "Optimasi SEO dan analitik",
             "Manajemen user hingga 10 akun",
             "Free akses ke semua theme premium",
-            "Free Domain .id, com jika berlangganan 1 tahun",
             "Prioritas dukungan teknis",
             "Komunikasi langsung dengan tim developer untuk penyesuaian fitur dan troubleshooting",
         ],
@@ -60,7 +58,7 @@ const faqs = [
     },
     {
         q: "Apakah fitur SEO sudah termasuk?",
-        a: "Ya, semua paket sudah termasuk fitur optimasi SEO dasar seperti meta tag otomatis, sitemap, dan struktur URL yang ramah SEO. Paket Pro juga dilengkapi dengan analitik SEO untuk membantu anda memantau performa konten dan mendapatkan rekomendasi optimasi lebih lanjut.",        
+        a: "Ya, semua paket sudah termasuk fitur optimasi SEO dasar seperti meta tag otomatis, sitemap, dan struktur URL yang ramah SEO. Paket Pro juga dilengkapi dengan analitik SEO untuk membantu anda memantau performa konten dan mendapatkan rekomendasi optimasi lebih lanjut.",
     },
     {
         q: "Apakah ada biaya tambahan?",
@@ -87,57 +85,90 @@ const faqs = [
 
 <section class="section pricing-section" id="pricing" aria-labelledby="pricing-title">
     <div class="container pricing-shell">
-        <div class="pricing-header reveal">
-            <p class="eyebrow">Paket Layanan</p>
-            <h2 class="pricing-main-title font-display" id="pricing-title">Harga jelas, tanpa biaya tersembunyi.</h2>
-            <p class="pricing-subtitle">
-                Semua paket sudah termasuk server khusus portal, dukungan teknis, maintanance, dan update fitur. Anda tidak perlu lagi keluar biaya untuk theme, plugin, atau optimasi performa. Kami juga menyediakan opsi kustomisasi dan integrasi untuk kebutuhan khusus di luar cakupan paket standar.
-            </p>
-        </div>
+        <div class="pricing-block">
+            <div class="pricing-header reveal">
+                <p class="eyebrow">Paket Layanan</p>
+                <h2 class="pricing-main-title font-display" id="pricing-title">Harga jelas, tanpa biaya tersembunyi.</h2>
+                <p class="pricing-subtitle">
+                    Semua paket sudah termasuk server khusus portal, dukungan teknis, maintanance, dan update fitur. Anda tidak perlu lagi keluar biaya untuk theme, plugin, atau optimasi performa. Kami juga menyediakan opsi kustomisasi dan integrasi untuk kebutuhan khusus di luar cakupan paket standar.
+                </p>
+            </div>
 
-        <div class="pricing-cards reveal reveal-delay-1">
-            {
-                plans.map((plan) => (
-                    <article class={`pricing-card hover-logo-overlay-target ${plan.popular ? "pricing-card-popular" : ""}`}>
-                        <HoverLogoOverlay preset="interactive" logoTop="calc(var(--hlo-logo-size) * -0.14)" />
-                        <div class="hover-logo-overlay-content">
-                            {plan.popular && <span class="badge-popular">Pilihan Utama</span>}
-                            <h3 class="plan-name font-display">{plan.name}</h3>
-                            <p class="plan-desc">{plan.description}</p>
-                            <div class="plan-price-wrap">
-                                <span class="plan-price font-display">{plan.priceIdr}</span>
-                                <span class="plan-period">{plan.period}</span>
-                            </div>
-                            <ul class="plan-features">
-                                {plan.features.map((feature) => <li>{feature}</li>)}
-                            </ul>
-                            <a
-                                href={`https://wa.me/6285783024799?text=${encodeURIComponent(`Halo, saya tertarik dengan paket ${plan.name} Portal Online.`)}`}
-                                target="_blank"
-                                rel="nofollow noopener noreferrer"
-                                class={`btn ${plan.popular ? "btn-primary" : "btn-secondary"}`}
-                            >
-                                {plan.cta}
-                            </a>
-                        </div>
-                    </article>
-                ))
-            }
-        </div>
-
-        <div class="pricing-faq reveal reveal-delay-2">
-            <h3 class="faq-header font-display">Pertanyaan Umum</h3>
-            <div class="faq-grid">
+            <div class="pricing-cards reveal reveal-delay-1">
                 {
-                    faqs.map((faq) => (
-                        <article class="faq-item">
-                            <h4 class="faq-q">{faq.q}</h4>
-                            <p class="faq-a">{faq.a}</p>
+                    plans.map((plan) => (
+                        <article class={`pricing-card hover-logo-overlay-target ${plan.popular ? "pricing-card-popular" : ""}`}>
+                            <HoverLogoOverlay preset="interactive" logoTop="calc(var(--hlo-logo-size) * -0.14)" />
+                            <div class="hover-logo-overlay-content">
+                                {plan.popular && <span class="badge-popular">Pilihan Utama</span>}
+                                <h3 class="plan-name font-display">{plan.name}</h3>
+                                <p class="plan-desc">{plan.description}</p>
+                                <div class="plan-price-wrap">
+                                    <span class="plan-price font-display">{plan.priceIdr}</span>
+                                    <span class="plan-period">{plan.period}</span>
+                                </div>
+                                <ul class="plan-features">
+                                    {plan.features.map((feature) => <li>{feature}</li>)}
+                                </ul>
+                                <a
+                                    href={`https://wa.me/6285783024799?text=${encodeURIComponent(`Halo, saya tertarik dengan paket ${plan.name} Portal Online.`)}`}
+                                    target="_blank"
+                                    rel="nofollow noopener noreferrer"
+                                    class={`btn ${plan.popular ? "btn-primary" : "btn-secondary"}`}
+                                >
+                                    {plan.cta}
+                                </a>
+                            </div>
                         </article>
                     ))
                 }
             </div>
+
+            <p class="pricing-footnote reveal reveal-delay-2">
+                * Free Domain .id/.com jika berlangganan 1 tahun (berlaku untuk paket Starter &amp; Pro).
+            </p>
         </div>
+
+        <section class="pricing-faq qa-block reveal reveal-delay-2" aria-labelledby="pricing-faq-title">
+            <h3 class="faq-header font-display" id="pricing-faq-title">Pertanyaan Umum</h3>
+            <div class="faq-list">
+                {
+                    faqs.map((faq, index) => (
+                        <article class="faq-item">
+                            <button
+                                type="button"
+                                class="faq-question"
+                                id={`pricing-faq-trigger-${index}`}
+                                aria-expanded="false"
+                                aria-controls={`pricing-faq-panel-${index}`}
+                            >
+                                <span class="faq-q">{faq.q}</span>
+                                <svg
+                                    class="faq-icon"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M6 9l6 6 6-6" />
+                                </svg>
+                            </button>
+                            <div
+                                class="faq-answer"
+                                id={`pricing-faq-panel-${index}`}
+                                role="region"
+                                aria-labelledby={`pricing-faq-trigger-${index}`}
+                            >
+                                <p class="faq-a">{faq.a}</p>
+                            </div>
+                        </article>
+                    ))
+                }
+            </div>
+        </section>
     </div>
 </section>
 
@@ -149,6 +180,11 @@ const faqs = [
     .pricing-shell {
         display: grid;
         gap: 2.4rem;
+    }
+
+    .pricing-block {
+        display: grid;
+        gap: 1.15rem;
     }
 
     .pricing-header {
@@ -277,6 +313,13 @@ const faqs = [
         width: 100%;
     }
 
+    .pricing-footnote {
+        margin-top: 0.2rem;
+        color: var(--color-text-soft);
+        font-size: 0.84rem;
+        line-height: 1.6;
+    }
+
     .pricing-faq {
         margin-top: 0.8rem;
         border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -288,25 +331,74 @@ const faqs = [
         margin-bottom: 1rem;
     }
 
-    .faq-grid {
-        display: grid;
+    .faq-list {
+        display: flex;
+        flex-direction: column;
         gap: 0.85rem;
     }
 
     .faq-item {
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 0.85rem;
-        padding: 0.95rem;
         background: rgba(255, 255, 255, 0.01);
+        overflow: hidden;
+        transition: border-color var(--transition-fast);
+    }
+
+    .faq-item:hover {
+        border-color: rgba(var(--color-primary), 0.34);
+    }
+
+    .faq-item.open {
+        border-color: rgba(var(--color-primary), 0.45);
+    }
+
+    .faq-question {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.9rem;
+        padding: 0.95rem;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        text-align: left;
+        color: var(--color-text);
     }
 
     .faq-q {
         font-size: 0.97rem;
-        color: var(--color-text);
+        font-weight: 600;
+        line-height: 1.5;
+    }
+
+    .faq-icon {
+        flex-shrink: 0;
+        color: var(--color-text-muted);
+        transition:
+            transform var(--transition-fast),
+            color var(--transition-fast);
+    }
+
+    .faq-item.open .faq-icon {
+        transform: rotate(180deg);
+        color: rgb(var(--color-primary));
+    }
+
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.28s ease;
+    }
+
+    .faq-item.open .faq-answer {
+        max-height: 18rem;
     }
 
     .faq-a {
-        margin-top: 0.45rem;
+        margin: 0;
+        padding: 0 0.95rem 0.95rem;
         color: var(--color-text-soft);
         line-height: 1.65;
         font-size: 0.9rem;
@@ -314,10 +406,6 @@ const faqs = [
 
     @media (min-width: 980px) {
         .pricing-cards {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-
-        .faq-grid {
             grid-template-columns: repeat(3, minmax(0, 1fr));
         }
     }
@@ -341,5 +429,51 @@ const faqs = [
         .pricing-card:focus-within {
             transform: none;
         }
+
+        .faq-answer {
+            transition: none;
+        }
+
+        .faq-icon {
+            transition: none;
+        }
     }
 </style>
+
+<script is:inline>
+    (function () {
+        function initPricingFAQAccordion() {
+            const root = document.querySelector(".pricing-section");
+            if (!root) return;
+
+            const faqItems = root.querySelectorAll(".pricing-faq .faq-item");
+            faqItems.forEach((item) => {
+                const trigger = item.querySelector(".faq-question");
+                if (!trigger) return;
+
+                trigger.onclick = () => {
+                    const isOpen = item.classList.contains("open");
+
+                    faqItems.forEach((otherItem) => {
+                        const otherTrigger = otherItem.querySelector(".faq-question");
+                        otherItem.classList.remove("open");
+                        otherTrigger?.setAttribute("aria-expanded", "false");
+                    });
+
+                    if (!isOpen) {
+                        item.classList.add("open");
+                        trigger.setAttribute("aria-expanded", "true");
+                    }
+                };
+            });
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initPricingFAQAccordion);
+        } else {
+            initPricingFAQAccordion();
+        }
+
+        document.addEventListener("astro:page-load", initPricingFAQAccordion);
+    })();
+</script>
