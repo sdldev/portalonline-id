@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import { getCollection, selectFeaturedEntry } from "../../utils/collections";
 import Layout from "../../layouts/Layout.astro";
+import "../../styles/ui-utilities.css";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
 import HoverLogoOverlay from "../../components/HoverLogoOverlay.astro";
@@ -72,6 +73,25 @@ const meta = categoryMeta[categoryName] || {
     subtitle: `Kumpulan artikel kategori ${categoryName}`,
     introText: `Menampilkan semua arsip tulisan untuk kategori ${categoryName}.`,
 };
+
+const getResponsiveImageSources = (src?: string) => {
+    if (
+        src !== "/images/articles/cms-portal-berita-online.avif" &&
+        src !== "/images/articles/cms-portal-berita-online.webp"
+    ) {
+        return null;
+    }
+
+    return {
+        avifSrcSet:
+            "/images/articles/cms-portal-berita-online-688.avif 688w, /images/articles/cms-portal-berita-online.avif 1376w",
+        webpSrcSet:
+            "/images/articles/cms-portal-berita-online-688.webp 688w, /images/articles/cms-portal-berita-online.webp 1376w",
+        fallbackSrc: "/images/articles/cms-portal-berita-online.avif",
+        width: 1376,
+        height: 768,
+    };
+};
 ---
 
 <Layout title={`${meta.title} | Portal Online`} description={meta.subtitle}>
@@ -106,7 +126,35 @@ const meta = categoryMeta[categoryName] || {
                                             <div class="featured-media">
                                                 {
                                                     featuredItem.data.image ? (
-                                                        <img src={featuredItem.data.image} alt={featuredItem.data.title} loading="lazy" />
+                                                        getResponsiveImageSources(featuredItem.data.image) ? (
+                                                            <picture>
+                                                                <source
+                                                                    type="image/avif"
+                                                                    srcset={getResponsiveImageSources(featuredItem.data.image)!.avifSrcSet}
+                                                                    sizes="(max-width: 980px) 100vw, 52vw"
+                                                                />
+                                                                <source
+                                                                    type="image/webp"
+                                                                    srcset={getResponsiveImageSources(featuredItem.data.image)!.webpSrcSet}
+                                                                    sizes="(max-width: 980px) 100vw, 52vw"
+                                                                />
+                                                                <img
+                                                                    src={getResponsiveImageSources(featuredItem.data.image)!.fallbackSrc}
+                                                                    alt={featuredItem.data.title}
+                                                                    width={getResponsiveImageSources(featuredItem.data.image)!.width}
+                                                                    height={getResponsiveImageSources(featuredItem.data.image)!.height}
+                                                                    loading="lazy"
+                                                                    decoding="async"
+                                                                />
+                                                            </picture>
+                                                        ) : (
+                                                            <img
+                                                                src={featuredItem.data.image}
+                                                                alt={featuredItem.data.title}
+                                                                loading="lazy"
+                                                                decoding="async"
+                                                            />
+                                                        )
                                                     ) : (
                                                         <div class="featured-placeholder" aria-hidden="true"></div>
                                                     )
@@ -165,7 +213,37 @@ const meta = categoryMeta[categoryName] || {
                                                 </div>
                                                 {
                                                     item.data.image && (
-                                                        <img src={item.data.image} alt={item.data.title} loading="lazy" class="article-thumb" />
+                                                        getResponsiveImageSources(item.data.image) ? (
+                                                            <picture>
+                                                                <source
+                                                                    type="image/avif"
+                                                                    srcset={getResponsiveImageSources(item.data.image)!.avifSrcSet}
+                                                                    sizes="(max-width: 980px) 42vw, 22vw"
+                                                                />
+                                                                <source
+                                                                    type="image/webp"
+                                                                    srcset={getResponsiveImageSources(item.data.image)!.webpSrcSet}
+                                                                    sizes="(max-width: 980px) 42vw, 22vw"
+                                                                />
+                                                                <img
+                                                                    src={getResponsiveImageSources(item.data.image)!.fallbackSrc}
+                                                                    alt={item.data.title}
+                                                                    width={getResponsiveImageSources(item.data.image)!.width}
+                                                                    height={getResponsiveImageSources(item.data.image)!.height}
+                                                                    loading="lazy"
+                                                                    decoding="async"
+                                                                    class="article-thumb"
+                                                                />
+                                                            </picture>
+                                                        ) : (
+                                                            <img
+                                                                src={item.data.image}
+                                                                alt={item.data.title}
+                                                                loading="lazy"
+                                                                decoding="async"
+                                                                class="article-thumb"
+                                                            />
+                                                        )
                                                     )
                                                 }
                                             </div>

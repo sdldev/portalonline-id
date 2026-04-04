@@ -11,7 +11,7 @@ tags:
         "portal online sekolah",
         "sso",
     ]
-image: "/images/articles/cms-portal-berita-online.webp"
+image: "/images/articles/cms-portal-berita-online.avif"
 imageCaption: "Tampilan dashboard interaktif khusus untuk ruang redaksi modern."
 ---
 

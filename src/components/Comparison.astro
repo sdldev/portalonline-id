@@ -4,6 +4,25 @@ import { getCollection, selectFeaturedEntry } from "../utils/collections";
 
 const articleCollection = await getCollection("article");
 const featuredArticle = selectFeaturedEntry(articleCollection);
+
+const getResponsiveImageSources = (src?: string) => {
+    if (
+        src !== "/images/articles/cms-portal-berita-online.avif" &&
+        src !== "/images/articles/cms-portal-berita-online.webp"
+    ) {
+        return null;
+    }
+
+    return {
+        avifSrcSet:
+            "/images/articles/cms-portal-berita-online-688.avif 688w, /images/articles/cms-portal-berita-online.avif 1376w",
+        webpSrcSet:
+            "/images/articles/cms-portal-berita-online-688.webp 688w, /images/articles/cms-portal-berita-online.webp 1376w",
+        fallbackSrc: "/images/articles/cms-portal-berita-online.avif",
+        width: 1376,
+        height: 768,
+    };
+};
 ---
 
 <section class="section comparison-section" id="comparison" aria-labelledby="comparison-title">
@@ -27,11 +46,35 @@ const featuredArticle = selectFeaturedEntry(articleCollection);
                         <div class="proof-card-media">
                             {
                                 featuredArticle.data.image ? (
-                                    <img
-                                        src={featuredArticle.data.image}
-                                        alt={featuredArticle.data.title}
-                                        loading="lazy"
-                                    />
+                                    getResponsiveImageSources(featuredArticle.data.image) ? (
+                                        <picture>
+                                            <source
+                                                type="image/avif"
+                                                srcset={getResponsiveImageSources(featuredArticle.data.image)!.avifSrcSet}
+                                                sizes="(max-width: 980px) 100vw, 52vw"
+                                            />
+                                            <source
+                                                type="image/webp"
+                                                srcset={getResponsiveImageSources(featuredArticle.data.image)!.webpSrcSet}
+                                                sizes="(max-width: 980px) 100vw, 52vw"
+                                            />
+                                            <img
+                                                src={getResponsiveImageSources(featuredArticle.data.image)!.fallbackSrc}
+                                                alt={featuredArticle.data.title}
+                                                width={getResponsiveImageSources(featuredArticle.data.image)!.width}
+                                                height={getResponsiveImageSources(featuredArticle.data.image)!.height}
+                                                loading="lazy"
+                                                decoding="async"
+                                            />
+                                        </picture>
+                                    ) : (
+                                        <img
+                                            src={featuredArticle.data.image}
+                                            alt={featuredArticle.data.title}
+                                            loading="lazy"
+                                            decoding="async"
+                                        />
+                                    )
                                 ) : (
                                     <div class="proof-placeholder" aria-hidden="true"></div>
                                 )
