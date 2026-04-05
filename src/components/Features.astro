@@ -3,79 +3,58 @@ import HoverLogoOverlay from "./HoverLogoOverlay.astro";
 
 const pillars = [
     {
-        eyebrow: "Arsitektur dan performa",
-        title: "Fondasi yang siap trafik dan siap berkembang",
+        eyebrow: "Server dan performa",
+        title: "Server khusus, optimasi khusus, performa maksimal",
         description:
-            "Kami membangun struktur frontend, CMS, dan server yang rapi sejak awal. Hasilnya bukan hanya cepat saat peluncuran, tapi tetap stabil ketika volume konten dan pembaca bertambah.",
+            "Kami menggunakan server khusus dengan konfigurasi yang dioptimalkan untuk CMS portal berita. Hasilnya: kecepatan akses yang konsisten, waktu muat halaman yang cepat, dan pengalaman pengguna yang mulus tanpa gangguan teknis.",
     },
     {
-        eyebrow: "Design direction dan identitas",
-        title: "Tampilan terasa kredibel sejak detik pertama",
+        eyebrow: "Desain simple dan modern",
+        title: "Desain yang dirancang khusus media online",
         description:
-            "Tipografi, ritme layout, dan komposisi visual kami rancang spesifik untuk karakter brand Anda. Bukan template generik yang sekadar diganti warna.",
+            "Tampilan simple dan modern yang dirancang khusus untuk media online, memastikan pembaca fokus pada konten tanpa gangguan visual. Desain ini juga memudahkan redaksi dalam mengelola dan menampilkan berita dengan cara yang menarik dan mudah dinavigasi.",
     },
     {
-        eyebrow: "Operasional dan pendampingan",
-        title: "Diskusi teknis langsung dengan developer",
+        eyebrow: "SEO dan Keamanan",
+        title: "Fondasi SEO dan keamanan yang terintegrasi",
         description:
-            "Setiap keputusan penting, dari struktur konten sampai optimasi teknis, dibahas langsung tanpa rantai perantara. Alur kerja jadi lebih cepat dan jelas.",
+            "CMS kami dibangun sudah memiliki SEO yang kuat, tidak perlu tambahan plugin atau modifikasi. Keamanan juga dirancang untuk melindungi situs dari serangan siber, memastikan data dan konten tetap aman",
     },
 ];
 
-const detailItems = [
-    {
-        title: "Fondasi SEO",
-        text: "Struktur heading, metadata, internal link, dan schema disiapkan sebagai bagian dari fondasi website.",
-    },
-    {
-        title: "Alur CMS",
-        text: "Alur terbit artikel dan manajemen redaksi dirancang untuk penggunaan harian, bukan sekadar demo presentasi.",
-    },
-    {
-        title: "Akses Developer Langsung",
-        text: "Butuh perubahan teknis, evaluasi performa, atau ide baru: Anda berdiskusi langsung dengan developer yang membangunnya.",
-    },
-];
 ---
 
 <section class="section features-section section-frame" id="why-choose" aria-labelledby="why-choose-title">
     <div class="container features-shell">
         <div class="features-intro reveal">
-            <p class="eyebrow">Pendekatan Kami</p>
+            <p class="eyebrow">Fitur Layanan</p>
             <h2 class="features-main-title font-display" id="why-choose-title">
-                Kami tidak menjual setup instan. Kami membangun sistem publikasi yang tahan dipakai bertahun-tahun.
+                CMS PORTAL ONLINE Siap Pakai, Siap Tumbuh, Siap Bersaing.
             </h2>
             <p class="features-intro-copy">
-                Fokus kami sederhana: performa yang sehat, presentasi yang kredibel, dan proses editorial yang nyaman untuk tim Anda.
+                Fokus kami sederhana: anda fokus pada konten dan strategi, kami pastikan fondasi teknisnya kuat, cepat, dan mudah dikembangkan. Tidak perlu pusing soal hosting, optimasi, atau fitur teknis lainnya. Kami yang urus, anda yang fokus ke bisnis.
             </p>
         </div>
 
         <div class="features-grid">
             {
                 pillars.map((pillar, index) => (
-                    <article class={`feature-item reveal reveal-delay-${index + 1}`}>
-                        <p class="feature-eyebrow">{pillar.eyebrow}</p>
-                        <h3 class="feature-title font-display">{pillar.title}</h3>
-                        <p class="feature-text">{pillar.description}</p>
+                    <article class={`feature-item hover-logo-overlay-target reveal reveal-delay-${index + 1}`}>
+                        <HoverLogoOverlay
+                            preset="informational"
+                            logoTop="calc(var(--hlo-logo-size) * -0.14)"
+                            logoRight="calc(var(--hlo-logo-size) * -0.14)"
+                            logoSize="4.8rem"
+                            hoverOpacity={0.18}
+                        />
+                        <div class="hover-logo-overlay-content">
+                            <p class="feature-eyebrow">{pillar.eyebrow}</p>
+                            <h3 class="feature-title font-display">{pillar.title}</h3>
+                            <p class="feature-text">{pillar.description}</p>
+                        </div>
                     </article>
                 ))
             }
-        </div>
-
-        <div class="detail-strip-wrapper reveal reveal-delay-2" aria-label="Detail pilar teknis">
-            <div class="detail-grid">
-                {
-                    detailItems.map((item) => (
-                        <article class="detail-card hover-logo-overlay-target">
-                            <HoverLogoOverlay preset="informational" logoTop="calc(var(--hlo-logo-size) * -0.14)" logoSize="4.4rem" hoverOpacity={0.16} />
-                            <div class="hover-logo-overlay-content">
-                                <h3 class="detail-title">{item.title}</h3>
-                                <p class="detail-text">{item.text}</p>
-                            </div>
-                        </article>
-                    ))
-                }
-            </div>
         </div>
     </div>
 </section>
@@ -114,8 +93,12 @@ const detailItems = [
     }
 
     .feature-item {
-        padding: 1.2rem 0;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 1.35rem 1.15rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.012);
+        overflow: hidden;
+        min-height: 100%;
     }
 
     .feature-eyebrow {
@@ -138,36 +121,6 @@ const detailItems = [
         line-height: 1.75;
     }
 
-    .detail-strip-wrapper {
-        padding-top: 2.2rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .detail-grid {
-        display: grid;
-        gap: 0.35rem;
-    }
-
-    .detail-card {
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 0.95rem 0 1.05rem;
-        background: transparent;
-    }
-
-    .detail-title {
-        font-size: 0.9rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--color-text);
-    }
-
-    .detail-text {
-        margin-top: 0.55rem;
-        color: var(--color-text-soft);
-        line-height: 1.65;
-        font-size: 0.92rem;
-    }
-
     @media (min-width: 900px) {
         .features-grid {
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -175,28 +128,7 @@ const detailItems = [
         }
 
         .feature-item {
-            border-top: none;
-            padding: 0 1.25rem 0 0;
-            border-right: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .feature-item:last-child {
-            border-right: none;
-        }
-
-        .detail-grid {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1.2rem;
-        }
-
-        .detail-card {
-            border-top: none;
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 0 1rem 0 0;
-        }
-
-        .detail-card:last-child {
-            border-right: none;
+            padding: 1.5rem 1.3rem;
         }
     }
 </style>

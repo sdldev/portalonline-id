@@ -6,13 +6,13 @@ import HoverLogoOverlay from "./HoverLogoOverlay.astro";
     <div class="container cta-shell">
         <div class="cta-card hover-logo-overlay-target reveal reveal-delay-1">
             <HoverLogoOverlay preset="interactive" logoTop="calc(var(--hlo-logo-size) * -0.14)" logoSize="6rem" hoverOpacity={0.2} />
-            <div class="hover-logo-overlay-content">
+            <div class="hover-logo-overlay-content cta-content">
                 <p class="eyebrow">Konsultasi Gratis</p>
                 <h2 class="cta-title font-display" id="cta-title">
-                    Siap meluncurkan portal yang lebih rapi dikelola dan lebih meyakinkan di mata audiens?
+                    Anda ingin membangun portal online untuk media atau bisnis? Kami siap membantu dengan konsultasi gratis.
                 </h2>
                 <p class="cta-desc">
-                    Ceritakan kebutuhan redaksi atau bisnis Anda. Kami bantu memetakan struktur, desain, dan langkah implementasi yang realistis.
+                    ceritakan kebutuhan Anda, dan kami akan memberikan panduan langkah demi langkah untuk mewujudkan portal online yang sesuai dengan visi Anda. Tidak ada biaya, hanya solusi yang tepat untuk Anda.
                 </p>
 
                 <a
@@ -43,34 +43,61 @@ import HoverLogoOverlay from "./HoverLogoOverlay.astro";
         border: 1px solid rgba(255, 255, 255, 0.14);
         border-radius: 1.2rem;
         background: rgba(255, 255, 255, 0.012);
-        padding: 2.2rem 1.2rem;
+        padding: 2.8rem 1.35rem;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 1.05rem;
         text-align: center;
+    }
+
+    .cta-content {
+        display: grid;
+        justify-items: center;
+        gap: 1rem;
+        width: 100%;
+    }
+
+    .cta-content .eyebrow {
+        margin-bottom: 0.15rem;
     }
 
     .cta-title {
         font-size: clamp(2rem, 4vw, 3.3rem);
         line-height: 1.08;
         max-width: 18ch;
+        margin: 0;
     }
 
     .cta-desc {
         color: var(--color-text-muted);
         max-width: 56ch;
         line-height: 1.75;
+        margin: 0;
+    }
+
+    .cta-content .btn {
+        margin-top: 0.65rem;
+        margin-bottom: 0.45rem;
     }
 
     .cta-note {
         font-size: 0.82rem;
         color: var(--color-text-soft);
+        margin: 0;
     }
 
     @media (min-width: 768px) {
         .cta-card {
-            padding: 3rem 2.1rem;
+            padding: 3.5rem 2.4rem 3.2rem;
+        }
+
+        .cta-content {
+            gap: 1.15rem;
+        }
+
+        .cta-content .btn {
+            margin-top: 0.8rem;
+            margin-bottom: 0.55rem;
         }
     }
 

@@ -78,13 +78,14 @@ const {
     <head>
         <!-- Google Analytics -->
         <script
+            is:inline
             async
             src="https://www.googletagmanager.com/gtag/js?id=G-7D8XPV35XR"
         ></script>
-        <script>
+        <script is:inline>
             window.dataLayer = window.dataLayer || [];
             function gtag(...args) {
-                dataLayer.push(args);
+                window.dataLayer.push(args);
             }
             gtag("js", new Date());
             gtag("config", "G-7D8XPV35XR");

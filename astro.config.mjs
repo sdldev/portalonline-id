@@ -46,5 +46,7 @@ export default defineConfig({
         }),
         mdx(),
     ],
-    adapter: cloudflare(),
+    adapter: cloudflare({
+        inspectorPort: false,
+    }),
 });

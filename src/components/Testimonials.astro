@@ -3,19 +3,19 @@ import HoverLogoOverlay from "./HoverLogoOverlay.astro";
 
 const testimonials = [
     {
+        name: "Ridwan Saleh, S.H.",
+        role: "Pimpinan Jasaku.co.id",
+        avatar: "/images/testimoni/ridwan-saleh-sh.avif",
+        content:
+            "Selama hampir 5 tahun saya mencari developer yang bukan hanya bisa membuat website, tapi juga bisa diajak komunikasi dengan nyaman. Banyak yang secara teknis pintar, tapi terasa kaku, sulit memahami kebutuhan bisnis, dan hanya mengeksekusi perintah tanpa benar-benar mengerti tujuan klien. Padahal bagi saya, website itu bukan sekadar tampilan — melainkan alat untuk mencapai hasil. Akhirnya saya menemukan Portal Online, dan di sini saya merasa berbeda. Mereka tidak langsung bicara soal fitur atau harga, tapi justru menggali dulu: website ini mau dipakai untuk apa, target marketnya siapa, dan hasil apa yang ingin dicapai. Dari situ saya sadar mereka bukan sekadar jasa pembuatan website, melainkan partner yang memahami strategi digital secara utuh. Sekarang saya melihat mereka lebih seperti partner digital marketing organik yang benar-benar membantu perkembangan bisnis, bukan vendor teknis semata. Terima kasih Portal Online atas kerjasamanya, semoga ke depan semakin banyak pelaku usaha yang terbantu dan merasakan manfaat yang sama seperti saya.",
+        featured: true,
+    },
+    {
         name: "Zainal Asikin",
         role: "Pimred SWM, Jurnalis Madya AJI",
         avatar: "/images/testimoni/zainal-asikin.avif",
         content:
             "Portal Online membantu kami merapikan pengelolaan berita dan membuat tampilan situs terasa jauh lebih siap bersaing. Yang paling terasa justru kombinasi performa, dashboard, dan kualitas presentasinya.",
-        featured: true,
-    },
-    {
-        name: "Ridwan Saleh, S.H.",
-        role: "Pimpinan Jasaku.co.id",
-        avatar: "/images/testimoni/ridwan-saleh-sh.avif",
-        content:
-            "Saya butuh partner yang memahami tujuan bisnis, lalu menerjemahkannya menjadi website yang benar-benar membantu perkembangan usaha. Itu yang saya dapatkan.",
         featured: false,
     },
     {
@@ -34,14 +34,14 @@ const testimonials = [
         <div class="testi-header reveal">
             <p class="eyebrow">Testimoni</p>
             <h2 class="section-title" id="testimonials-title">
-                Dipercaya oleh pemimpin redaksi dan pemilik bisnis.
+                Dipercaya oleh perusahaan media dan pemilik bisnis.
             </h2>
         </div>
 
         <div class="testi-grid">
             {
                 testimonials.map((item, index) => (
-                    <article class={`testi-card hover-logo-overlay-target reveal reveal-delay-${index + 1} ${item.featured ? "testi-card-featured" : "testi-card-standard"}`}>
+                    <article class={`testi-card hover-logo-overlay-target reveal reveal-delay-${index + 1} ${item.featured ? "testi-card-featured" : ""}`}>
                         <HoverLogoOverlay
                             preset={item.featured ? "interactive" : "informational"}
                             logoTop="calc(var(--hlo-logo-size) * -0.14)"
