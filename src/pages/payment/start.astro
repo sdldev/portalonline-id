@@ -1,0 +1,109 @@
+---
+import { env } from "cloudflare:workers";
+
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import { getDuitkuConfig } from "../../lib/duitku";
+
+export const prerender = false;
+
+const reference = Astro.url.searchParams.get("reference") ?? "";
+const paymentUrl = Astro.url.searchParams.get("paymentUrl") ?? "";
+const duitku = getDuitkuConfig(env);
+---
+
+<Layout
+    title="Mulai Pembayaran Duitku | Portal Online"
+    description="Lanjutkan pembayaran Portal Online melalui Duitku Sandbox."
+>
+    <Navbar />
+    <main id="main-content">
+        <section class="section payment-start-section" aria-labelledby="payment-start-title">
+            <div class="container payment-start-shell">
+                <div class="payment-start-card">
+                    <p class="eyebrow">Duitku Sandbox</p>
+                    <h1 class="payment-start-title font-display" id="payment-start-title">
+                        Membuka pembayaran Duitku.
+                    </h1>
+                    <p>
+                        Jendela pembayaran akan terbuka otomatis. Jika tidak muncul, gunakan tombol di bawah untuk melanjutkan pembayaran.
+                    </p>
+                    {
+                        reference ? (
+                            <button class="btn btn-primary" type="button" id="duitku-pay-button" data-reference={reference}>
+                                Lanjutkan Pembayaran
+                            </button>
+                        ) : paymentUrl ? (
+                            <a class="btn btn-primary" href={paymentUrl}>Lanjutkan Pembayaran</a>
+                        ) : (
+                            <a class="btn btn-secondary" href="/#pricing">Kembali ke Paket Layanan</a>
+                        )
+                    }
+                </div>
+            </div>
+        </section>
+    </main>
+    <Footer />
+</Layout>
+
+<style>
+    .payment-start-section {
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .payment-start-shell {
+        max-width: 760px;
+    }
+
+    .payment-start-card {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        padding: clamp(1.25rem, 4vw, 2rem);
+    }
+
+    .payment-start-title {
+        margin-top: 0.7rem;
+        font-size: clamp(2.1rem, 5vw, 3.4rem);
+        line-height: 1.08;
+    }
+
+    .payment-start-card p:not(.eyebrow) {
+        margin-top: 1rem;
+        margin-bottom: 1.4rem;
+        color: var(--color-text-soft);
+        line-height: 1.75;
+    }
+</style>
+
+{reference && <script src={duitku.popScriptUrl}></script>}
+
+<script define:vars={{ hasReference: Boolean(reference) }}>
+    if (hasReference) {
+        const button = document.getElementById("duitku-pay-button");
+        const reference = button?.getAttribute("data-reference");
+
+        function processPayment() {
+            if (!reference || typeof checkout === "undefined") return;
+
+            checkout.process(reference, {
+                successEvent: function () {
+                    window.location.href = "/payment/return";
+                },
+                pendingEvent: function () {
+                    window.location.href = "/payment/return";
+                },
+                errorEvent: function () {
+                    window.location.href = "/checkout/starter?error=payment_failed";
+                },
+                closeEvent: function () {
+                    // Keep the buyer on this page so they can retry with the button.
+                },
+            });
+        }
+
+        button?.addEventListener("click", processPayment);
+        window.addEventListener("load", processPayment);
+    }
+</script>

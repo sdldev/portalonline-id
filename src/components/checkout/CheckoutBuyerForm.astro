@@ -1,0 +1,106 @@
+---
+import { billingPeriods, type BillingPeriod, type ServicePackage } from "../../data/servicePackages";
+
+interface Props {
+    servicePackage: ServicePackage;
+    period: BillingPeriod;
+    hasPaymentError: boolean;
+    hasValidationError: boolean;
+}
+
+const { servicePackage, period, hasPaymentError, hasValidationError } = Astro.props;
+const billingPeriod = billingPeriods[period];
+const whatsappHelpUrl = `https://wa.me/6285783024799?text=${encodeURIComponent(
+    `Halo, saya butuh bantuan checkout paket ${servicePackage.name} ${billingPeriod.label} Portal Online.`,
+)}`;
+---
+
+<form class="checkout-form" method="post" action="/api/duitku/create-payment" data-checkout-form novalidate={false}>
+    <input type="hidden" name="packageId" value={servicePackage.id} />
+    <input type="hidden" name="period" value={period} />
+
+    <div class="checkout-form-header">
+        <span class="checkout-step">Langkah 1 dari 2</span>
+        <h2 class="font-display">Data Buyer</h2>
+        <p>Pastikan kontak aktif. Email dan WhatsApp membantu kami mengirim informasi Payment dan follow-up aktivasi.</p>
+    </div>
+
+    {
+        (hasPaymentError || hasValidationError) && (
+            <p class="checkout-alert" role="alert">
+                {hasValidationError
+                    ? "Mohon periksa kembali data Checkout Anda. Nama, email, WhatsApp, dan nama media wajib diisi dengan benar."
+                    : "Maaf, Payment belum dapat diproses. Silakan coba beberapa saat lagi atau hubungi kami via WhatsApp."}
+            </p>
+        )
+    }
+
+    <fieldset class="checkout-fieldset">
+        <legend>Kontak utama</legend>
+        <p class="checkout-fieldset-note">Kami memakai data ini untuk membuat Payment dan menghubungi Anda bila ada kendala.</p>
+        <div class="checkout-field-grid">
+            <label class="checkout-field">
+                <span>Nama lengkap <strong>Wajib</strong></span>
+                <input name="name" type="text" autocomplete="name" minlength="2" placeholder="Nama sesuai kontak" required />
+            </label>
+
+            <label class="checkout-field">
+                <span>Email <strong>Wajib</strong></span>
+                <input name="email" type="email" autocomplete="email" placeholder="nama@email.com" required />
+            </label>
+
+            <label class="checkout-field checkout-field-wide">
+                <span>Nomor WhatsApp <strong>Wajib</strong></span>
+                <input
+                    name="phoneNumber"
+                    type="tel"
+                    autocomplete="tel"
+                    inputmode="tel"
+                    minlength="8"
+                    placeholder="08xxxxxxxxxx"
+                    aria-describedby="phone-help"
+                    required
+                />
+                <small id="phone-help">Gunakan nomor yang dapat menerima pesan WhatsApp.</small>
+            </label>
+        </div>
+    </fieldset>
+
+    <fieldset class="checkout-fieldset">
+        <legend>Media atau organisasi</legend>
+        <p class="checkout-fieldset-note">Bantu kami memahami identitas media yang akan memakai layanan Portal Online.</p>
+        <div class="checkout-field-grid">
+            <label class="checkout-field checkout-field-wide">
+                <span>Nama media / organisasi <strong>Wajib</strong></span>
+                <input name="organizationName" type="text" minlength="2" placeholder="Nama media Anda" required />
+            </label>
+
+            <label class="checkout-field checkout-field-wide">
+                <span>Domain saat ini / domain pilihan <small>Opsional</small></span>
+                <input name="domain" type="text" placeholder="contoh: namamedia.id" />
+            </label>
+
+            <label class="checkout-field checkout-field-wide">
+                <span>Catatan kebutuhan <small>Opsional</small></span>
+                <textarea name="notes" rows="4" placeholder="Contoh: butuh migrasi artikel, bantuan setup redaksi, atau domain baru."></textarea>
+            </label>
+        </div>
+    </fieldset>
+
+    <div class="checkout-payment-note">
+        <strong>Langkah berikutnya</strong>
+        <span>Setelah tombol ditekan, invoice dibuat dan halaman Payment Duitku Sandbox akan terbuka otomatis.</span>
+    </div>
+
+    <button class="btn btn-primary checkout-submit" type="submit">
+        <span>Lanjutkan ke pembayaran Duitku Sandbox</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+        </svg>
+    </button>
+    <p class="checkout-help">
+        Butuh bantuan sebelum membayar?
+        <a href={whatsappHelpUrl} target="_blank" rel="nofollow noopener noreferrer">Hubungi WhatsApp kami</a>.
+    </p>
+</form>

@@ -1,0 +1,78 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+
+export const prerender = false;
+---
+
+<Layout
+    title="Pembayaran Diproses | Portal Online"
+    description="Pembayaran Portal Online sedang diproses. Tim kami akan menghubungi Anda setelah pembayaran terverifikasi."
+>
+    <Navbar />
+    <main id="main-content">
+        <section class="section payment-return-section" aria-labelledby="payment-return-title">
+            <div class="container payment-return-shell">
+                <div class="payment-return-card">
+                    <p class="eyebrow">Pembayaran Duitku</p>
+                    <h1 class="payment-return-title font-display" id="payment-return-title">
+                        Pembayaran sedang diproses.
+                    </h1>
+                    <p>
+                        Terima kasih. Jika pembayaran berhasil, tim Portal Online akan menghubungi Anda melalui WhatsApp atau email untuk proses aktivasi berikutnya.
+                    </p>
+                    <p>
+                        Halaman ini bukan konfirmasi final pembayaran. Status pembayaran diverifikasi melalui notifikasi resmi dari Duitku.
+                    </p>
+                    <div class="payment-return-actions">
+                        <a class="btn btn-primary" href="/">Kembali ke Beranda</a>
+                        <a
+                            class="btn btn-secondary"
+                            href="https://wa.me/6285783024799?text=Halo,%20saya%20ingin%20menanyakan%20status%20pembayaran%20Portal%20Online."
+                            target="_blank"
+                            rel="nofollow noopener noreferrer"
+                        >Hubungi WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <Footer />
+</Layout>
+
+<style>
+    .payment-return-section {
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .payment-return-shell {
+        max-width: 760px;
+    }
+
+    .payment-return-card {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        padding: clamp(1.25rem, 4vw, 2rem);
+    }
+
+    .payment-return-title {
+        margin-top: 0.7rem;
+        font-size: clamp(2.1rem, 5vw, 3.4rem);
+        line-height: 1.08;
+    }
+
+    .payment-return-card p:not(.eyebrow) {
+        margin-top: 1rem;
+        color: var(--color-text-soft);
+        line-height: 1.75;
+    }
+
+    .payment-return-actions {
+        margin-top: 1.4rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+</style>

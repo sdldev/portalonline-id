@@ -1,0 +1,51 @@
+---
+import { billingPeriods, formatIdr, type BillingPeriod, type ServicePackage } from "../../data/servicePackages";
+
+interface Props {
+    servicePackage: ServicePackage;
+    period: BillingPeriod;
+    price: number;
+}
+
+const { servicePackage, period, price } = Astro.props;
+const billingPeriod = billingPeriods[period];
+---
+
+<article class="checkout-summary" aria-labelledby="checkout-summary-title">
+    <div class="checkout-summary-topline">
+        <p class="eyebrow">Anda sedang membeli</p>
+        <span class="checkout-env-badge">Sandbox</span>
+    </div>
+
+    <h1 class="checkout-title font-display" id="checkout-summary-title">
+        {servicePackage.name} {billingPeriod.label}
+    </h1>
+    <p class="checkout-description">
+        Checkout untuk paket CMS Portal Online. Isi data Buyer, lalu lanjutkan ke Payment yang diproses di halaman Duitku.
+    </p>
+
+    <div class="checkout-price-card" aria-label="Ringkasan harga">
+        <span class="checkout-price-label">Total yang dibayar sekarang</span>
+        <div class="checkout-price">
+            <span class="checkout-price-value font-display">{formatIdr(price)}</span>
+            <span class="checkout-price-period">/{billingPeriod.shortLabel}</span>
+        </div>
+        <span class="checkout-price-note">Invoice dibuat melalui Duitku POP Sandbox.</span>
+    </div>
+
+    {
+        period === "yearly" && (
+            <p class="checkout-benefit">
+                Hemat 2 bulan: bayar 10 bulan untuk 12 bulan layanan, termasuk domain gratis `.id`/`.com`.
+            </p>
+        )
+    }
+
+    <div class="checkout-includes" aria-label="Termasuk dalam paket">
+        <h2 class="checkout-card-heading font-display">Yang Anda dapatkan</h2>
+        <p>{servicePackage.description}</p>
+        <ul class="checkout-features">
+            {servicePackage.features.map((feature) => <li>{feature}</li>)}
+        </ul>
+    </div>
+</article>

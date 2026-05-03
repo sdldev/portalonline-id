@@ -1,55 +1,12 @@
 ---
 import HoverLogoOverlay from "./HoverLogoOverlay.astro";
-
-const plans = [
-    {
-        id: "starter",
-        name: "Starter",
-        priceIdr: "150K",
-        period: "/bulan",
-        description: "Cocok untuk media baru dan media daerah.",
-        features: [
-            "Penerbitan artikel tidak terbatas",
-            "Optimasi SEO",
-            "Manajemen user hingga 3 akun",
-            "1 tema premium",
-        ],
-        cta: "Mulai Starter",
-        popular: false,
-    },
-    {
-        id: "pro",
-        name: "Pro",
-        priceIdr: "300K",
-        period: "/bulan",
-        description: "Dirancang untuk media yang sudah berjalan dengan trafik tinggi.",
-        features: [
-            "Penerbitan artikel tidak terbatas",
-            "Optimasi SEO dan analitik",
-            "Manajemen user hingga 10 akun",
-            "Akses ke semua tema premium",
-            "Prioritas dukungan teknis",
-            "Komunikasi langsung dengan tim developer untuk penyesuaian fitur dan troubleshooting",
-        ],
-        cta: "Mulai Pro",
-        popular: true,
-    },
-    {
-        id: "enterprise",
-        name: "Enterprise",
-        priceIdr: "Custom",
-        period: "",
-        description: "Untuk kebutuhan migrasi besar, integrasi sistem, dan infrastruktur khusus.",
-        features: [
-            "SLA uptime 99.9%",
-            "Integrasi API eksternal",
-            "Migrasi data CMS lama",
-            "Account manager khusus",
-        ],
-        cta: "Diskusikan Kebutuhan",
-        popular: false,
-    },
-];
+import {
+    billingPeriods,
+    formatCompactIdr,
+    getPackagePrice,
+    servicePackages,
+    type BillingPeriod,
+} from "../data/servicePackages";
 
 const faqs = [
     {
@@ -81,9 +38,12 @@ const faqs = [
         a: "Kami melakukan maintenance rutin untuk menjaga performa tetap optimal dan data tetap aman. Backup dilakukan secara berkala, dan kami memiliki prosedur pemulihan yang cepat jika terjadi kendala.",
     },
 ];
+
+const defaultPeriod: BillingPeriod = "monthly";
 ---
 
-<section class="section pricing-section" id="pricing" aria-labelledby="pricing-title">
+
+<section class="section pricing-section" id="pricing" aria-labelledby="pricing-title" data-active-period={defaultPeriod}>
     <div class="container pricing-shell">
         <div class="pricing-block">
             <div class="pricing-header reveal">
@@ -92,40 +52,90 @@ const faqs = [
                 <p class="pricing-subtitle">
                     Semua paket sudah termasuk server khusus portal, dukungan teknis, maintenance, dan update fitur. Anda tidak perlu lagi mengeluarkan biaya tambahan untuk tema, plugin, atau optimasi performa. Kami juga menyediakan opsi kustomisasi dan integrasi untuk kebutuhan khusus di luar cakupan paket standar.
                 </p>
+                <div class="billing-toggle" aria-label="Pilih periode pembayaran">
+                    {
+                        Object.values(billingPeriods).map((period) => (
+                            <button
+                                type="button"
+                                class={`billing-toggle-button ${period.id === defaultPeriod ? "active" : ""}`}
+                                data-period={period.id}
+                                aria-pressed={period.id === defaultPeriod ? "true" : "false"}
+                            >
+                                <span>{period.label}</span>
+                                {period.badge && <small>{period.badge}</small>}
+                            </button>
+                        ))
+                    }
+                </div>
             </div>
 
             <div class="pricing-cards reveal reveal-delay-1">
                 {
-                    plans.map((plan) => (
-                        <article class={`pricing-card hover-logo-overlay-target ${plan.popular ? "pricing-card-popular" : ""}`}>
-                            <HoverLogoOverlay preset="interactive" logoTop="calc(var(--hlo-logo-size) * -0.14)" />
-                            <div class="hover-logo-overlay-content">
-                                {plan.popular && <span class="badge-popular">Pilihan Utama</span>}
-                                <h3 class="plan-name font-display">{plan.name}</h3>
-                                <p class="plan-desc">{plan.description}</p>
-                                <div class="plan-price-wrap">
-                                    <span class="plan-price font-display">{plan.priceIdr}</span>
-                                    <span class="plan-period">{plan.period}</span>
+                    servicePackages.map((plan) => {
+                        const monthlyPrice = getPackagePrice(plan, "monthly");
+                        const yearlyPrice = getPackagePrice(plan, "yearly");
+                        const checkoutHref = plan.checkoutEnabled
+                            ? `/checkout/${plan.id}?period=${defaultPeriod}`
+                            : `https://wa.me/6285783024799?text=${encodeURIComponent(`Halo, saya ingin mendiskusikan kebutuhan paket ${plan.name} Portal Online.`)}`;
+
+                        return (
+                            <article class={`pricing-card hover-logo-overlay-target ${plan.popular ? "pricing-card-popular" : ""}`}>
+                                <HoverLogoOverlay preset="interactive" logoTop="calc(var(--hlo-logo-size) * -0.14)" />
+                                <div class="hover-logo-overlay-content">
+                                    {plan.popular && <span class="badge-popular">Pilihan Utama</span>}
+                                    <h3 class="plan-name font-display">{plan.name}</h3>
+                                    <p class="plan-desc">{plan.description}</p>
+                                    <div class="plan-price-wrap">
+                                        {monthlyPrice && yearlyPrice ? (
+                                            <>
+                                                <span
+                                                    class="plan-price font-display"
+                                                    data-monthly-price={formatCompactIdr(monthlyPrice)}
+                                                    data-yearly-price={formatCompactIdr(yearlyPrice)}
+                                                >
+                                                    {formatCompactIdr(monthlyPrice)}
+                                                </span>
+                                                <span
+                                                    class="plan-period"
+                                                    data-monthly-period={billingPeriods.monthly.periodLabel}
+                                                    data-yearly-period={billingPeriods.yearly.periodLabel}
+                                                >
+                                                    {billingPeriods.monthly.periodLabel}
+                                                </span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span class="plan-price font-display">Custom</span>
+                                                <span class="plan-period">Sesuai kebutuhan</span>
+                                            </>
+                                        )}
+                                    </div>
+                                    {plan.checkoutEnabled && (
+                                        <p class="plan-saving" data-yearly-saving="true" hidden>
+                                            Bayar 10 bulan untuk 12 bulan layanan.
+                                        </p>
+                                    )}
+                                    <ul class="plan-features">
+                                        {plan.features.map((feature) => <li>{feature}</li>)}
+                                    </ul>
+                                    <a
+                                        href={checkoutHref}
+                                        target={plan.checkoutEnabled ? undefined : "_blank"}
+                                        rel={plan.checkoutEnabled ? undefined : "nofollow noopener noreferrer"}
+                                        data-checkout-base={plan.checkoutEnabled ? `/checkout/${plan.id}` : undefined}
+                                        class={`btn ${plan.popular ? "btn-primary" : "btn-secondary"}`}
+                                    >
+                                        {plan.cta}
+                                    </a>
                                 </div>
-                                <ul class="plan-features">
-                                    {plan.features.map((feature) => <li>{feature}</li>)}
-                                </ul>
-                                <a
-                                    href={`https://wa.me/6285783024799?text=${encodeURIComponent(`Halo, saya tertarik dengan paket ${plan.name} Portal Online.`)}`}
-                                    target="_blank"
-                                    rel="nofollow noopener noreferrer"
-                                    class={`btn ${plan.popular ? "btn-primary" : "btn-secondary"}`}
-                                >
-                                    {plan.cta}
-                                </a>
-                            </div>
-                        </article>
-                    ))
+                            </article>
+                        );
+                    })
                 }
             </div>
 
             <p class="pricing-footnote reveal reveal-delay-2">
-                * Domain gratis `.id`/`.com` jika berlangganan 1 tahun (berlaku untuk paket Starter &amp; Pro).
+                * Paket tahunan hemat 2 bulan dan termasuk domain gratis `.id`/`.com` untuk Starter &amp; Pro.
             </p>
         </div>
 
@@ -171,7 +181,6 @@ const faqs = [
         </section>
     </div>
 </section>
-
 <style>
     .pricing-section {
         border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -202,6 +211,45 @@ const faqs = [
         color: var(--color-text-muted);
         line-height: 1.75;
         max-width: 64ch;
+    }
+
+    .billing-toggle {
+        margin-top: 1.2rem;
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        padding: 0.3rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    .billing-toggle-button {
+        border: 0;
+        border-radius: 999px;
+        padding: 0.65rem 0.95rem;
+        color: var(--color-text-soft);
+        background: transparent;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        font-weight: 700;
+        transition:
+            color var(--transition-fast),
+            background var(--transition-fast);
+    }
+
+    .billing-toggle-button small {
+        color: inherit;
+        font-size: 0.72rem;
+        font-weight: 600;
+        opacity: 0.78;
+    }
+
+    .billing-toggle-button.active {
+        color: rgb(var(--color-background));
+        background: rgb(var(--color-primary));
     }
 
     .pricing-cards {
@@ -280,6 +328,14 @@ const faqs = [
     .plan-period {
         color: var(--color-text-soft);
         font-size: 0.9rem;
+    }
+
+    .plan-saving {
+        margin-top: 0.55rem;
+        color: rgb(var(--color-primary));
+        font-size: 0.84rem;
+        font-weight: 700;
+        line-height: 1.5;
     }
 
     .plan-features {
@@ -468,12 +524,64 @@ const faqs = [
             });
         }
 
-        if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", initPricingFAQAccordion);
-        } else {
-            initPricingFAQAccordion();
+        function initBillingToggle() {
+            const root = document.querySelector(".pricing-section");
+            if (!root) return;
+
+            const buttons = root.querySelectorAll(".billing-toggle-button");
+            const priceNodes = root.querySelectorAll(".plan-price[data-monthly-price]");
+            const periodNodes = root.querySelectorAll(".plan-period[data-monthly-period]");
+            const savingNodes = root.querySelectorAll("[data-yearly-saving]");
+            const checkoutLinks = root.querySelectorAll("[data-checkout-base]");
+
+            function setPeriod(period) {
+                const safePeriod = period === "yearly" ? "yearly" : "monthly";
+                root.setAttribute("data-active-period", safePeriod);
+
+                buttons.forEach((button) => {
+                    const active = button.getAttribute("data-period") === safePeriod;
+                    button.classList.toggle("active", active);
+                    button.setAttribute("aria-pressed", active ? "true" : "false");
+                });
+
+                priceNodes.forEach((node) => {
+                    const value = node.getAttribute(`data-${safePeriod}-price`);
+                    if (value) node.textContent = value;
+                });
+
+                periodNodes.forEach((node) => {
+                    const value = node.getAttribute(`data-${safePeriod}-period`);
+                    if (value) node.textContent = value;
+                });
+
+                savingNodes.forEach((node) => {
+                    node.hidden = safePeriod !== "yearly";
+                });
+
+                checkoutLinks.forEach((link) => {
+                    const base = link.getAttribute("data-checkout-base");
+                    if (base) link.setAttribute("href", `${base}?period=${safePeriod}`);
+                });
+            }
+
+            buttons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    setPeriod(button.getAttribute("data-period"));
+                });
+            });
         }
 
-        document.addEventListener("astro:page-load", initPricingFAQAccordion);
+        function initPricing() {
+            initPricingFAQAccordion();
+            initBillingToggle();
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initPricing);
+        } else {
+            initPricing();
+        }
+
+        document.addEventListener("astro:page-load", initPricing);
     })();
 </script>
