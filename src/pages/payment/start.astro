@@ -14,32 +14,34 @@ const duitku = getDuitkuConfig(env);
 ---
 
 <Layout
-    title="Mulai Pembayaran Duitku | Portal Online"
+    title="Lanjutkan Pembayaran | Portal Online"
     description="Lanjutkan pembayaran Portal Online melalui Duitku Sandbox."
 >
     <Navbar />
     <main id="main-content">
-        <section class="section payment-start-section" aria-labelledby="payment-start-title">
-            <div class="container payment-start-shell">
-                <div class="payment-start-card">
-                    <p class="eyebrow">Duitku Sandbox</p>
-                    <h1 class="payment-start-title font-display" id="payment-start-title">
-                        Membuka pembayaran Duitku.
+        <section class="section payment-focus-section" aria-labelledby="payment-start-title">
+            <div class="container payment-focus-shell">
+                <div class="payment-focus-card">
+                    <span class="payment-focus-badge">Duitku Sandbox</span>
+                    <h1 class="payment-focus-title font-display" id="payment-start-title">
+                        Lanjutkan pembayaran
                     </h1>
                     <p>
-                        Jendela pembayaran akan terbuka otomatis. Jika tidak muncul, gunakan tombol di bawah untuk melanjutkan pembayaran.
+                        Kami sedang membuka halaman pembayaran. Jika tidak otomatis, tekan tombol di bawah.
                     </p>
-                    {
-                        reference ? (
-                            <button class="btn btn-primary" type="button" id="duitku-pay-button" data-reference={reference}>
-                                Lanjutkan Pembayaran
-                            </button>
-                        ) : paymentUrl ? (
-                            <a class="btn btn-primary" href={paymentUrl}>Lanjutkan Pembayaran</a>
-                        ) : (
-                            <a class="btn btn-secondary" href="/#pricing">Kembali ke Paket Layanan</a>
-                        )
-                    }
+                    <div class="payment-focus-actions">
+                        {
+                            reference ? (
+                                <button class="btn btn-primary" type="button" id="duitku-pay-button" data-reference={reference}>
+                                    Lanjutkan ke Pembayaran
+                                </button>
+                            ) : paymentUrl ? (
+                                <a class="btn btn-primary" href={paymentUrl}>Lanjutkan ke Pembayaran</a>
+                            ) : (
+                                <a class="btn btn-secondary" href="/#pricing">Kembali ke Paket</a>
+                            )
+                        }
+                    </div>
                 </div>
             </div>
         </section>
@@ -48,32 +50,55 @@ const duitku = getDuitkuConfig(env);
 </Layout>
 
 <style>
-    .payment-start-section {
+    .payment-focus-section {
         border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .payment-start-shell {
-        max-width: 760px;
+    .payment-focus-shell {
+        max-width: 720px;
     }
 
-    .payment-start-card {
+    .payment-focus-card {
         border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 1rem;
-        background: rgba(255, 255, 255, 0.02);
-        padding: clamp(1.25rem, 4vw, 2rem);
+        border-radius: 1.15rem;
+        background: rgba(255, 255, 255, 0.025);
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+        padding: clamp(1.2rem, 4vw, 2rem);
     }
 
-    .payment-start-title {
-        margin-top: 0.7rem;
-        font-size: clamp(2.1rem, 5vw, 3.4rem);
-        line-height: 1.08;
+    .payment-focus-badge {
+        display: inline-flex;
+        align-items: center;
+        width: fit-content;
+        border-radius: 999px;
+        border: 1px solid rgba(var(--color-primary), 0.24);
+        background: rgba(var(--color-primary), 0.08);
+        color: rgb(var(--color-primary));
+        padding: 0.34rem 0.68rem;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        line-height: 1;
+        text-transform: uppercase;
     }
 
-    .payment-start-card p:not(.eyebrow) {
+    .payment-focus-title {
         margin-top: 1rem;
-        margin-bottom: 1.4rem;
+        font-size: clamp(2.15rem, 5vw, 3.7rem);
+        line-height: 1.04;
+    }
+
+    .payment-focus-card p {
+        margin-top: 0.9rem;
         color: var(--color-text-soft);
-        line-height: 1.75;
+        line-height: 1.7;
+    }
+
+    .payment-focus-actions {
+        margin-top: 1.35rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
     }
 </style>
 

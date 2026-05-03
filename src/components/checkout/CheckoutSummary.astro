@@ -9,43 +9,44 @@ interface Props {
 
 const { servicePackage, period, price } = Astro.props;
 const billingPeriod = billingPeriods[period];
+const visibleFeatures = servicePackage.features.slice(0, 4);
 ---
 
 <article class="checkout-summary" aria-labelledby="checkout-summary-title">
     <div class="checkout-summary-topline">
-        <p class="eyebrow">Anda sedang membeli</p>
-        <span class="checkout-env-badge">Sandbox</span>
+        <p class="eyebrow">Ringkasan</p>
+        <span class="checkout-status-badge">Duitku Sandbox</span>
     </div>
 
-    <h1 class="checkout-title font-display" id="checkout-summary-title">
-        {servicePackage.name} {billingPeriod.label}
-    </h1>
-    <p class="checkout-description">
-        Checkout untuk paket CMS Portal Online. Isi data Buyer, lalu lanjutkan ke Payment yang diproses di halaman Duitku.
-    </p>
+    <h2 class="checkout-title font-display" id="checkout-summary-title">
+        {servicePackage.name}
+    </h2>
+    <p class="checkout-summary-meta">{billingPeriod.label} · CMS Portal Online</p>
+    <p class="checkout-description">{servicePackage.description}</p>
 
     <div class="checkout-price-card" aria-label="Ringkasan harga">
-        <span class="checkout-price-label">Total yang dibayar sekarang</span>
+        <span class="checkout-price-label">Total pembayaran</span>
         <div class="checkout-price">
             <span class="checkout-price-value font-display">{formatIdr(price)}</span>
             <span class="checkout-price-period">/{billingPeriod.shortLabel}</span>
         </div>
-        <span class="checkout-price-note">Invoice dibuat melalui Duitku POP Sandbox.</span>
+        <span class="checkout-price-note">Dibayar melalui Duitku Sandbox.</span>
     </div>
 
     {
         period === "yearly" && (
             <p class="checkout-benefit">
-                Hemat 2 bulan: bayar 10 bulan untuk 12 bulan layanan, termasuk domain gratis `.id`/`.com`.
+                Hemat 2 bulan + domain .id/.com.
             </p>
         )
     }
 
     <div class="checkout-includes" aria-label="Termasuk dalam paket">
-        <h2 class="checkout-card-heading font-display">Yang Anda dapatkan</h2>
-        <p>{servicePackage.description}</p>
+        <h3 class="checkout-card-heading">Termasuk</h3>
         <ul class="checkout-features">
-            {servicePackage.features.map((feature) => <li>{feature}</li>)}
+            {visibleFeatures.map((feature) => <li>{feature}</li>)}
         </ul>
     </div>
+
+    <a class="checkout-summary-link" href="/#pricing">Ganti paket</a>
 </article>

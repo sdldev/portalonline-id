@@ -196,3 +196,22 @@ Check:
 - Required fields remain required.
 - Optional fields remain visible but secondary.
 - Return page does not claim final success.
+
+## Implementation notes
+
+Implemented in the first pass with the following files:
+
+- `src/pages/checkout/[package].astro`
+- `src/components/checkout/CheckoutBuyerForm.astro`
+- `src/components/checkout/CheckoutSummary.astro`
+- `src/pages/payment/start.astro`
+- `src/pages/payment/return.astro`
+
+The implementation keeps the Duitku payment architecture unchanged and only changes visible hierarchy, copy, and layout. The Checkout page no longer renders `CheckoutFlowSteps` or `CheckoutTrustNotes`; their essential reassurance copy is now reduced into CTA microcopy and the compact summary. The primary Checkout CTA is `Lanjutkan ke Pembayaran`, and the loading state is `Memproses…`.
+
+Verification run after implementation:
+
+```bash
+npm run build
+git diff --check
+```
