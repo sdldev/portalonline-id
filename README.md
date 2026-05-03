@@ -34,6 +34,18 @@ Privasi dan data adalah aset terpenting. Arsitektur kami menjamin keamanan data 
 
 ---
 
+## 🧾 Checkout & Pembayaran
+
+Halaman checkout menggunakan flow pembayaran Duitku dengan form data kontak yang konsisten dengan halaman kontak. Styling checkout mempertahankan spacing section global, container lebar standar situs, input field seragam, dan jarak antar field yang rapi agar halaman pembayaran tetap fokus dan mudah digunakan.
+
+Halaman terkait:
+
+- `/checkout/[package]` — form data kontak dan ringkasan paket.
+- `/payment/start` — halaman untuk melanjutkan pembayaran Duitku.
+- `/payment/return` — halaman status setelah kembali dari Duitku.
+
+---
+
 <div align="center">
   <h2>🚀 Siap Membangun Portal Online Anda?</h2>
   <p>Jangan tunda lagi untuk go digital. Wujudkan kredibilitas dan kemudahan akses informasi bersama kami.</p>
