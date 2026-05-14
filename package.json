@@ -37,7 +37,7 @@
     "overrides": {
         "brace-expansion": "^5.0.5",
         "defu": "^6.1.6",
-        "devalue": "^5.6.4",
+        "devalue": "^5.8.1",
         "flatted": "^3.4.2",
         "h3": "^1.15.6",
         "lodash": "^4.17.23",
