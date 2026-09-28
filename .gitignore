@@ -15,9 +15,12 @@ yarn-error.log*
 pnpm-debug.log*
 
 
-# environment variables
+# environment variables — semua varian, kecuali contoh yang didokumentasikan
+# PENTING: repo ini memegang DUITKU_API_KEY. Pola harus menutup
+# .env.local / .env.development / .env.test yang biasa dipakai developer.
 .env
-.env.production
+.env.*
+!.env.example
 
 # macOS-specific files
 .DS_Store
@@ -27,7 +30,12 @@ pnpm-debug.log*
 
 # Wrangler / Cloudflare local dev cache
 .wrangler/
-.env*\n.env.local
+
+# build & tooling artifacts — machine-specific, jangan di-commit
+# (build.log / preview.log / wrangler.log memuat detail infra & binding)
+*.log
+report.html
+.scratch/
 
 # Taskplane runtime artifacts (machine-specific, do not commit)
 .pi/batch-state.json
