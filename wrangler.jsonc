@@ -10,7 +10,11 @@
     "kv_namespaces": [
         {
             "binding": "CACHE_KV",
-            "id": "f0a6a9469ce349179772cad58e55c609",
+            "id": "db51254b13fe4ef5b538ac960a4ca7e3",
+        },
+        {
+            "binding": "SESSION",
+            "id": "989e0066e0884ffa9a053ea4d9a6ad83",
         },
     ],
     "observability": {
