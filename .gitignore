@@ -31,6 +31,11 @@ pnpm-debug.log*
 # Wrangler / Cloudflare local dev cache
 .wrangler/
 
+# Cloudflare Workers local secrets (wrangler dev / astro preview)
+# Isi: DUITKU_API_KEY dkk — WAJIB tidak masuk git
+.dev.vars
+.dev.vars.*
+
 # build & tooling artifacts — machine-specific, jangan di-commit
 # (build.log / preview.log / wrangler.log memuat detail infra & binding)
 *.log
