@@ -1,0 +1,16 @@
+# Cloudflare Workers local secrets untuk `astro preview` / `wrangler dev`.
+#
+# Cara pakai:
+#   cp .dev.vars.example .dev.vars
+#   lalu isi nilai aslinya.
+#
+# File .dev.vars TIDAK di-commit (sudah di .gitignore).
+# Di production, nilai-nilai ini diset sebagai Secrets di
+# Cloudflare Dashboard → Workers → portalonline-id → Settings →
+# Variables and Secrets (atau via `wrangler secret put`).
+
+DUITKU_ENV=sandbox
+DUITKU_MERCHANT_CODE=
+DUITKU_API_KEY=
+DUITKU_DEFAULT_PAYMENT_METHOD=VC
+PUBLIC_SITE_URL=https://portalonline.id
